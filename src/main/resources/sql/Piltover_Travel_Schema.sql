@@ -2,6 +2,15 @@ USE mysql;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+-- Tạo user 'piltover' nếu chưa tồn tại
+CREATE USER IF NOT EXISTS 'piltover'@'localhost' IDENTIFIED BY 'piltover123';
+
+-- Cấp quyền cao nhất cho database 'piltover_travel' cho user 'piltover'
+GRANT ALL PRIVILEGES ON piltover_travel.* TO 'piltover'@'localhost';
+
+-- Làm mới các quyền
+FLUSH PRIVILEGES;
+
 -- Drop the database if it exists
 DROP DATABASE IF EXISTS Piltover_Travel;
 
