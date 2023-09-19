@@ -7,5 +7,13 @@ import com.piltover.entity.TourPlanDetail;
 public interface TourPlanDetailService {
     List<TourPlanDetail> getAll();
 
+    TourPlanDetail getById(Long id);
+
     List<TourPlanDetail> getTourPlanDetailListByTourPlanId(Long tourPlanId);
+
+    void postPlanDetail(TourPlanDetail planDetail);
+
+    void putPlanDetail(TourPlanDetail planDetail);
+
+    void deleteTourPlan(Long planDetailId);
 }
