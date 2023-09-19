@@ -108,7 +108,7 @@ CREATE TABLE Tours(
     Description TEXT,
     Image VARCHAR(50),
     Destination_address TEXT,
-    AvailableSpaces INT,
+    Available_spaces INT,
     Create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
     Active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (PriceID) REFERENCES Prices(Id),
@@ -141,11 +141,11 @@ CREATE TABLE TourPlan(
 
 CREATE TABLE TourPlanDetail(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    TourPlanID BIGINT,
+    Tour_Plan_ID BIGINT,
     Description TEXT,
     Start_time DATETIME,
     End_time DATETIME,
-    FOREIGN KEY (TourPlanID) REFERENCES TourPlan(Id)
+    FOREIGN KEY (Tour_Plan_ID) REFERENCES TourPlan(Id)
 );
 
 CREATE TABLE Hotels(
