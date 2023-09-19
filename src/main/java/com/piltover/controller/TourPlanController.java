@@ -19,6 +19,6 @@ public class TourPlanController {
 
     @GetMapping("/api/tour_plan")
     public List<TourPlan> getAllTourPlans(@RequestParam("tourId") Long id) {
-        return tourPlanService.getTourPlansByPlanID(id);
+        return tourPlanService.getTourPlansByPlanId(id);
     }
 }

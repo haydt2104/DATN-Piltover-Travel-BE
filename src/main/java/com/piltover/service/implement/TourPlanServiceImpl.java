@@ -15,7 +15,7 @@ public class TourPlanServiceImpl implements TourPlanService {
     TourPlanRepository tourPlanRepository;
 
     @Override
-    public List<TourPlan> getTourPlansByPlanID(Long tourID) {
-        return tourPlanRepository.getTourPlansByPlanID(tourID);
+    public List<TourPlan> getTourPlansByPlanId(Long tourID) {
+        return tourPlanRepository.getTourPlansByPlanId(tourID);
     }
 }

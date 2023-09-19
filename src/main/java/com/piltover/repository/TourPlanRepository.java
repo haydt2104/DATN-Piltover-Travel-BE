@@ -8,5 +8,5 @@ import com.piltover.entity.TourPlan;
 
 public interface TourPlanRepository extends JpaRepository<TourPlan, Long>{
     @Query("SELECT p FROM TourPlan p WHERE p.tour.id = ?1")
-    List<TourPlan> getTourPlansByPlanID(Long id);
+    List<TourPlan> getTourPlansByPlanId(Long id);
 }
