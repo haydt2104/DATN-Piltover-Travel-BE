@@ -59,7 +59,7 @@ public class Tour implements Serializable {
     @Column(name = "Destination_address", columnDefinition = "TEXT")
     private String destinationAddress;
 
-    @Column(name = "AvailableSpaces")
+    @Column(name = "Available_spaces")
     private Integer availableSpaces;
 
     @DateTimeFormat(iso = ISO.DATE_TIME)

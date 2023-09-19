@@ -23,7 +23,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "TourPlanDetail", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "TourPlanID", "TransportID" })
+        @UniqueConstraint(columnNames = { "Tour_Plan_ID"})
 })
 public class TourPlanDetail implements Serializable {
     /**
@@ -36,12 +36,8 @@ public class TourPlanDetail implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "TourPlanID")
+    @JoinColumn(name = "Tour_Plan_ID")
     private TourPlan tourPlan;
-
-    @ManyToOne
-    @JoinColumn(name = "TransportID")
-    private Transport transport;
 
     @Column(name = "Start_time")
     @DateTimeFormat(iso = ISO.DATE_TIME)
@@ -52,4 +48,7 @@ public class TourPlanDetail implements Serializable {
     @DateTimeFormat(iso = ISO.DATE_TIME)
 	@Temporal(TemporalType.DATE)
     private Date endTime;
+
+    @Column(name = "Description")
+    private String description;
 }
