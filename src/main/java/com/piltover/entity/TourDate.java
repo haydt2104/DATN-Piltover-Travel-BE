@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -27,54 +26,29 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Posts", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "AccountId" })
+@Table(name = "TourDates", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "TourID" })
 })
-public class Post implements Serializable{/**
+public class TourDate implements Serializable {
+    /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "AccountID")
-    private Account account;
+    @JoinColumn(name = "TourID")
+    private Tour tour;
 
-    @Column(name = "Title")
-    private String title;
-
-    @Lob
-    @Column(name = "Description")
-    private String description;
-
-    @Lob
-    @Column(name = "Content")
-    private String content;
-    
-    @Column(name = "Image")
-    private String image;
-
+    @Column(name = "Initiate_date")
     @DateTimeFormat(iso = ISO.DATE)
 	@Temporal(TemporalType.DATE)
-    @Column(name = "Create_time", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createTime;
-
-    @Column(name = "Status")
-    private Boolean status;
+    private Date initiateDate;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "post")
-    List<PostImage> postImages;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "post")
-    List<Like> likes;
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "post")
-    List<Comment> comments;
+    @OneToMany(mappedBy = "tourDate")
+    private List<Booking> bookings;
 }

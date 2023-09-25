@@ -78,6 +78,34 @@ CREATE TABLE Posts(
     FOREIGN KEY (AccountID) REFERENCES Accounts(Id)
 );
 
+CREATE TABLE PostImages(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	PostID BIGINT,
+    Path VARCHAR(100),
+    FOREIGN KEY (PostID) REFERENCES Posts(Id)
+    
+);
+
+CREATE TABLE Comments(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    AccountID BIGINT,
+	PostID BIGINT,
+    Content VARCHAR(100),
+    FOREIGN KEY (AccountID) REFERENCES Accounts(Id),
+    FOREIGN KEY (PostID) REFERENCES Posts(Id)
+    
+);
+
+CREATE TABLE Likes(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    AccountID BIGINT,
+	PostID BIGINT,
+    IsLike BOOLEAN,
+    FOREIGN KEY (AccountID) REFERENCES Accounts(Id),
+    FOREIGN KEY (PostID) REFERENCES Posts(Id)
+    
+);
+
 INSERT INTO Posts (AccountID, Title, Description, Content)
 VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1');
 
@@ -113,6 +141,22 @@ CREATE TABLE Tours(
     Active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (PriceID) REFERENCES Prices(Id),
     FOREIGN KEY (CreateID) REFERENCES Accounts(Id)
+);
+
+CREATE TABLE TourDates(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	TourID BIGINT,
+    Initiate_date DATETIME,
+    FOREIGN KEY (TourID) REFERENCES Tours(Id)
+    
+);
+
+CREATE TABLE TourImages(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	TourID BIGINT,
+    Path VARCHAR(100),
+    FOREIGN KEY (TourID) REFERENCES Tours(Id)
+    
 );
 
 CREATE TABLE Status(
@@ -167,14 +211,14 @@ CREATE TABLE Discounts(
 CREATE TABLE Bookings(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     AccountID BIGINT,
-    TourID BIGINT,
+    TourDateID BIGINT,
     HotelID BIGINT,
     DiscountID BIGINT,
     Total_price INT,
     Total_passengers INT,
     Status INT,
     FOREIGN KEY (AccountID) REFERENCES Accounts(Id),
-    FOREIGN KEY (TourID) REFERENCES Tours(Id),
+    FOREIGN KEY (TourDateID) REFERENCES TourDates(Id),
     FOREIGN KEY (HotelID) REFERENCES Hotels(Id),
     FOREIGN KEY (DiscountID) REFERENCES Discounts(Id)
 );
