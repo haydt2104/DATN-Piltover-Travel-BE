@@ -13,7 +13,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -25,11 +24,11 @@ import lombok.Data;
 })
 public class Booking implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -55,6 +54,9 @@ public class Booking implements Serializable {
     @Column(name = "Total_passengers")
     private Integer totalPassengers;
     
+    @Column(name = "Status")
+    private Integer status;
+
     @JsonIgnore
     @OneToOne(mappedBy = "booking")
     private BookingDetail bookingDetail;
