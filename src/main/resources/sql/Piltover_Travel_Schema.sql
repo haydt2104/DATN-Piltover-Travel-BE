@@ -172,6 +172,7 @@ CREATE TABLE Bookings(
     DiscountID BIGINT,
     Total_price INT,
     Total_passengers INT,
+    Status INT,
     FOREIGN KEY (AccountID) REFERENCES Accounts(Id),
     FOREIGN KEY (TourID) REFERENCES Tours(Id),
     FOREIGN KEY (HotelID) REFERENCES Hotels(Id),
