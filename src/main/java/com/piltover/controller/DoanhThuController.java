@@ -20,4 +20,9 @@ public class DoanhThuController {
 	public ResponseEntity<?> getAll() {
 		return ResponseEntity.ok(service.getDoanhThuTourHotel());
 	}
+	
+	@GetMapping("/monthdoanhthu")
+	public ResponseEntity<?> getDoanhThu(){
+		return ResponseEntity.ok(service.getMonthDoanhThu());
+	}
 }

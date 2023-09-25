@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.piltover.entity.DoanhThu;
+import com.piltover.entity.DoanhThu2;
 import com.piltover.repository.DoanhThuRepository;
 import com.piltover.service.DoanhThuService;
 
@@ -18,5 +19,11 @@ public class DoanhThuServicelmpl implements DoanhThuService{
 	public List<DoanhThu> getDoanhThuTourHotel() {
 		// TODO Auto-generated method stub	
 		return rep.calculateTotalRevenue();
+	}
+
+	@Override
+	public List<DoanhThu2> getMonthDoanhThu() {
+		// TODO Auto-generated method stub
+		return rep.MonthTourHotel();
 	}
 }
