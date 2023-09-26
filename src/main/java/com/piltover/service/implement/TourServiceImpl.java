@@ -19,25 +19,5 @@ public class TourServiceImpl implements TourService {
         return tourRepository.findAll();
     }
 
-    @Override
-    public Tour getTourById(Long id) {
-        return tourRepository.findById(id).get();
-    }
-
-    @Override
-    public void postTour(Tour tour) {
-        tourRepository.save(tour);
-    }
-
-    @Override
-    public void putTour(Tour tour) {
-        tourRepository.save(tour);
-    }
-
-    @Override
-    public void deleteTour(Long id) {
-        Tour tour = tourRepository.findById(id).get();
-        tourRepository.delete(tour);
-    }
-
+    
 }

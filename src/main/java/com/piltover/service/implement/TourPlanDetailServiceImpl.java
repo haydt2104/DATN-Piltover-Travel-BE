@@ -23,25 +23,4 @@ public class TourPlanDetailServiceImpl implements TourPlanDetailService {
     public List<TourPlanDetail> getAll() {
         return tourPlanDetailRepository.findAll();
     }
-
-    @Override
-    public TourPlanDetail getById(Long id) {
-        return tourPlanDetailRepository.findById(id).get();
-    }
-
-    @Override
-    public void postPlanDetail(TourPlanDetail planDetail) {
-        tourPlanDetailRepository.save(planDetail);
-    }
-
-    @Override
-    public void putPlanDetail(TourPlanDetail planDetail) {
-        tourPlanDetailRepository.save(planDetail);
-    }
-
-    @Override
-    public void deleteTourPlan(Long planDetailId) {
-        TourPlanDetail tourPlanDetail = tourPlanDetailRepository.findById(planDetailId).get();
-        tourPlanDetailRepository.delete(tourPlanDetail);
-    }
 }
