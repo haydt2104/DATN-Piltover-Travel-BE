@@ -13,22 +13,23 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Bookings", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "AccountID", "TourDateID", "HotelID", "DiscountID" })
+@Table(name = "TourPlan", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "AccountID", "TourID", "HotelID", "DiscountID" })
 })
 public class Booking implements Serializable {
     /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -37,8 +38,8 @@ public class Booking implements Serializable {
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name = "TourDateID")
-    private TourDate tourDate;
+    @JoinColumn(name = "TourID")
+    private Tour tour;
 
     @ManyToOne
     @JoinColumn(name = "HotelID")
@@ -54,9 +55,6 @@ public class Booking implements Serializable {
     @Column(name = "Total_passengers")
     private Integer totalPassengers;
     
-    @Column(name = "Status")
-    private Integer status;
-
     @JsonIgnore
     @OneToOne(mappedBy = "booking")
     private BookingDetail bookingDetail;

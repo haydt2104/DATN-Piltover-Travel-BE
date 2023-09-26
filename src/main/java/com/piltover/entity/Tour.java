@@ -71,10 +71,10 @@ public class Tour implements Serializable {
     
     @JsonIgnore
     @OneToMany(mappedBy = "tour")
-    List<TourDate> tourDates;
+    List<TourPlan> tourPlans;
     
     @JsonIgnore
     @OneToMany(mappedBy = "tour")
-    List<TourImage> tourImages;
+    List<Booking> bookings;
     
 }
