@@ -31,11 +31,11 @@ import lombok.Data;
 })
 public class TourDate implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -45,10 +45,14 @@ public class TourDate implements Serializable {
 
     @Column(name = "Initiate_date")
     @DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     private Date initiateDate;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "tourDate")
     private List<Booking> bookings;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "tourDate")
+    List<TourPlan> tourPlans;
 }
