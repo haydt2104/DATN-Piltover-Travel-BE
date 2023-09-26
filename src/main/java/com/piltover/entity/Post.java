@@ -2,6 +2,7 @@ package com.piltover.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,6 +20,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -50,6 +54,9 @@ public class Post implements Serializable{/**
     @Lob
     @Column(name = "Content")
     private String content;
+    
+    @Column(name = "Image")
+    private String image;
 
     @DateTimeFormat(iso = ISO.DATE)
 	@Temporal(TemporalType.DATE)
@@ -58,4 +65,16 @@ public class Post implements Serializable{/**
 
     @Column(name = "Status")
     private Boolean status;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "post")
+    List<PostImage> postImages;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "post")
+    List<Like> likes;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "post")
+    List<Comment> comments;
 }

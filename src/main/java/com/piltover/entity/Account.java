@@ -55,19 +55,19 @@ public class Account implements Serializable{/**
     private String address;
     
     @Column(name = "Create_at")
-    private Date createAt;
+    private Date createAt = new Date();
     
     @Column(name = "Update_at")
-    private Date updateAt;
+    private Date updateAt = new Date();
     
     @Column(name = "Error_count")
-    private Integer errorCount;
+    private Integer errorCount = 0;
     
     @Column(name = "Banned_time")
     private Date bannedTime;
     
     @Column(name = "Active")
-    private Boolean active;
+    private Boolean active = true;
 	
     @JsonIgnore
     @OneToMany(mappedBy = "account")

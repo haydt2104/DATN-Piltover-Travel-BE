@@ -2,6 +2,7 @@ package com.piltover.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,14 +20,16 @@ import javax.persistence.UniqueConstraint;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Booking_Detail", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "BookingID" })
+@Table(name = "TourDates", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "TourID" })
 })
-public class BookingDetail implements Serializable {
+public class TourDate implements Serializable {
     /**
 	 * 
 	 */
@@ -35,21 +39,16 @@ public class BookingDetail implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "BookingID")
-    private Booking booking;
+    @ManyToOne
+    @JoinColumn(name = "TourID")
+    private Tour tour;
 
-    @Column(name = "Adult")
-    private Integer adult;
-
-    @Column(name = "Children")
-    private Integer children;
-
-    @Column(name = "Surcharge")
-    private Integer surcharge;
-
-    @Column(name = "Booking_time")
-    @DateTimeFormat(iso = ISO.DATE_TIME)
+    @Column(name = "Initiate_date")
+    @DateTimeFormat(iso = ISO.DATE)
 	@Temporal(TemporalType.DATE)
-    private Date bookingTime;
+    private Date initiateDate;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "tourDate")
+    private List<Booking> bookings;
 }

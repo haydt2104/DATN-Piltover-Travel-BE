@@ -1,4 +1,4 @@
-package com.piltover.controller;
+package com.piltover.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +11,13 @@ import com.piltover.service.AccountService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/test")
-public class TestController {
+@RequestMapping("/api/account")
+public class AccountController {
 	@Autowired
 	AccountService accountService;
 	
-	@GetMapping("/account")
-	public ResponseEntity<?> getAllAccountActive() {
-		
-		System.out.println("Email 1: "+accountService.getAllAccount().get(0).getEmail());
+	@GetMapping("/getAllAccount")
+	public ResponseEntity<?> getAllAccount() {
 		return ResponseEntity.ok(accountService.getAllAccount());
-		
 	}
 }
