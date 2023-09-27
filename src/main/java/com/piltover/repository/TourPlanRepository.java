@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import com.piltover.entity.TourPlan;
 
 public interface TourPlanRepository extends JpaRepository<TourPlan, Long>{
-    @Query("SELECT p FROM TourPlan p WHERE p.tour.id = ?1")
+    @Query("SELECT p FROM TourPlan p WHERE p.tourDate.id = ?1")
     List<TourPlan> getTourPlansByPlanId(Long id);
 }
