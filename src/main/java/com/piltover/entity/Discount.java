@@ -17,7 +17,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Discounts")
+@Table(name = "Hotels")
 public class Discount implements Serializable {
     /**
 	 * 
