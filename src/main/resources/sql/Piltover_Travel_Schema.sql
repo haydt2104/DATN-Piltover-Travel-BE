@@ -143,7 +143,7 @@ CREATE TABLE Tours(
     FOREIGN KEY (CreateID) REFERENCES Accounts(Id)
 );
 
-CREATE TABLE TourDates(
+CREATE TABLE Tour_Dates(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	TourID BIGINT,
     Initiate_date DATETIME,
@@ -211,14 +211,14 @@ CREATE TABLE Discounts(
 CREATE TABLE Bookings(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     AccountID BIGINT,
-    TourDateID BIGINT,
+    Tour_DateID BIGINT,
     HotelID BIGINT,
     DiscountID BIGINT,
     Total_price INT,
     Total_passengers INT,
     Status INT,
     FOREIGN KEY (AccountID) REFERENCES Accounts(Id),
-    FOREIGN KEY (TourDateID) REFERENCES TourDates(Id),
+    FOREIGN KEY (Tour_DateID) REFERENCES Tour_Dates(Id),
     FOREIGN KEY (HotelID) REFERENCES Hotels(Id),
     FOREIGN KEY (DiscountID) REFERENCES Discounts(Id)
 );

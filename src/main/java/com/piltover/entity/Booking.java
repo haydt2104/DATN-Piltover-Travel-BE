@@ -20,7 +20,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Bookings", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "AccountID", "TourDateID", "HotelID", "DiscountID" })
+        @UniqueConstraint(columnNames = { "AccountID", "Tour_DateID", "HotelID", "DiscountID" })
 })
 public class Booking implements Serializable {
     /**
@@ -37,7 +37,7 @@ public class Booking implements Serializable {
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name = "TourDateID")
+    @JoinColumn(name = "Tour_DateID")
     private TourDate tourDate;
 
     @ManyToOne
