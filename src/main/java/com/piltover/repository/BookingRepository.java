@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.piltover.entity.Booking;
-
+@Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     // Get All data of bookings => (lấy tất cả dữ liệu trong Bookings)
-    @Query("SELECT b FROM Booking b")
-    List<Booking> findAll();
+//    @Query("SELECT b FROM Booking b")
+//    List<Booking> findAll();
     
     // Get All data of bookings with status = 1(confirmed) => (Lấy tất danh sách khách đã liên hệ)
     @Query("SELECT b FROM Booking b WHERE b.status = 1")
