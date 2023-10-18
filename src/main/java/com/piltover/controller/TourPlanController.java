@@ -35,8 +35,8 @@ public class TourPlanController {
     }
 
     @GetMapping("")
-    public List<TourPlan> getTourPlansByTourId(@RequestParam("tourId") Long id) {
-        return tourPlanService.getTourPlansByPlanId(id);
+    public List<TourPlan> getTourPlansByTourId(@RequestParam("tourDateId") Long id) {
+        return tourPlanService.getTourPlansByDateId(id);
     }
 
     @PostMapping("")

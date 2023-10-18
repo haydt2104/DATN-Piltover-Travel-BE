@@ -20,4 +20,25 @@ public class TourDateServiceImpl implements TourDateService {
         return tourDateRepository.getTourDatesByTourId(Id);
     }
 
+    @Override
+    public TourDate getTourDate(Long Id) {
+        return tourDateRepository.findById(Id).get();
+    }
+
+    @Override
+    public void postTourDate(TourDate tourDate) {
+        tourDateRepository.save(tourDate);
+    }
+
+    @Override
+    public void putTourDate(TourDate tourDate) {
+        tourDateRepository.save(tourDate);
+    }
+
+    @Override
+    public void deleteTourDate(Long id) {
+        TourDate tourDate = tourDateRepository.findById(id).get();
+        tourDateRepository.delete(tourDate);
+    }
+
 }
