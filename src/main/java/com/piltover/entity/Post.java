@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,18 +20,27 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Proxy;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @Entity
 @Table(name = "Posts", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "AccountId" })
 })
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
+@Proxy(lazy = false)
 public class Post implements Serializable{/**
 	 * 
 	 */
@@ -55,8 +66,8 @@ public class Post implements Serializable{/**
     @Column(name = "Content")
     private String content;
     
-    @Column(name = "Image")
-    private String image;
+//    @Column(name = "Image")
+//    private String image;
 
     @DateTimeFormat(iso = ISO.DATE)
 	@Temporal(TemporalType.DATE)
@@ -71,7 +82,7 @@ public class Post implements Serializable{/**
     List<PostImage> postImages;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "post")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post", cascade = CascadeType.ALL)
     List<Like> likes;
     
     @JsonIgnore

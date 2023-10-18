@@ -37,6 +37,6 @@ public class Like implements Serializable {
     @JoinColumn(name = "PostID")
     private Post post;
 
-    @Column(name = "IsLike")
+    @Column(name = "IsLike", nullable = false, unique = true)
     private Boolean isLike;
 }

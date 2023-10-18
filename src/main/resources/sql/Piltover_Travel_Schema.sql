@@ -107,7 +107,14 @@ CREATE TABLE Likes(
 );
 
 INSERT INTO Posts (AccountID, Title, Description, Content)
-VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1');
+VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1'),
+		(1234567890, 'Tiêu đề bài viết 2', 'Mô tả bài viết 2', 'Trạng thái bài viết 2'),
+        (2345673452, 'Tiêu đề bài viết 3', 'Mô tả bài viết 3', 'Trạng thái bài viết 3');
+
+INSERT INTO Likes (AccountID, PostId, IsLike)
+VALUES(1234567890, 1, 1),
+		(1234567890, 2, 1),
+        (2345673452,1, 1);
 
 CREATE TABLE Logs(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
