@@ -152,7 +152,8 @@ CREATE TABLE TourPlan(
     Start_address TEXT,
     Start_time DATETIME,
     FOREIGN KEY (TourID) REFERENCES Tours(Id),
-    FOREIGN KEY (StatusID) REFERENCES Status(Id)
+    FOREIGN KEY (StatusID) REFERENCES Status(Id),
+    FOREIGN KEY (TransportID) REFERENCES Status(Id)
 );
 
 CREATE TABLE TourPlanDetail(
