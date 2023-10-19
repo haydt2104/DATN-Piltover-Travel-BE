@@ -27,7 +27,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "TourPlan", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "TourDateID", "StatusID", "TransportID" })
+        @UniqueConstraint(columnNames = { "Tour_Date_ID", "TransportID" })
 })
 public class TourPlan implements Serializable {
     /**
@@ -40,12 +40,8 @@ public class TourPlan implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "TourDateID")
+    @JoinColumn(name = "Tour_Date_ID")
     private TourDate tourDate;
-
-    @ManyToOne
-    @JoinColumn(name = "StatusID")
-    private Status status;
     
     @ManyToOne
     @JoinColumn(name = "TransportID")

@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.piltover.entity.Booking;
 
-public interface BookingRepository extends JpaRepository<Booking, Long> {
-    // Get All data of bookings => (lấy tất cả dữ liệu trong Bookings)
+public interface BookingRepository extends JpaRepository<Booking, Long>{
+	// Get All data of bookings => (lấy tất cả dữ liệu trong Bookings)
     @Query("SELECT b FROM Booking b")
     List<Booking> findAll();
     

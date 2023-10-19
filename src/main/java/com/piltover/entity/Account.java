@@ -54,11 +54,15 @@ public class Account implements Serializable{/**
     @Column(name = "Address")
     private String address;
     
+    @DateTimeFormat(iso = ISO.DATE)
+	@Temporal(TemporalType.DATE)
     @Column(name = "Create_at")
     private Date createAt = new Date();
     
+    @DateTimeFormat(iso = ISO.DATE)
+	@Temporal(TemporalType.DATE)
     @Column(name = "Update_at")
-    private Date updateAt = new Date();
+    private Date updateAt;
     
     @Column(name = "Error_count")
     private Integer errorCount = 0;
@@ -66,12 +70,32 @@ public class Account implements Serializable{/**
     @Column(name = "Banned_time")
     private Date bannedTime;
     
-    @Column(name = "Active")
-    private Boolean active = true;
+    @Column(name = "isDelete")
+    private Boolean isDelete = false;
 	
     @JsonIgnore
-    @OneToMany(mappedBy = "account")
-    List<Post> posts;
+    @OneToMany(mappedBy = "createUser")
+    List<Post> listPostCreated;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "updateUser")
+    List<Post> listPostUpdated;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "commentUser")
+    List<Comment> listComment;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "likeUser")
+    List<Like> listLike;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "createUser")
+    List<Discount> listDiscountCreate;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "updateUser")
+    List<Discount> listDiscountUpdate;
     
     @JsonIgnore
     @OneToMany(mappedBy = "account")
@@ -79,9 +103,23 @@ public class Account implements Serializable{/**
     
     @JsonIgnore
     @OneToMany(mappedBy = "creator")
-    List<Tour> tours;
+    List<Tour> listTourCreate;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "account")
-    List<Booking> bookings;
+    @OneToMany(mappedBy = "createUser")
+    List<Booking> listBookingCreate;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "updateUser")
+    List<Booking> listBookingUpdate;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "updateUser")
+    List<Hotel> listHotelUpdate;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "createUser")
+    List<Hotel> listHotelCreate;
+    
+    
 }

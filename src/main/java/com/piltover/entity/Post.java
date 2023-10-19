@@ -36,7 +36,7 @@ import lombok.Setter;
 @Data
 @Entity
 @Table(name = "Posts", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "AccountId" })
+        @UniqueConstraint(columnNames = { "Create_User","Update_User" })
 })
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
@@ -52,8 +52,8 @@ public class Post implements Serializable{/**
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "AccountID")
-    private Account account;
+    @JoinColumn(name = "Create_User")
+    private Account createUser;
 
     @Column(name = "Title")
     private String title;
@@ -71,11 +71,20 @@ public class Post implements Serializable{/**
 
     @DateTimeFormat(iso = ISO.DATE)
 	@Temporal(TemporalType.DATE)
-    @Column(name = "Create_time", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createTime;
+    @Column(name = "Create_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createTime = new Date();
+    
+    @ManyToOne
+    @JoinColumn(name = "Update_User")
+    private Account updateUser;
+    
+    @DateTimeFormat(iso = ISO.DATE)
+	@Temporal(TemporalType.DATE)
+    @Column(name = "Update_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date updateTime;
 
-    @Column(name = "Status")
-    private Boolean status;
+    @Column(name = "isDelete")
+    private Boolean isDelete = false;
     
     @JsonIgnore
     @OneToMany(mappedBy = "post")
