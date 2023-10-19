@@ -27,7 +27,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Tour_Dates", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "TourID" })
+        @UniqueConstraint(columnNames = { "TourID", "StatusID" })
 })
 public class TourDate implements Serializable {
     /**
@@ -42,6 +42,10 @@ public class TourDate implements Serializable {
     @ManyToOne
     @JoinColumn(name = "TourID")
     private Tour tour;
+    
+    @ManyToOne
+    @JoinColumn(name = "StatusID")
+    private Status status;
 
     @Column(name = "Initiate_date")
     @DateTimeFormat(iso = ISO.DATE)

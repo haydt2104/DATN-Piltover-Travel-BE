@@ -1,4 +1,4 @@
-package com.piltover.controller;
+package com.piltover.controller.admin;
 
 import java.util.List;
 

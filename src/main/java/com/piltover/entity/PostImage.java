@@ -1,7 +1,7 @@
+
 package com.piltover.entity;
 
 import java.io.Serializable;
-import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +17,10 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "TourPlanDetail", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "Tour_Plan_ID"})
+@Table(name = "PostImages", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "PostID" })
 })
-public class TourPlanDetail implements Serializable {
+public class PostImage implements Serializable {
     /**
 	 * 
 	 */
@@ -31,15 +31,9 @@ public class TourPlanDetail implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "Tour_Plan_ID")
-    private TourPlan tourPlan;
+    @JoinColumn(name = "PostID")
+    private Post post;
 
-    @Column(name = "Start_time")
-    private LocalTime startTime;
-
-    @Column(name = "End_time")
-    private LocalTime endTime;
-
-    @Column(name = "Description")
-    private String description;
+    @Column(name = "Path")
+    private String path;
 }
