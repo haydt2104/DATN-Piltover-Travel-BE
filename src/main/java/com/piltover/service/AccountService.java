@@ -11,4 +11,17 @@ public interface AccountService {
 
 	// Lấy tất cả account hoạt động
 	List<Account> getAllAccountActive();
+	
+	// Tạo tài khoản mới
+	Account createAccount(Account account);
+	
+	// Kiểm tra email
+	boolean isEmailExists(String email);
+	
+	// Kiểm tra phone
+	boolean isPhoneExists(String phone);
+	
+	// Kiểm tra id
+	boolean isIDExists(Long id);
+	
 }

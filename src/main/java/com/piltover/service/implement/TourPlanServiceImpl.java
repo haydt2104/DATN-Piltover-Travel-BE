@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.piltover.entity.Status;
 import com.piltover.entity.TourPlan;
 import com.piltover.repository.StatusRepository;
 import com.piltover.repository.TourPlanRepository;
@@ -35,9 +34,7 @@ public class TourPlanServiceImpl implements TourPlanService {
 
     @Override
     public void postTourPlan(TourPlan plan) {
-        Status status = statusRepository.findById(Long.valueOf(1)).get();
         TourPlan tourPlan = plan;
-        tourPlan.setStatus(status);
         tourPlanRepository.save(tourPlan);
     }
 

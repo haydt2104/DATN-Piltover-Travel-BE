@@ -1,3 +1,4 @@
+
 package com.piltover.entity;
 
 import java.io.Serializable;
@@ -16,10 +17,10 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Tour_Images", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "TourID" })
+@Table(name = "PostImages", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "PostID" })
 })
-public class TourImage implements Serializable {
+public class PostImage implements Serializable {
     /**
 	 * 
 	 */
@@ -30,8 +31,8 @@ public class TourImage implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "TourID")
-    private Tour tour;
+    @JoinColumn(name = "PostID")
+    private Post post;
 
     @Column(name = "Path")
     private String path;

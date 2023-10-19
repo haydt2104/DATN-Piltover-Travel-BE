@@ -32,6 +32,6 @@ public class Status implements Serializable {
     
     @JsonIgnore
     @OneToMany(mappedBy = "status")
-    private List<TourPlan> tourPlans;
+    private List<TourDate> tourDates;
 
 }

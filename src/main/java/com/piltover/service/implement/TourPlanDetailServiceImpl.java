@@ -31,7 +31,6 @@ public class TourPlanDetailServiceImpl implements TourPlanDetailService {
 
     @Override
     public void postPlanDetail(TourPlanDetail planDetail) {
-        System.out.println(planDetail);
         tourPlanDetailRepository.save(planDetail);
     }
 

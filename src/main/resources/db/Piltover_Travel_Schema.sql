@@ -34,7 +34,7 @@ CREATE TABLE Accounts (
     Update_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Error_count INT DEFAULT 0,
     Banned_time DATETIME DEFAULT NULL,
-    Active BOOLEAN DEFAULT TRUE
+    isDelete BOOLEAN DEFAULT FALSE
 );
 
 INSERT INTO Accounts (ID, Email, Password, Phone, Fullname, Birthday, Gender, Address)
@@ -69,17 +69,54 @@ VALUES(1234567890, 'ADMIN'),
 
 CREATE TABLE Posts(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    AccountID BIGINT,
+    Create_User BIGINT,
     Title VARCHAR(50),
     Description TEXT,
     Content TEXT,
-    Create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Status BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (AccountID) REFERENCES Accounts(Id)
+    Image NVARCHAR(50),
+    Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_User BIGINT,
+    isDelete BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
+    FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
 
-INSERT INTO Posts (AccountID, Title, Description, Content)
+INSERT INTO Posts (Create_User, Title, Description, Content)
 VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1');
+
+CREATE TABLE PostImages(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	PostID BIGINT,
+    Path VARCHAR(100),
+    FOREIGN KEY (PostID) REFERENCES Posts(Id)
+    
+);
+
+CREATE TABLE Comments(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    Comment_User BIGINT,
+	PostID BIGINT,
+    Comment_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Content VARCHAR(100),
+    isDelete BIT DEFAULT FALSE,
+    FOREIGN KEY (Comment_User) REFERENCES Accounts(Id),
+    FOREIGN KEY (PostID) REFERENCES Posts(Id)
+    
+);
+
+CREATE TABLE Likes(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    Like_User BIGINT,
+	PostID BIGINT,
+    IsLike BOOLEAN,
+    Like_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Unlike_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (Like_User) REFERENCES Accounts(Id),
+    FOREIGN KEY (PostID) REFERENCES Posts(Id)
+    
+);
 
 CREATE TABLE Logs(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -100,21 +137,6 @@ CREATE TABLE Prices(
     Children_price INT
 );
 
-CREATE TABLE Tours(
-    Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    PriceID BIGINT,
-    CreateID BIGINT,
-    Name VARCHAR(50),
-    Description TEXT,
-    Image VARCHAR(50),
-    Destination_address TEXT,
-    Available_spaces INT,
-    Create_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Active BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (PriceID) REFERENCES Prices(Id),
-    FOREIGN KEY (CreateID) REFERENCES Accounts(Id)
-);
-
 CREATE TABLE Status(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Name VARCHAR(50)
@@ -124,27 +146,69 @@ CREATE TABLE Transports(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Name VARCHAR(50),
     Price INT,
-    Seating_capacity INT
+    Seating_capacity INT,
+    Create_User BIGINT,
+    Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_User BIGINT,
+    isDelete BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
+    FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
+
+CREATE TABLE Tours(
+    Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    PriceID BIGINT,
+    CreateID BIGINT,
+    TransportID BIGINT,
+    Name VARCHAR(50),
+    Description TEXT,
+    Image VARCHAR(50),
+    Destination_address TEXT,
+    Available_spaces INT,
+    Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Active BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (PriceID) REFERENCES Prices(Id),
+    FOREIGN KEY (CreateID) REFERENCES Accounts(Id),
+    FOREIGN KEY (TransportID) REFERENCES Transports(Id)
+);
+
+CREATE TABLE Tour_Dates(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	TourID BIGINT,
+	StatusID BIGINT,
+    Initiate_date DATETIME,
+	FOREIGN KEY (StatusID) REFERENCES Status(Id),
+    FOREIGN KEY (TourID) REFERENCES Tours(Id)
+    
+);
+
+CREATE TABLE TourImages(
+	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	TourID BIGINT,
+    Path VARCHAR(100),
+    FOREIGN KEY (TourID) REFERENCES Tours(Id)
+    
+);
+
 
 CREATE TABLE TourPlan(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     TourID BIGINT,
-    StatusID BIGINT,
     TransportID BIGINT,
     Start_name VARCHAR(50),
     Start_address TEXT,
     Start_time DATETIME,
     FOREIGN KEY (TourID) REFERENCES Tours(Id),
-    FOREIGN KEY (StatusID) REFERENCES Status(Id)
+    FOREIGN KEY (TransportID) REFERENCES Transports(Id)
 );
 
 CREATE TABLE TourPlanDetail(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Tour_Plan_ID BIGINT,
     Description TEXT,
-    Start_time DATETIME,
-    End_time DATETIME,
+    Start_time TIME,
+    End_time TIME,
     FOREIGN KEY (Tour_Plan_ID) REFERENCES TourPlan(Id)
 );
 
@@ -153,7 +217,14 @@ CREATE TABLE Hotels(
     Name VARCHAR(50),
     Price INT,
     Star INT,
-    Address TEXT
+    Address TEXT,
+    Create_User BIGINT,
+    Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_User BIGINT,
+    isDelete BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
+    FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
 
 CREATE TABLE Discounts(
@@ -161,19 +232,33 @@ CREATE TABLE Discounts(
     Name VARCHAR(50),
     Percentage FLOAT,
     Amount INT,
-    Code VARCHAR(10)
+    Code VARCHAR(10) unique,
+    Create_User BIGINT,
+    Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_User BIGINT,
+    isDelete BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
+    FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
+    
 );
 
 CREATE TABLE Bookings(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    AccountID BIGINT,
-    TourID BIGINT,
+    Tour_DateID BIGINT,
     HotelID BIGINT,
     DiscountID BIGINT,
     Total_price INT,
     Total_passengers INT,
-    FOREIGN KEY (AccountID) REFERENCES Accounts(Id),
-    FOREIGN KEY (TourID) REFERENCES Tours(Id),
+    Create_User BIGINT,
+    Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_User BIGINT,
+    Status INT,
+    CHECK (Status IN (0, 1, 2)),
+    FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
+    FOREIGN KEY (Update_User) REFERENCES Accounts(Id),
+    FOREIGN KEY (Tour_DateID) REFERENCES Tour_Dates(Id),
     FOREIGN KEY (HotelID) REFERENCES Hotels(Id),
     FOREIGN KEY (DiscountID) REFERENCES Discounts(Id)
 );
