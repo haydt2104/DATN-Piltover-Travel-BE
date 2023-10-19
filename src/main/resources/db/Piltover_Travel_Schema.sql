@@ -173,11 +173,6 @@ CREATE TABLE Tours(
     FOREIGN KEY (TransportID) REFERENCES Transports(Id)
 );
 
-CREATE TABLE Status(
-    Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    Name VARCHAR(50)
-);
-
 CREATE TABLE Tour_Dates(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	TourID BIGINT,
@@ -199,12 +194,12 @@ CREATE TABLE TourImages(
 
 CREATE TABLE TourPlan(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    TourID BIGINT,
+    Tour_Date_ID BIGINT,
     TransportID BIGINT,
     Start_name VARCHAR(50),
     Start_address TEXT,
     Start_time DATETIME,
-    FOREIGN KEY (TourID) REFERENCES Tours(Id),
+    FOREIGN KEY (Tour_Date_ID) REFERENCES Tour_Dates(Id),
     FOREIGN KEY (TransportID) REFERENCES Transports(Id)
 );
 
