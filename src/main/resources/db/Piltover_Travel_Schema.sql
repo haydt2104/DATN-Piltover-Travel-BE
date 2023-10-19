@@ -88,7 +88,7 @@ VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạ
 CREATE TABLE PostImages(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	PostID BIGINT,
-    Path VARCHAR(100),
+    Path VARCHAR(1000),
     FOREIGN KEY (PostID) REFERENCES Posts(Id)
     
 );
@@ -163,7 +163,7 @@ CREATE TABLE Tours(
     TransportID BIGINT,
     Name VARCHAR(50),
     Description TEXT,
-    Image VARCHAR(50),
+    Image VARCHAR(1000),
     Destination_address TEXT,
     Available_spaces INT,
     Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -183,16 +183,16 @@ CREATE TABLE Tour_Dates(
     
 );
 
-CREATE TABLE TourImages(
+CREATE TABLE Tour_Images(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	TourID BIGINT,
-    Path VARCHAR(100),
+    Path VARCHAR(1000),
     FOREIGN KEY (TourID) REFERENCES Tours(Id)
     
 );
 
 
-CREATE TABLE TourPlan(
+CREATE TABLE Tour_Plan(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Tour_Date_ID BIGINT,
     TransportID BIGINT,
@@ -203,7 +203,7 @@ CREATE TABLE TourPlan(
     FOREIGN KEY (TransportID) REFERENCES Transports(Id)
 );
 
-CREATE TABLE TourPlanDetail(
+CREATE TABLE Tour_Plan_Detail(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Tour_Plan_ID BIGINT,
     Description TEXT,
