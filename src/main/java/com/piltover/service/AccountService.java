@@ -24,4 +24,6 @@ public interface AccountService {
 	// Kiểm tra id
 	boolean isIDExists(Long id);
 	
+	// Lấy account vs id
+	Account findUserByID(Long id);
 }

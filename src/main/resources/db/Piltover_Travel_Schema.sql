@@ -74,17 +74,17 @@ CREATE TABLE Posts(
     Description TEXT,
     Content TEXT,
     Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_at DATETIME,
     Update_User BIGINT,
     is_Delete BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
     FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
 
-INSERT INTO Posts (Create_User, Title, Description, Content, Create_at)
-VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1', CURRENT_TIMESTAMP()),
-	  (1234567890, 'Tiêu đề bài viết 2', 'Mô tả bài viết 2', 'Trạng thái bài viết 2', CURRENT_TIMESTAMP()),
-      (2345673452, 'Tiêu đề bài viết 3', 'Mô tả bài viết 3', 'Trạng thái bài viết 3', CURRENT_TIMESTAMP());
+INSERT INTO Posts (Create_User, Title, Description, Content)
+VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1'),
+	  (1234567890, 'Tiêu đề bài viết 2', 'Mô tả bài viết 2', 'Trạng thái bài viết 2'),
+      (2345673452, 'Tiêu đề bài viết 3', 'Mô tả bài viết 3', 'Trạng thái bài viết 3');
 
 CREATE TABLE PostImages(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,

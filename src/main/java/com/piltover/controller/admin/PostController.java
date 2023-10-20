@@ -1,5 +1,8 @@
 package com.piltover.controller.admin;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,13 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piltover.dto.PostDTO;
+import com.piltover.entity.Account;
 import com.piltover.entity.Post;
+import com.piltover.service.AccountService;
 import com.piltover.service.LikeService;
 import com.piltover.service.PostService;
 
@@ -28,6 +35,9 @@ public class PostController {
 	
 	@Autowired
 	LikeService ls;
+	
+	@Autowired
+	AccountService as;
 	
 	@GetMapping("/getAllPosts")
     public ResponseEntity<?> getAllPosts() {
@@ -45,24 +55,40 @@ public class PostController {
     }
 	
 	@PutMapping("/updatePost/{id}")
-	public ResponseEntity<?> updatePost(@RequestBody Post post, @PathVariable Long id){
+	public ResponseEntity<?> updatePost(@RequestBody PostDTO post, @PathVariable Long id){
 		Post entity = ps.getPost(id);
 		if(entity == null) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}else {
-			String title = post.getTitle();
+			String title = post.getTitle().replaceAll("<p>", "");
+			String description = post.getDescription().replaceAll("<p>", "");
+			String content = post.getContent().replaceAll("<p>", "");
+			Account user = as.findUserByID((long) 1234567890);
+			
 			entity.setId(id);
-			entity.setTitle(post.getTitle());
-			entity.setDescription(post.getDescription());
-			entity.setContent(post.getContent());
+			entity.setTitle(title.replaceAll("</p>", ""));
+			entity.setDescription(description.replaceAll("</p>", ""));
+			entity.setContent(content.replaceAll("</p>", ""));
+			entity.setUpdateTime(LocalDateTime.now());
+			entity.setUpdateUser(user);
 			ps.updatePost(entity);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
 	
-	@RequestMapping("/create")
-	public ResponseEntity<?> createPost(@RequestBody Post post){
-		
+	@PostMapping("/create")
+	public ResponseEntity<?> createPost(@RequestBody PostDTO post){
+		String title = post.getTitle().replaceAll("<p>", "");
+		String description = post.getDescription().replaceAll("<p>", "");
+		String content = post.getContent().replaceAll("<p>", "");
+		Account user = as.findUserByID((long) 1234567890);
+		Post entity = new Post();
+		entity.setTitle(title.replaceAll("</p>", ""));
+		entity.setDescription(description.replaceAll("</p>", ""));
+		entity.setContent(content.replaceAll("</p>", ""));
+		entity.setCreateTime(LocalDateTime.now());
+		entity.setCreateUser(user);
+		ps.createPost(entity);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 }

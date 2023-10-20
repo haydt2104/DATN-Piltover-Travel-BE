@@ -1,6 +1,7 @@
 package com.piltover.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -66,19 +67,19 @@ public class Post implements Serializable{/**
     @Column(name = "Content")
     private String content;
 
-    @DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+//	@Temporal(TemporalType.DATE)
     @Column(name = "Create_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createTime = new Date();
+    private LocalDateTime createTime;
     
     @ManyToOne
     @JoinColumn(name = "Update_User")
     private Account updateUser;
     
-    @DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
-    @Column(name = "Update_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date updateTime;
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+//	@Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "Update_at", nullable = true, updatable = true, insertable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime updateTime;
 
     @Column(name = "is_Delete")
     private Boolean isDelete = false;
