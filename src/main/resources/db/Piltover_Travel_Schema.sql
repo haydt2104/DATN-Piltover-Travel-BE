@@ -73,7 +73,6 @@ CREATE TABLE Posts(
     Title VARCHAR(50),
     Description TEXT,
     Content TEXT,
-    Image NVARCHAR(50),
     Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_User BIGINT,
@@ -82,13 +81,15 @@ CREATE TABLE Posts(
     FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
 
-INSERT INTO Posts (Create_User, Title, Description, Content)
-VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1');
+INSERT INTO Posts (Create_User, Title, Description, Content, Create_at)
+VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1', CURRENT_TIMESTAMP()),
+	  (1234567890, 'Tiêu đề bài viết 2', 'Mô tả bài viết 2', 'Trạng thái bài viết 2', CURRENT_TIMESTAMP()),
+      (2345673452, 'Tiêu đề bài viết 3', 'Mô tả bài viết 3', 'Trạng thái bài viết 3', CURRENT_TIMESTAMP());
 
 CREATE TABLE PostImages(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	PostID BIGINT,
-    Path VARCHAR(100),
+    Path VARCHAR(1000),
     FOREIGN KEY (PostID) REFERENCES Posts(Id)
     
 );
@@ -118,15 +119,10 @@ CREATE TABLE Likes(
     
 );
 
-INSERT INTO Posts (AccountID, Title, Description, Content)
-VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1'),
-		(1234567890, 'Tiêu đề bài viết 2', 'Mô tả bài viết 2', 'Trạng thái bài viết 2'),
-        (2345673452, 'Tiêu đề bài viết 3', 'Mô tả bài viết 3', 'Trạng thái bài viết 3');
-
-INSERT INTO Likes (AccountID, PostId, IsLike)
-VALUES(1234567890, 1, 1),
-		(1234567890, 2, 1),
-        (2345673452,1, 1);
+INSERT INTO Likes(Like_User, PostID, IsLike, Like_at)
+VALUES (1234567890, 1, 1, CURRENT_TIMESTAMP()),
+	   (1234567890, 2, 1, CURRENT_TIMESTAMP()),
+       (2345673452, 1, 1, CURRENT_TIMESTAMP());
 
 CREATE TABLE Logs(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -173,7 +169,7 @@ CREATE TABLE Tours(
     TransportID BIGINT,
     Name VARCHAR(50),
     Description TEXT,
-    Image VARCHAR(50),
+    Image VARCHAR(1000),
     Destination_address TEXT,
     Available_spaces INT,
     Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -181,11 +177,6 @@ CREATE TABLE Tours(
     FOREIGN KEY (PriceID) REFERENCES Prices(Id),
     FOREIGN KEY (CreateID) REFERENCES Accounts(Id),
     FOREIGN KEY (TransportID) REFERENCES Transports(Id)
-);
-
-CREATE TABLE Status(
-    Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    Name VARCHAR(50)
 );
 
 CREATE TABLE Tour_Dates(
@@ -198,33 +189,33 @@ CREATE TABLE Tour_Dates(
     
 );
 
-CREATE TABLE TourImages(
+CREATE TABLE Tour_Images(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	TourID BIGINT,
-    Path VARCHAR(100),
+    Path VARCHAR(1000),
     FOREIGN KEY (TourID) REFERENCES Tours(Id)
     
 );
 
 
-CREATE TABLE TourPlan(
+CREATE TABLE Tour_Plan(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    TourID BIGINT,
+    Tour_Date_ID BIGINT,
     TransportID BIGINT,
     Start_name VARCHAR(50),
     Start_address TEXT,
     Start_time DATETIME,
-    FOREIGN KEY (TourID) REFERENCES Tours(Id),
+    FOREIGN KEY (Tour_Date_ID) REFERENCES Tour_Dates(Id),
     FOREIGN KEY (TransportID) REFERENCES Transports(Id)
 );
 
-CREATE TABLE TourPlanDetail(
+CREATE TABLE Tour_Plan_Detail(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Tour_Plan_ID BIGINT,
     Description TEXT,
     Start_time TIME,
     End_time TIME,
-    FOREIGN KEY (Tour_Plan_ID) REFERENCES TourPlan(Id)
+    FOREIGN KEY (Tour_Plan_ID) REFERENCES Tour_Plan(Id)
 );
 
 CREATE TABLE Hotels(
