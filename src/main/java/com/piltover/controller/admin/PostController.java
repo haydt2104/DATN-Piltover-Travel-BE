@@ -50,13 +50,19 @@ public class PostController {
 		if(entity == null) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}else {
+			String title = post.getTitle();
 			entity.setId(id);
 			entity.setTitle(post.getTitle());
 			entity.setDescription(post.getDescription());
 			entity.setContent(post.getContent());
 			ps.updatePost(entity);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
-		return null;
+	}
+	
+	@RequestMapping("/create")
+	public ResponseEntity<?> createPost(@RequestBody Post post){
 		
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 }

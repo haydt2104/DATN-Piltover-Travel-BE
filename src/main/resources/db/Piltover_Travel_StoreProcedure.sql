@@ -41,3 +41,16 @@ BEGIN
 END//
 DELIMITER ;
 -- Test CalculateStatistics: CALL CalculateStatistics(9, 10, 3);
+
+-- Sử dụng DELIMITER để chạy một khối lệnh tránh MySQL hiểu lầm dấu chấm phẩy
+DELIMITER //
+DROP PROCEDURE IF EXISTS CountLikePost;
+CREATE PROCEDURE CountLikePost(IN id INT)
+BEGIN
+	SELECT COUNT(*)
+	FROM likes
+	WHERE Is_Like = 1 AND PostID = id;
+END//
+DELIMITER ;
+-- Test CountLikePost: CALL CountLikePost(2);
+

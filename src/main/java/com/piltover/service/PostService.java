@@ -11,4 +11,6 @@ public interface PostService {
 	Post getPost(Long id);
 	
 	Post updatePost(Post entity);
+	
+	Post createPost(Post entity);
 }

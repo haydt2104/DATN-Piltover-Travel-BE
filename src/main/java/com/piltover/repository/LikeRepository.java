@@ -7,7 +7,6 @@ import com.piltover.entity.Like;
 
 public interface LikeRepository extends Repository<Like, Long>{
 
-	@Query(nativeQuery = true, value = "Select count(*) as 'so luong like' from likes"
-			+ " where Is_Like = 1 and PostID = ?1")
+	@Query(nativeQuery = true, value = "CALL CountLikePost(?)")
 	int getCountLikePostId(long id);
 }

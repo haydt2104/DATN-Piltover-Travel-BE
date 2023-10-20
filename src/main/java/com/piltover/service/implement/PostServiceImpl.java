@@ -34,4 +34,10 @@ public class PostServiceImpl implements PostService{
 		return pdao.saveAndFlush(entity);
 	}
 
+	@Override
+	public Post createPost(Post entity) {
+		// TODO Auto-generated method stub
+		return pdao.saveAndFlush(entity);
+	}
+
 }

@@ -65,9 +65,6 @@ public class Post implements Serializable{/**
     @Lob
     @Column(name = "Content")
     private String content;
-    
-//    @Column(name = "Image")
-//    private String image;
 
     @DateTimeFormat(iso = ISO.DATE)
 	@Temporal(TemporalType.DATE)
@@ -83,7 +80,7 @@ public class Post implements Serializable{/**
     @Column(name = "Update_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date updateTime;
 
-    @Column(name = "isDelete")
+    @Column(name = "is_Delete")
     private Boolean isDelete = false;
     
     @JsonIgnore
