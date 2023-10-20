@@ -34,7 +34,7 @@ CREATE TABLE Accounts (
     Update_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     Error_count INT DEFAULT 0,
     Banned_time DATETIME DEFAULT NULL,
-    isDelete BOOLEAN DEFAULT FALSE
+    is_Delete BOOLEAN DEFAULT FALSE
 );
 
 INSERT INTO Accounts (ID, Email, Password, Phone, Fullname, Birthday, Gender, Address)
@@ -76,7 +76,7 @@ CREATE TABLE Posts(
     Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_User BIGINT,
-    isDelete BOOLEAN DEFAULT FALSE,
+    is_Delete BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
     FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
@@ -111,7 +111,7 @@ CREATE TABLE Likes(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Like_User BIGINT,
 	PostID BIGINT,
-    IsLike BOOLEAN,
+    Is_Like BOOLEAN,
     Like_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Unlike_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (Like_User) REFERENCES Accounts(Id),
@@ -119,7 +119,7 @@ CREATE TABLE Likes(
     
 );
 
-INSERT INTO Likes(Like_User, PostID, IsLike, Like_at)
+INSERT INTO Likes(Like_User, PostID, Is_Like, Like_at)
 VALUES (1234567890, 1, 1, CURRENT_TIMESTAMP()),
 	   (1234567890, 2, 1, CURRENT_TIMESTAMP()),
        (2345673452, 1, 1, CURRENT_TIMESTAMP());
@@ -278,4 +278,3 @@ CREATE TABLE Booking_Detail(
     Booking_time DATETIME,
     FOREIGN KEY (BookingID) REFERENCES Bookings(Id)
 );
-
