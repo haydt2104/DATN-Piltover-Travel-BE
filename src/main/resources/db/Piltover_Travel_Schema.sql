@@ -73,7 +73,6 @@ CREATE TABLE Posts(
     Title VARCHAR(50),
     Description TEXT,
     Content TEXT,
-    Image NVARCHAR(50),
     Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_User BIGINT,
@@ -82,8 +81,10 @@ CREATE TABLE Posts(
     FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
 
-INSERT INTO Posts (Create_User, Title, Description, Content)
-VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1');
+INSERT INTO Posts (Create_User, Title, Description, Content, Create_at)
+VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạng thái bài viết 1', CURRENT_TIMESTAMP()),
+	  (1234567890, 'Tiêu đề bài viết 2', 'Mô tả bài viết 2', 'Trạng thái bài viết 2', CURRENT_TIMESTAMP()),
+      (2345673452, 'Tiêu đề bài viết 3', 'Mô tả bài viết 3', 'Trạng thái bài viết 3', CURRENT_TIMESTAMP());
 
 CREATE TABLE PostImages(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -117,6 +118,11 @@ CREATE TABLE Likes(
     FOREIGN KEY (PostID) REFERENCES Posts(Id)
     
 );
+
+INSERT INTO Likes(Like_User, PostID, IsLike, Like_at)
+VALUES (1234567890, 1, 1, CURRENT_TIMESTAMP()),
+	   (1234567890, 2, 1, CURRENT_TIMESTAMP()),
+       (2345673452, 1, 1, CURRENT_TIMESTAMP());
 
 CREATE TABLE Logs(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -209,7 +215,7 @@ CREATE TABLE Tour_Plan_Detail(
     Description TEXT,
     Start_time TIME,
     End_time TIME,
-    FOREIGN KEY (Tour_Plan_ID) REFERENCES TourPlan(Id)
+    FOREIGN KEY (Tour_Plan_ID) REFERENCES Tour_Plan(Id)
 );
 
 CREATE TABLE Hotels(
