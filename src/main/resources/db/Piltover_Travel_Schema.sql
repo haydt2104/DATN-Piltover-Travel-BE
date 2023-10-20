@@ -101,7 +101,7 @@ CREATE TABLE Comments(
     Comment_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Content VARCHAR(100),
-    isDelete BIT DEFAULT FALSE,
+    is_Delete BIT DEFAULT FALSE,
     FOREIGN KEY (Comment_User) REFERENCES Accounts(Id),
     FOREIGN KEY (PostID) REFERENCES Posts(Id)
     
@@ -157,7 +157,7 @@ CREATE TABLE Transports(
     Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_User BIGINT,
-    isDelete BOOLEAN DEFAULT FALSE,
+    is_Delete BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
     FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
@@ -228,7 +228,7 @@ CREATE TABLE Hotels(
     Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_User BIGINT,
-    isDelete BOOLEAN DEFAULT FALSE,
+    is_Delete BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
     FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
@@ -243,7 +243,7 @@ CREATE TABLE Discounts(
     Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     Update_User BIGINT,
-    isDelete BOOLEAN DEFAULT FALSE,
+    is_Delete BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
     FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
     
