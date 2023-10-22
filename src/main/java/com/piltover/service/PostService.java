@@ -2,6 +2,9 @@ package com.piltover.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.piltover.entity.Post;
 
 public interface PostService {
@@ -13,4 +16,7 @@ public interface PostService {
 	Post updatePost(Post entity);
 	
 	Post createPost(Post entity);
+	
+	Page<Post> getAllPost(Pageable pageable);
+	
 }

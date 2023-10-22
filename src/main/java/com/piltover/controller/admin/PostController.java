@@ -2,11 +2,16 @@ package com.piltover.controller.admin;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +45,14 @@ public class PostController {
 	AccountService as;
 	
 	@GetMapping("/getAllPosts")
-    public ResponseEntity<?> getAllPosts() {
+    public ResponseEntity<?> getAllPosts( ) {
+//		Pageable pageable;
+//		try {
+//			pageable = PageRequest.of(p.orElse(0), 5);
+//		} catch (Exception e) {
+//			pageable = PageRequest.of(0, 5);
+//		}
+//		Page<Post> listPage = ps.getAllPost(pageable);
         return ResponseEntity.ok(ps.getAllPost());
     }
 	
@@ -55,7 +67,7 @@ public class PostController {
     }
 	
 	@PutMapping("/updatePost/{id}")
-	public ResponseEntity<?> updatePost(@RequestBody PostDTO post, @PathVariable Long id){
+	public ResponseEntity<?> updatePost(@Validated @RequestBody PostDTO post, @PathVariable Long id){
 		Post entity = ps.getPost(id);
 		if(entity == null) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
