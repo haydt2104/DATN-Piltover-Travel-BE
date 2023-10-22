@@ -6,4 +6,5 @@ import com.piltover.entity.Booking;
 
 public interface BookingService {
     List<Booking> getAllBooking();
+    
 }
