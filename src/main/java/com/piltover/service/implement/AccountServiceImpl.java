@@ -60,5 +60,10 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return false;
 	}
+
+	@Override
+	public Account findUserByID(Long id) {
+		return accountRepository.getById(id);
+	}
 	
 }

@@ -70,7 +70,7 @@ public class Account implements Serializable{/**
     @Column(name = "Banned_time")
     private Date bannedTime;
     
-    @Column(name = "isDelete")
+    @Column(name = "is_Delete")
     private Boolean isDelete = false;
 	
     @JsonIgnore

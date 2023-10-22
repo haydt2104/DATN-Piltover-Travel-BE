@@ -210,3 +210,14 @@ DROP PROCEDURE IF EXISTS CallTransportRevenue;
 
 
  
+-- Đếm số lượt Like của bài viết
+DELIMITER //
+DROP PROCEDURE IF EXISTS CountLikePost;
+CREATE PROCEDURE CountLikePost(IN id INT)
+BEGIN
+	SELECT COUNT(*)
+	FROM likes
+	WHERE Is_Like = 1 AND PostID = id;
+END//
+DELIMITER ;
+-- Test CountLikePost: CALL CountLikePost(2);

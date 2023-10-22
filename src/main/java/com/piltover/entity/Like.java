@@ -53,6 +53,6 @@ public class Like implements Serializable {
     @Column(name = "Unlike_at")
     private Date unlikeTime;
 
-    @Column(name = "IsLike")
+    @Column(name = "IsLike", nullable = false, unique = true)
     private Boolean isLike;
 }
