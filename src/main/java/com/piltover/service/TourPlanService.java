@@ -9,7 +9,7 @@ public interface TourPlanService {
 
         TourPlan getById(Long id);
 
-        List<TourPlan> getTourPlansByPlanId(Long tourID);
+        List<TourPlan> getTourPlansByDateId(Long tourID);
 
         void postTourPlan(TourPlan plan);
 

@@ -18,15 +18,15 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "TourPlanDetail", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "Tour_Plan_ID"})
+        @UniqueConstraint(columnNames = { "Tour_Plan_ID" })
 })
 public class TourPlanDetail implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
