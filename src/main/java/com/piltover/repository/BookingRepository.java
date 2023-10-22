@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.piltover.entity.Booking;
+import com.piltover.entity.BookingDetail;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
     // Get All data of bookings => (lấy tất cả dữ liệu trong Bookings)
@@ -24,4 +25,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     // Get All data of bookings with status = 1(confirmed) => (Lấy tất danh sách khách đã hủy)  
     @Query("SELECT b FROM Booking b WHERE b.status = 2")
     List<Booking> findAllCancel();
+    
+    @Query("SELECT bd FROM Booking bd WHERE bd.id=?1")
+	Booking findByBookingID(Long id);
 }

@@ -34,12 +34,17 @@ public class BookingController {
    }
    
    @GetMapping("/detail/{id}")
-   public List<BookingDetail> getById(@PathVariable("id") Long id) {
+   public BookingDetail getById(@PathVariable("id") Long id) {
 	   return bds.getAll((Long) id);
    }
    
-   @PutMapping("/")
-   public ResponseEntity<BookingDetail> editDetail(@RequestBody BookingDetail bookingdetail){
-	   return ResponseEntity.ok(this.bds.editDetailOfBooking(bookingdetail));
+   @GetMapping("/getOne/{id}")
+   public Booking GetOne(@PathVariable("id") Long id) {
+	   return bs.getOneByID( id);
+   }
+   
+   @PutMapping("/edit/{id}")
+   public Booking editDetail(@RequestBody Booking bookingdetail,@PathVariable("id") long id){
+	   return bs.edit(bookingdetail, id);
    }
 }

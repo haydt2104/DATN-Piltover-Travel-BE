@@ -10,5 +10,6 @@ import com.piltover.entity.BookingDetail;
 
 public interface BookingDetailRepository extends JpaRepository<BookingDetail, Long>{
 	@Query("SELECT bd FROM BookingDetail bd WHERE bd.booking.id=?1")
-	List<BookingDetail> findByBookingID(Long id);
+	BookingDetail findByBookingID(Long id);
+	
 }

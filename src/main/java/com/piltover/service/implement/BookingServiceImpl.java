@@ -33,11 +33,14 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	public Booking getOneByID(Long Id) {
-		Optional<Booking> temp = BookingRepo.findById(Id);
-		Booking booking = null;
-		if (temp.isPresent()) {
-			booking = temp.get();
-		}
-		return booking;
+		return BookingRepo.findByBookingID((Long) Id);
+	}
+
+	public Booking edit(Booking booking, Long Id) {
+		Booking bk = BookingRepo.findByBookingID(Id);
+		bk.setDiscount(null);
+		bk.setHotel(null);
+		bk.setStatus(null);
+		return BookingRepo.saveAndFlush(bk);
 	}
 }

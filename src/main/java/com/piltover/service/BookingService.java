@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.piltover.entity.Booking;
 
-
 public interface BookingService {
     List<Booking> getAllBooking();
     
