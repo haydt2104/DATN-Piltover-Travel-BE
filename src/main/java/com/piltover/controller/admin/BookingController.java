@@ -29,13 +29,13 @@ public class BookingController {
    private BookingDetailServiceImpl bds;
 
    @GetMapping("/")
-   public List<Booking> getAll(){
-	   return bs.getAllBooking();
+   public ResponseEntity<?> getAll(){
+		return ResponseEntity.ok(bs.getAllBooking());
    }
    
    @GetMapping("/detail/{id}")
    public BookingDetail getById(@PathVariable("id") Long id) {
-	   return bds.getAll((Long) id);
+	   return bds.getAll(id);
    }
    
    @GetMapping("/getOne/{id}")
@@ -43,8 +43,13 @@ public class BookingController {
 	   return bs.getOneByID( id);
    }
    
-   @PutMapping("/edit/{id}")
-   public Booking editDetail(@RequestBody Booking bookingdetail,@PathVariable("id") long id){
-	   return bs.edit(bookingdetail, id);
+   @PutMapping("/edit")
+   public ResponseEntity<Booking> editBooking(@RequestBody Booking booking) {
+	   return ResponseEntity.ok(this.bs.edit(booking));
+   }
+   
+   @PutMapping("/edit2")
+   public ResponseEntity<BookingDetail> editBookingdetail(@RequestBody BookingDetail booking) {
+	   return ResponseEntity.ok(this.bds.edit2(booking));
    }
 }

@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service;
 import com.piltover.entity.Booking;
 import com.piltover.entity.BookingDetail;
 import com.piltover.repository.BookingDetailRepository;
+import com.piltover.repository.BookingRepository;
 import com.piltover.service.BookingDetailService;
 
 @Service
-public class BookingDetailServiceImpl implements BookingDetailService{
-    @Autowired BookingDetailRepository BookingDetailRepo;
+public class BookingDetailServiceImpl implements BookingDetailService {
+	@Autowired
+	BookingDetailRepository BookingDetailRepo;
+	@Autowired
+	BookingRepository bookingRepository;
 
 	@Override
 	public BookingDetail getAll(Long id) {
@@ -27,6 +31,9 @@ public class BookingDetailServiceImpl implements BookingDetailService{
 		// TODO Auto-generated method stub
 		return this.BookingDetailRepo.saveAndFlush(bookingDetail);
 	}
-	
+
+	public BookingDetail edit2(BookingDetail bookingDetail) {
+		return BookingDetailRepo.save(bookingDetail);
+	}
 
 }

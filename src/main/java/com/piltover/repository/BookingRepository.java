@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.piltover.entity.Booking;
@@ -27,4 +29,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long>{
     
     @Query("SELECT bd FROM Booking bd WHERE bd.id=?1")
 	Booking findByBookingID(Long id);
+
+    
 }
