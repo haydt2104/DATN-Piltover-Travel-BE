@@ -7,12 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.piltover.entity.Booking;
-import com.piltover.entity.BookingDetail;
-@Repository
-public interface BookingRepository extends JpaRepository<Booking, Long> {
-    // Get All data of bookings => (lấy tất cả dữ liệu trong Bookings)
-//    @Query("SELECT b FROM Booking b")
-//    List<Booking> findAll();
+
+public interface BookingRepository extends JpaRepository<Booking, Long>{
+	// Get All data of bookings => (lấy tất cả dữ liệu trong Bookings)
+    @Query("SELECT b FROM Booking b")
+    List<Booking> findAll();
     
     // Get All data of bookings with status = 1(confirmed) => (Lấy tất danh sách khách đã liên hệ)
     @Query("SELECT b FROM Booking b WHERE b.status = 1")

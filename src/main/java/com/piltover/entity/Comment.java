@@ -1,6 +1,8 @@
+
 package com.piltover.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,14 +12,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "Comments", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "PostID" , "AccountID" })
+        @UniqueConstraint(columnNames = { "PostID" , "Comment_User" })
 })
 public class Comment implements Serializable {
     /**
@@ -30,13 +37,26 @@ public class Comment implements Serializable {
     private Long id;
 	
 	@ManyToOne
-    @JoinColumn(name = "AccountID")
-    private Account account;
+    @JoinColumn(name = "Comment_User")
+    private Account commentUser;
 
     @ManyToOne
     @JoinColumn(name = "PostID")
     private Post post;
-
+    
+    @DateTimeFormat(iso = ISO.DATE)
+	@Temporal(TemporalType.DATE)
+    @Column(name = "Comment_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date commentTime = new Date();
+    
+    @DateTimeFormat(iso = ISO.DATE)
+	@Temporal(TemporalType.DATE)
+    @Column(name = "Update_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date updateTime = new Date();
+    
     @Column(name = "Content")
     private String content;
+    
+    @Column(name = "isDelete")
+    private Boolean isDelete = false;
 }

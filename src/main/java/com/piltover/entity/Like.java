@@ -1,6 +1,7 @@
 package com.piltover.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,14 +11,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "Likes", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "PostID" , "AccountID" })
+        @UniqueConstraint(columnNames = { "PostID" , "Like_User" })
 })
 public class Like implements Serializable {
     /**
@@ -30,12 +36,22 @@ public class Like implements Serializable {
     private Long id;
 	
 	@ManyToOne
-    @JoinColumn(name = "AccountID")
-    private Account account;
+    @JoinColumn(name = "Like_User")
+    private Account likeUser;
 
     @ManyToOne
     @JoinColumn(name = "PostID")
     private Post post;
+    
+    @DateTimeFormat(iso = ISO.DATE)
+	@Temporal(TemporalType.DATE)
+    @Column(name = "Like_at")
+    private Date likeTime;
+    
+    @DateTimeFormat(iso = ISO.DATE)
+	@Temporal(TemporalType.DATE)
+    @Column(name = "Unlike_at")
+    private Date unlikeTime;
 
     @Column(name = "IsLike")
     private Boolean isLike;

@@ -18,7 +18,6 @@ public class TestController {
 	
 	@GetMapping("/account")
 	public ResponseEntity<?> getAllAccountActive() {
-		
 		System.out.println("Email 1: "+accountService.getAllAccount().get(0).getEmail());
 		return ResponseEntity.ok(accountService.getAllAccount());
 		

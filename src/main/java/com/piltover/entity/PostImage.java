@@ -1,3 +1,4 @@
+
 package com.piltover.entity;
 
 import java.io.Serializable;
