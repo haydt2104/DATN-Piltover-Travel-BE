@@ -38,11 +38,20 @@ public class BookingServiceImpl implements BookingService {
 		return BookingRepo.findAllCancel();
 	}
 
-	public Booking getOneByID(Long Id) {
+	public Booking getOneByIDQuery(Long Id) {
 		return BookingRepo.findByBookingID((Long) Id);
 	}
+	
 
+	@Override
+	public Booking getOneByID(Long id) {
+		// TODO Auto-generated method stub
+		return BookingRepo.getOne(id);
+	}
+
+	@Override
 	public Booking edit(Booking booking) {
+		// TODO Auto-generated method stub
 		return BookingRepo.save(booking);
 	}
 }
