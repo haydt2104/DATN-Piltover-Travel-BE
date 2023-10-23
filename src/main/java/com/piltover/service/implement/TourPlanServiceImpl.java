@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.piltover.entity.TourPlan;
+import com.piltover.repository.StatusRepository;
 import com.piltover.repository.TourPlanRepository;
 import com.piltover.service.TourPlanService;
 
@@ -13,10 +14,12 @@ import com.piltover.service.TourPlanService;
 public class TourPlanServiceImpl implements TourPlanService {
     @Autowired
     TourPlanRepository tourPlanRepository;
+    @Autowired
+    StatusRepository statusRepository;
 
     @Override
-    public List<TourPlan> getTourPlansByPlanId(Long tourID) {
-        return tourPlanRepository.getTourPlansByPlanId(tourID);
+    public List<TourPlan> getTourPlansByDateId(Long tourID) {
+        return tourPlanRepository.getTourPlansByDateId(tourID);
     }
 
     @Override
@@ -31,7 +34,8 @@ public class TourPlanServiceImpl implements TourPlanService {
 
     @Override
     public void postTourPlan(TourPlan plan) {
-        tourPlanRepository.save(plan);
+        TourPlan tourPlan = plan;
+        tourPlanRepository.save(tourPlan);
     }
 
     @Override

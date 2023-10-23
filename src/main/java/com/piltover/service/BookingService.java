@@ -5,5 +5,9 @@ import java.util.List;
 import com.piltover.entity.Booking;
 
 public interface BookingService {
-    List<Booking> getAllBooking();
+	List<Booking> getAllBooking();
+
+	Booking getOneByID(Long id);
+
+	Booking edit(Booking booking);
 }

@@ -2,7 +2,6 @@ package com.piltover.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,8 +16,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Proxy;
@@ -26,7 +23,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -66,6 +62,9 @@ public class Post implements Serializable{/**
     @Lob
     @Column(name = "Content")
     private String content;
+    
+    @Column(name = "Image")
+    private String image;
 
     @DateTimeFormat(iso = ISO.DATE_TIME)
 //	@Temporal(TemporalType.DATE)

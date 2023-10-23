@@ -68,7 +68,7 @@ public class Hotel implements Serializable {
     @Column(name = "Update_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date updateTime;
 
-    @Column(name = "isDelete")
+    @Column(name = "is_Delete")
     private Boolean isDelete = false;
     
     @JsonIgnore
