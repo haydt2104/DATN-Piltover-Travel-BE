@@ -63,8 +63,6 @@ public class Post implements Serializable{/**
     @Column(name = "Content")
     private String content;
     
-    @Column(name = "Image")
-    private String image;
 
     @DateTimeFormat(iso = ISO.DATE_TIME)
 //	@Temporal(TemporalType.DATE)
