@@ -1,11 +1,8 @@
 package com.piltover.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.piltover.entity.Booking;
 import com.piltover.entity.BookingDetail;
 
 public interface BookingDetailRepository extends JpaRepository<BookingDetail, Long>{

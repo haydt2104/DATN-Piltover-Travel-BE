@@ -1,15 +1,11 @@
 package com.piltover.service.implement;
 
 import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.piltover.entity.Booking;
-import com.piltover.entity.BookingDetail;
 import com.piltover.repository.BookingDetailRepository;
 import com.piltover.repository.BookingRepository;
 import com.piltover.service.BookingService;
@@ -46,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public Booking getOneByID(Long id) {
 		// TODO Auto-generated method stub
-		return BookingRepo.getOne(id);
+		return BookingRepo.findById(id).get();
 	}
 
 	@Override

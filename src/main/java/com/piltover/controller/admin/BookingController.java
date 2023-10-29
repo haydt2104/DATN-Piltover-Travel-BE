@@ -1,7 +1,5 @@
 package com.piltover.controller.admin;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,8 +14,6 @@ import com.piltover.entity.Booking;
 import com.piltover.entity.BookingDetail;
 import com.piltover.service.BookingDetailService;
 import com.piltover.service.BookingService;
-import com.piltover.service.implement.BookingDetailServiceImpl;
-import com.piltover.service.implement.BookingServiceImpl;
 
 @RestController
 @CrossOrigin("*")

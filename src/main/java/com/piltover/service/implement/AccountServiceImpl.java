@@ -63,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account findUserByID(Long id) {
-		return accountRepository.getById(id);
+		return accountRepository.findById(id).get();
 	}
 	
 }
