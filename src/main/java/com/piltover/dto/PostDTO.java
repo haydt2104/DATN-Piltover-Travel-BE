@@ -18,8 +18,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostDTO {
-
-private static final long serialVersionUID = 1L;
 	
     private Long id;
     private Account createUser;

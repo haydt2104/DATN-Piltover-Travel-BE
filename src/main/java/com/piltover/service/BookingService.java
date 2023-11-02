@@ -6,4 +6,6 @@ import com.piltover.entity.Booking;
 
 public interface BookingService {
     List<Booking> getAllBooking();
+
+    List<Booking> getBookingsByTourDateId(Long tourDateId);
 }
