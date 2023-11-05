@@ -47,10 +47,6 @@ public class Booking implements Serializable {
     private TourDate tourDate;
 
     @ManyToOne
-    @JoinColumn(name = "HotelID")
-    private Hotel hotel;
-
-    @ManyToOne
     @JoinColumn(name = "DiscountID")
     private Discount discount;
 
