@@ -73,5 +73,5 @@ public class Hotel implements Serializable {
     
     @JsonIgnore
     @OneToMany(mappedBy = "hotel")
-    List<Booking> bookings;
+    List<Tour> tours;
 }

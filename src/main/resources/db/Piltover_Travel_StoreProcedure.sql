@@ -47,6 +47,7 @@ DELIMITER ;
 
 -- Lấy doanh thu theo tháng 
 DELIMITER //
+DROP PROCEDURE IF EXISTS CallMonthTotalRevenue;
 CREATE PROCEDURE CallMonthTotalRevenue(IN startDate DATE, IN endDate DATE)
 BEGIN
     -- Truy vấn SQL để tính tổng doanh thu
@@ -74,13 +75,14 @@ ORDER BY
     month;
 END;
 //DELIMITER ;
-CALL CallMonthTotalRevenue('2023-01-01', '2023-12-31');
+-- CALL CallMonthTotalRevenue('2023-01-01', '2023-12-31');
 
-DROP PROCEDURE IF EXISTS CallMonthTotalRevenue;
+
 --------------------------
 
 -- Lấy tổng tất cả doanh thu 
 DELIMITER //
+DROP PROCEDURE IF EXISTS CallTotalRevenue;
 CREATE PROCEDURE CallTotalRevenue(IN startDate DATE, IN endDate DATE)
 BEGIN
     -- Truy vấn SQL để tính tổng doanh thu
@@ -106,15 +108,16 @@ WHERE
 END;
 //DELIMITER ;
 
-CALL CallTotalRevenue('2023-01-01', '2023-10-30');
-CALL CallTotalRevenue('2023-01-01', '2023-12-31');
+-- CALL CallTotalRevenue('2023-01-01', '2023-10-30');
+-- CALL CallTotalRevenue('2023-01-01', '2023-12-31');
 
-DROP PROCEDURE IF EXISTS CallTotalRevenue;
+
 
 ---------------------------------------------
 
 -- ---Lấy dữ liệu doanh thu tour ---
 DELIMITER //
+DROP PROCEDURE IF EXISTS CallTourRevenue;
 CREATE PROCEDURE CallTourRevenue(IN startDate DATE, IN endDate DATE)
 BEGIN
     -- Truy vấn SQL để tính tổng doanh thu
@@ -140,14 +143,15 @@ ORDER BY
 LIMIT 10;
 END;
 //DELIMITER ;
-CALL CallTourRevenue('2023-01-01', '2023-09-30');
-CALL CallTourRevenue('2023-01-01', '2023-12-31');
-DROP PROCEDURE IF EXISTS CallTourRevenue;
+-- CALL CallTourRevenue('2023-01-01', '2023-09-30');
+-- CALL CallTourRevenue('2023-01-01', '2023-12-31');
+
 
 ------------------------------------------------
 
 -- ---Lấy dữ liệu doanh thu hotel ---
 DELIMITER //
+DROP PROCEDURE IF EXISTS CallHotelRevenue;
 CREATE PROCEDURE CallHotelRevenue(IN startDate DATE, IN endDate DATE)
 BEGIN
     -- Truy vấn SQL để tính tổng doanh thu
@@ -172,14 +176,13 @@ ORDER BY
 LIMIT 10;
 END;
 //DELIMITER ;
-CALL CallHotelRevenue('2023-01-01', '2023-12-31');
-
-DROP PROCEDURE IF EXISTS CallHotelRevenue;
+-- CALL CallHotelRevenue('2023-01-01', '2023-12-31');
  
 ------------------------------------------------
 
 -- ---Lấy dữ liệu doanh thu phuong tien ---
 DELIMITER //
+DROP PROCEDURE IF EXISTS CallTransportRevenue;
 CREATE PROCEDURE CallTransportRevenue(IN startDate DATE, IN endDate DATE)
 BEGIN
     -- Truy vấn SQL để tính tổng doanh thu
@@ -203,9 +206,8 @@ ORDER BY
 LIMIT 10; 
 END;
 //DELIMITER ;
-CALL CallTransportRevenue('2023-01-01', '2023-12-31');
+-- CALL CallTransportRevenue('2023-01-01', '2023-12-31');
 
-DROP PROCEDURE IF EXISTS CallTransportRevenue;
 -- -----------------------------------------------------
 
 
