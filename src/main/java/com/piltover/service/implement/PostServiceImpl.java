@@ -19,32 +19,32 @@ public class PostServiceImpl implements PostService{
 	
 	@Override
 	public List<Post> getAllPost() {
-		// TODO Auto-generated method stub
-		return pdao.findAll();
+		return pdao.getAllsPost();
 	}
 
 	@Override
 	public Post getPost(Long id) {
-		// TODO Auto-generated method stub
 		return pdao.getById(id);
 	}
 
 	@Override
 	public Post updatePost(Post entity) {
-		// TODO Auto-generated method stub
 		return pdao.saveAndFlush(entity);
 	}
 
 	@Override
 	public Post createPost(Post entity) {
-		// TODO Auto-generated method stub
 		return pdao.saveAndFlush(entity);
 	}
 
 	@Override
-	public Page<Post> getAllPost(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return pdao.findAll(pageable);
+	public Post deletePost(Post entity) {
+		return pdao.saveAndFlush(entity);
+	}
+
+	@Override
+	public String idMostNewPost() {
+		return pdao.idMostNewPost();
 	}
 
 }

@@ -30,6 +30,7 @@ private static final long serialVersionUID = 1L;
     private Account updateUser;
     private Date updateTime;
     private Boolean isDelete = false;
+    List<String> images;
     List<PostImage> postImages;
     List<Like> likes;
     List<Comment> comments;

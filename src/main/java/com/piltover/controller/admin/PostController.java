@@ -1,6 +1,7 @@
 package com.piltover.controller.admin;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.piltover.dto.PostDTO;
 import com.piltover.entity.Account;
 import com.piltover.entity.Post;
+import com.piltover.entity.PostImage;
 import com.piltover.service.AccountService;
 import com.piltover.service.LikeService;
+import com.piltover.service.PostImageService;
 import com.piltover.service.PostService;
 
 @RestController
@@ -33,6 +36,9 @@ public class PostController {
 	PostService ps;
 	
 	@Autowired
+	PostImageService is;
+	
+	@Autowired
 	LikeService ls;
 	
 	@Autowired
@@ -40,13 +46,8 @@ public class PostController {
 	
 	@GetMapping("/getAllPosts")
     public ResponseEntity<?> getAllPosts( ) {
-//		Pageable pageable;
-//		try {
-//			pageable = PageRequest.of(p.orElse(0), 5);
-//		} catch (Exception e) {
-//			pageable = PageRequest.of(0, 5);
-//		}
-//		Page<Post> listPage = ps.getAllPost(pageable);
+		List<Post> list = ps.getAllPost();
+//		list.get(0).getLikes().
         return ResponseEntity.ok(ps.getAllPost());
     }
 	
@@ -95,6 +96,27 @@ public class PostController {
 		entity.setCreateTime(LocalDateTime.now());
 		entity.setCreateUser(user);
 		ps.createPost(entity);
+//		String newPostId = ps.idMostNewPost();
+		System.out.println(post.getImages());
+		for(int i = 0; i < post.getImages().size(); i++) {
+			String path = post.getImages().get(i);
+			PostImage postImg = new PostImage();
+			postImg.setPost(entity);
+			postImg.setPath(path);
+			is.createPostImg(postImg);
+		}
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/removePost/{id}")
+	public ResponseEntity<?> removePost(@PathVariable Long id){
+		Post entity = ps.getPost(id);
+		if(entity == null) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}else {
+			entity.setIsDelete(true);
+			ps.deletePost(entity);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
 	}
 }
