@@ -86,7 +86,7 @@ VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạ
 	  (1234567890, 'Tiêu đề bài viết 2', 'Mô tả bài viết 2', 'Trạng thái bài viết 2'),
       (2345673452, 'Tiêu đề bài viết 3', 'Mô tả bài viết 3', 'Trạng thái bài viết 3');
 
-CREATE TABLE PostImages(
+CREATE TABLE Post_Images(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	PostID BIGINT,
     Path VARCHAR(1000),
