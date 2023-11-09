@@ -1,4 +1,4 @@
-USE piltover_travel;
+USE Piltover_Travel;
 
 -- Sử dụng DELIMITER để chạy một khối lệnh tránh MySQL hiểu lầm dấu chấm phẩy
 DELIMITER //
