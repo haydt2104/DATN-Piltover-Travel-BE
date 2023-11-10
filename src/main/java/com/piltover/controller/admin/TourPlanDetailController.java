@@ -3,6 +3,7 @@ package com.piltover.controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,18 +26,18 @@ public class TourPlanDetailController {
     TourPlanDetailService tourPlanDetailService;
 
     @GetMapping("/all")
-    public List<TourPlanDetail> getAllTourPlans() {
-        return tourPlanDetailService.getAll();
+    public ResponseEntity<List<TourPlanDetail>> getAllTourPlans() {
+        return ResponseEntity.ok(tourPlanDetailService.getAll());
     }
 
     @GetMapping("/{tourDetailId}")
-    public TourPlanDetail getTourPlanDetail(@PathVariable("tourDetailId") Long tourDetailId) {
-        return tourPlanDetailService.getById(tourDetailId);
+    public ResponseEntity<TourPlanDetail> getTourPlanDetail(@PathVariable("tourDetailId") Long tourDetailId) {
+        return ResponseEntity.ok(tourPlanDetailService.getById(tourDetailId));
     }
 
     @GetMapping("")
-    public List<TourPlanDetail> getAllTourPlans(@RequestParam("tourPlanId") Long id) {
-        return tourPlanDetailService.getTourPlanDetailListByTourPlanId(id);
+    public ResponseEntity<List<TourPlanDetail>> getAllTourPlans(@RequestParam("tourPlanId") Long id) {
+        return ResponseEntity.ok(tourPlanDetailService.getTourPlanDetailListByTourPlanId(id));
     }
 
     @PostMapping("")

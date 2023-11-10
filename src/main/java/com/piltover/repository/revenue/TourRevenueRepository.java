@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.piltover.model.TourRevenue;
 
-public interface TourRevenueRepository extends JpaRepository<TourRevenue, Long>{
+public interface TourRevenueRepository extends JpaRepository<TourRevenue, String>{
 	@Procedure("CallTourRevenue")
 	List<TourRevenue> CallTourRevenue(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }

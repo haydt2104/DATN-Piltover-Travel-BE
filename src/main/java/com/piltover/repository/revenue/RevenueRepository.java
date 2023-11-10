@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.piltover.model.Revenue;
 
-public interface RevenueRepository extends JpaRepository<Revenue, Long>{
+public interface RevenueRepository extends JpaRepository<Revenue, Double>{
 	@Procedure("CallTotalRevenue")
 	List<Revenue> CallTotalRevenue(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }
