@@ -29,4 +29,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query("SELECT b FROM Booking b WHERE b.tourDate.id = ?1")
     List<Booking> getBookingsByTourDateId(Long tourDateId);
+    
+    @Query("SELECT bd FROM Booking bd WHERE bd.id=?1")
+	Booking findByBookingID(Long id);
+
+    
 }

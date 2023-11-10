@@ -24,7 +24,8 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public Post getPost(Long id) {
-		return pdao.getById(id);
+		// TODO Auto-generated method stub
+		return pdao.findById(id).get();
 	}
 
 	@Override

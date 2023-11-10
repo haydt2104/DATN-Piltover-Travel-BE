@@ -2,11 +2,15 @@ package com.piltover.service.implement;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.piltover.entity.Price;
 import com.piltover.entity.Tour;
+import com.piltover.model.HomeUser;
+import com.piltover.repository.HomeRepository;
 import com.piltover.repository.PriceRepository;
 import com.piltover.repository.TourRepository;
 import com.piltover.service.TourService;
@@ -17,6 +21,9 @@ public class TourServiceImpl implements TourService {
     TourRepository tourRepository;
     @Autowired
     PriceRepository priceRepository;
+    
+    @Autowired
+    HomeRepository homeRepository;
 
     @Override
     public List<Tour> getTourList() {
@@ -52,5 +59,12 @@ public class TourServiceImpl implements TourService {
         Tour tour = tourRepository.findById(id).get();
         tourRepository.delete(tour);
     }
-
+    
+    @Transactional
+	@Override
+	public List<HomeUser> getHomeTour() {
+		// TODO Auto-generated method stub
+		return homeRepository.CallHomeTour();
+	}
+    
 }

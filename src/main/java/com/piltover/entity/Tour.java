@@ -50,7 +50,7 @@ public class Tour implements Serializable {
     @ManyToOne
     @JoinColumn(name = "TransportID")
     private Transport transport;
-
+    
     @ManyToOne
     @JoinColumn(name = "HotelID")
     private Hotel hotel;

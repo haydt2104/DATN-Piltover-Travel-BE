@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.piltover.entity.Hotel;
-import com.piltover.service.implement.HotelServiceImpl;
+import com.piltover.entity.Discount;
+import com.piltover.service.implement.DiscountServiceImpl;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/hotel")
-public class HotelController {
-    @Autowired
-    HotelServiceImpl hotelImpl;
+@RequestMapping("/api/discount")
+public class DiscountController {
+	@Autowired
+	DiscountServiceImpl disImpl;
 
-    @GetMapping("/")
-    public List<Hotel> getListHotel() {
-        return hotelImpl.getAllHotels();
-    }
+	@GetMapping("/")
+	public List<Discount> getListDiscount() {
+		return disImpl.getAllDiscount();
+	}
 }

@@ -86,7 +86,7 @@ VALUES(1234567890, 'Tiêu đề bài viết 1', 'Mô tả bài viết 1', 'Trạ
 	  (1234567890, 'Tiêu đề bài viết 2', 'Mô tả bài viết 2', 'Trạng thái bài viết 2'),
       (2345673452, 'Tiêu đề bài viết 3', 'Mô tả bài viết 3', 'Trạng thái bài viết 3');
 
-CREATE TABLE PostImages(
+CREATE TABLE Post_Images(
 	Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	PostID BIGINT,
     Path VARCHAR(1000),
@@ -165,11 +165,27 @@ CREATE TABLE Transports(
     FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
 );
 
+CREATE TABLE Hotels(
+    Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    Name VARCHAR(50),
+    Price INT,
+    Star INT,
+    Address TEXT,
+    Create_User BIGINT,
+    Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_User BIGINT,
+    is_Delete BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
+    FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
+);
+
 CREATE TABLE Tours(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     PriceID BIGINT,
     CreateID BIGINT,
     TransportID BIGINT,
+    HotelID BIGINT,
     Name VARCHAR(50),
     Description TEXT,
     Image VARCHAR(1000),
@@ -179,6 +195,7 @@ CREATE TABLE Tours(
     Active BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (PriceID) REFERENCES Prices(Id),
     FOREIGN KEY (CreateID) REFERENCES Accounts(Id),
+    FOREIGN KEY (HotelID) REFERENCES Hotels(Id),
     FOREIGN KEY (TransportID) REFERENCES Transports(Id)
 );
 
@@ -187,6 +204,7 @@ CREATE TABLE Tour_Dates(
 	TourID BIGINT,
 	StatusID BIGINT,
     Initiate_date DATETIME,
+    End_date DATETIME,
 	FOREIGN KEY (StatusID) REFERENCES Status(Id),
     FOREIGN KEY (TourID) REFERENCES Tours(Id)
     
@@ -221,21 +239,6 @@ CREATE TABLE Tour_Plan_Detail(
     FOREIGN KEY (Tour_Plan_ID) REFERENCES Tour_Plan(Id)
 );
 
-CREATE TABLE Hotels(
-    Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    Name VARCHAR(50),
-    Price INT,
-    Star INT,
-    Address TEXT,
-    Create_User BIGINT,
-    Create_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Update_User BIGINT,
-    is_Delete BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
-    FOREIGN KEY (Update_User) REFERENCES Accounts(Id)
-);
-
 CREATE TABLE Discounts(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Name VARCHAR(50),
@@ -255,7 +258,6 @@ CREATE TABLE Discounts(
 CREATE TABLE Bookings(
     Id BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     Tour_DateID BIGINT,
-    HotelID BIGINT,
     DiscountID BIGINT,
     Total_price INT,
     Total_passengers INT,
@@ -268,7 +270,6 @@ CREATE TABLE Bookings(
     FOREIGN KEY (Create_User) REFERENCES Accounts(Id),
     FOREIGN KEY (Update_User) REFERENCES Accounts(Id),
     FOREIGN KEY (Tour_DateID) REFERENCES Tour_Dates(Id),
-    FOREIGN KEY (HotelID) REFERENCES Hotels(Id),
     FOREIGN KEY (DiscountID) REFERENCES Discounts(Id)
 );
 

@@ -51,6 +51,11 @@ public class TourDate implements Serializable {
     @DateTimeFormat(iso = ISO.DATE)
     @Temporal(TemporalType.DATE)
     private Date initiateDate;
+    
+    @Column(name = "End_date")
+    @DateTimeFormat(iso = ISO.DATE)
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     @JsonIgnore
     @OneToMany(mappedBy = "tourDate")

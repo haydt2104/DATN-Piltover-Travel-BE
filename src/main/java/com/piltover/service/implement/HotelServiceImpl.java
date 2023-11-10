@@ -11,13 +11,12 @@ import com.piltover.service.HotelService;
 
 @Service
 public class HotelServiceImpl implements HotelService {
-
     @Autowired
-    HotelRepository hotelRepository;
+    HotelRepository hotelReps;
 
-    @Override
     public List<Hotel> getAllHotels() {
-        return hotelRepository.findAll();
+        // TODO Auto-generated method stub
+        return hotelReps.findAll();
     }
 
 }
