@@ -18,7 +18,7 @@ public class HotelController {
     @Autowired
     HotelServiceImpl hotelImpl;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public List<Hotel> getListHotel() {
         return hotelImpl.getAllHotels();
     }
