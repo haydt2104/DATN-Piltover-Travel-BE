@@ -10,7 +10,7 @@ import com.piltover.repository.BookingRepository;
 import com.piltover.service.BookingService;
 
 @Service
-public class BookingServicelmpl implements BookingService {
+public class BookingServiceImpl implements BookingService {
 	@Autowired
 	BookingRepository rep;
 
