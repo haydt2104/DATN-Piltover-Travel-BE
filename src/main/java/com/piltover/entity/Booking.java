@@ -51,7 +51,7 @@ public class Booking implements Serializable {
     private Discount discount;
 
     @Column(name = "Total_price")
-    private Integer totalPrice;
+    private Double totalPrice;
 
     @Column(name = "Total_passengers")
     private Integer totalPassengers;

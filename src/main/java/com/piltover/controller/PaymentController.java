@@ -1,12 +1,18 @@
 package com.piltover.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,10 +21,14 @@ import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import com.piltover.config.PaypalPaymentIntent;
 import com.piltover.config.PaypalPaymentMethod;
+import com.piltover.entity.BookingDetail;
+import com.piltover.repository.BookingDetailRepository;
+import com.piltover.repository.BookingRepository;
 import com.piltover.service.PaypalService;
 import com.piltover.service.VNPayService;
 import com.piltover.util.PaypalUtils;
 
+@CrossOrigin("*")
 @RestController
 public class PaymentController {
 
@@ -28,20 +38,29 @@ public class PaymentController {
     @Autowired
     private VNPayService vnPayService;
 
+    @Autowired
+    private BookingRepository bookingRepository;
+
+    @Autowired
+    private BookingDetailRepository bookingDetailRepository;
+
     private Logger log = LoggerFactory.getLogger(getClass());
+
+    private BookingDetail bookingDetail;
 
     /* Paypal */
 
     public static final String URL_PAYPAL_SUCCESS = "pay/success";
     public static final String URL_PAYPAL_CANCEL = "pay/cancel";
 
-    @GetMapping("/pay")
-    public String pay(HttpServletRequest request) {
-        Double price = 100.0;
+    @PostMapping("/pay")
+    public String pay(HttpServletRequest request, @RequestBody BookingDetail data) {
+        bookingDetail = data;
         String cancelUrl = PaypalUtils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
         String successUrl = PaypalUtils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;
         try {
-            Payment payment = paypalService.createPayment(price, "USD", PaypalPaymentMethod.paypal,
+            Payment payment = paypalService.createPayment(bookingDetail.getBooking().getTotalPrice(), "USD",
+                    PaypalPaymentMethod.paypal,
                     PaypalPaymentIntent.sale, "payment description", cancelUrl, successUrl);
             for (Links links : payment.getLinks())
                 if (links.getRel().equals("approval_url"))
@@ -49,41 +68,42 @@ public class PaymentController {
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
         }
-        return "redirect:/";
-    }
-
-    @GetMapping(URL_PAYPAL_CANCEL)
-    public String cancelPay() {
-        return "redirect:/";
+        return "http://localhost:4200/";
     }
 
     @GetMapping(URL_PAYPAL_SUCCESS)
-    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
+    public void successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId,
+            HttpServletResponse response) throws IOException {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
-            if (payment.getState().equals("approved"))
-                return "redirect:/purchase/" + 3;
+            if (payment.getState().equals("approved")) {
+                successPurchase(2, response);
+            }
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
         }
-        return "redirect:/";
+    }
+
+    @GetMapping(URL_PAYPAL_CANCEL)
+    public void cancelPay(HttpServletResponse response) throws IOException {
+        response.sendRedirect("http://localhost:4200/checkout/failed");
     }
 
     /* Paypal */
 
     /* VNPay */
 
-    @GetMapping("/submitOrder")
-    public String submidOrder(HttpServletRequest request) {
-        int orderTotal = (int) Math.round(100);
-        String orderInfo = "Giao dịch Fstore";
+    @PostMapping("/submitOrder")
+    public String submidOrder(HttpServletRequest request, @RequestBody BookingDetail bookingDetail) {
+        String orderInfo = "Giao dịch Piltover";
         String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        String vnpayUrl = vnPayService.createOrder(orderTotal, orderInfo, baseUrl);
+        String vnpayUrl = vnPayService.createOrder(bookingDetail.getBooking().getTotalPrice().intValue(), orderInfo,
+                baseUrl);
         return vnpayUrl;
     }
 
     @GetMapping("/vnpay-payment")
-    public String GetMapping(HttpServletRequest request, Model model) {
+    public void GetMapping(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         int paymentStatus = vnPayService.orderReturn(request);
 
         String orderInfo = request.getParameter("vnp_OrderInfo");
@@ -95,10 +115,32 @@ public class PaymentController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("paymentTime", paymentTime);
         model.addAttribute("transactionId", transactionId);
-
-        return paymentStatus == 1 ? "ordersuccess" : "orderfail";
+        if (paymentStatus == 1) {
+            successPurchase(3, response);
+        } else {
+            response.sendRedirect("http://localhost:4200/checkout/failed");
+        }
     }
 
     /* VNPay */
 
+    public void successPurchase(Integer num, HttpServletResponse response) throws IOException {
+        if (num == 2) {
+            bookingDetail.getBooking().setTotalPrice(
+                    bookingDetail.getAdult()
+                            * bookingDetail.getBooking().getTourDate().getTour().getPrice().getAdultPrice()
+                            + bookingDetail.getChildren() * bookingDetail.getBooking().getTourDate().getTour()
+                                    .getPrice().getChildrenPrice()
+                            + bookingDetail.getSurcharge());
+            if (bookingDetail.getBooking().getDiscount() != null) {
+                bookingDetail.getBooking().setTotalPrice(
+                        bookingDetail.getBooking().getTotalPrice() - bookingDetail.getBooking().getTotalPrice()
+                                * bookingDetail.getBooking().getDiscount().getPercentage());
+                ;
+            }
+        }
+        bookingRepository.save(bookingDetail.getBooking());
+        bookingDetailRepository.save(bookingDetail);
+        response.sendRedirect("http://localhost:4200/checkout/success");
+    }
 }
