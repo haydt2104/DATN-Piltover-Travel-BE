@@ -19,4 +19,7 @@ public class HotelServiceImpl implements HotelService {
         return hotelReps.findAll();
     }
 
+    public void addHotel(Hotel hotel) {
+        hotelReps.save(hotel);
+    }
 }

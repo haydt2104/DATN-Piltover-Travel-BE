@@ -22,8 +22,10 @@ import com.paypal.base.rest.PayPalRESTException;
 import com.piltover.config.PaypalPaymentIntent;
 import com.piltover.config.PaypalPaymentMethod;
 import com.piltover.entity.BookingDetail;
+import com.piltover.entity.Discount;
 import com.piltover.repository.BookingDetailRepository;
 import com.piltover.repository.BookingRepository;
+import com.piltover.repository.DiscountRepository;
 import com.piltover.service.PaypalService;
 import com.piltover.service.VNPayService;
 import com.piltover.util.PaypalUtils;
@@ -42,18 +44,33 @@ public class PaymentController {
     private BookingRepository bookingRepository;
 
     @Autowired
+    private DiscountRepository discountRepository;
+
+    @Autowired
     private BookingDetailRepository bookingDetailRepository;
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
     private BookingDetail bookingDetail;
 
+    @PostMapping("/nopay")
+    public String nopay(HttpServletRequest request, HttpServletResponse response, @RequestBody BookingDetail data)
+            throws IOException {
+        bookingDetail = data;
+        try {
+            successPurchase(1, response);
+            return "http://localhost:4200/checkout/success";
+        } catch (Exception e) {
+            return "http://localhost:4200/checkout/failed";
+        }
+    }
+
     /* Paypal */
 
     public static final String URL_PAYPAL_SUCCESS = "pay/success";
     public static final String URL_PAYPAL_CANCEL = "pay/cancel";
 
-    @PostMapping("/pay")
+    @PostMapping("/paypal")
     public String pay(HttpServletRequest request, @RequestBody BookingDetail data) {
         bookingDetail = data;
         String cancelUrl = PaypalUtils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
@@ -93,11 +110,12 @@ public class PaymentController {
 
     /* VNPay */
 
-    @PostMapping("/submitOrder")
-    public String submidOrder(HttpServletRequest request, @RequestBody BookingDetail bookingDetail) {
+    @PostMapping("/vnpay")
+    public String submidOrder(HttpServletRequest request, @RequestBody BookingDetail data) {
+        bookingDetail = data;
         String orderInfo = "Giao dịch Piltover";
         String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-        String vnpayUrl = vnPayService.createOrder(bookingDetail.getBooking().getTotalPrice().intValue(), orderInfo,
+        String vnpayUrl = vnPayService.createOrder(data.getBooking().getTotalPrice().intValue(), orderInfo,
                 baseUrl);
         return vnpayUrl;
     }
@@ -125,6 +143,11 @@ public class PaymentController {
     /* VNPay */
 
     public void successPurchase(Integer num, HttpServletResponse response) throws IOException {
+        if (num == 1) {
+            bookingDetail.getBooking().setStatus(1);
+        } else {
+            bookingDetail.getBooking().setStatus(2);
+        }
         if (num == 2) {
             bookingDetail.getBooking().setTotalPrice(
                     bookingDetail.getAdult()
@@ -139,8 +162,15 @@ public class PaymentController {
                 ;
             }
         }
+        if (bookingDetail.getBooking().getDiscount() != null) {
+            Discount discount = discountRepository.findById(bookingDetail.getBooking().getDiscount().getId()).get();
+            discount.setAmount(discount.getAmount() - 1);
+            discountRepository.save(discount);
+        }
         bookingRepository.save(bookingDetail.getBooking());
         bookingDetailRepository.save(bookingDetail);
-        response.sendRedirect("http://localhost:4200/checkout/success");
+        if (num != 1) {
+            response.sendRedirect("http://localhost:4200/checkout/success");
+        }
     }
 }

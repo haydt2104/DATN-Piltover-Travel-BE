@@ -6,4 +6,6 @@ import com.piltover.entity.Hotel;
 
 public interface HotelService {
     List<Hotel> getAllHotels();
+
+    void addHotel(Hotel hotel);
 }
