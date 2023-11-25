@@ -1,4 +1,4 @@
-package com.piltover.model;
+package com.piltover.dto.response;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class HotelRevenue {
+public class HotelRevenueRes {
 	@Id
 	private String hotel_name;
 	private Double hotel_price;

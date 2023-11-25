@@ -1,4 +1,4 @@
-package com.piltover.model;
+package com.piltover.dto.response;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class MonthRevenue {
+public class MonthRevenueRes {
 	@Id
 	private String month;
 	private Double total_tour_revenue;

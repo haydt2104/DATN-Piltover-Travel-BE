@@ -1,4 +1,4 @@
-package com.piltover.model;
+package com.piltover.dto.response;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,13 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class HomeUser {
+public class HomeUserRes {
 	@Id
 	private Long TourID;
 	private String Name_Tour;
 	private String Image;
+	private String Hotel_Name;
+	private String Start_address;
+	private String Start_time;
 	private Double Adult_price;
 	private Double Children_price;
-	private String Departure_Dates;
-	private String Name_Transports;
+	private String Transport_Name;
 }

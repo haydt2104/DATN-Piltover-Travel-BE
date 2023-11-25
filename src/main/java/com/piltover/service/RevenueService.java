@@ -2,20 +2,21 @@ package com.piltover.service;
 
 import java.util.List;
 
-import com.piltover.model.HotelRevenue;
-import com.piltover.model.MonthRevenue;
-import com.piltover.model.Revenue;
-import com.piltover.model.TourRevenue;
-import com.piltover.model.TransportRevenue;
+import com.piltover.dto.response.HotelRevenueRes;
+import com.piltover.dto.response.MonthRevenueRes;
+import com.piltover.dto.response.RevenueRes;
+import com.piltover.dto.response.TourRevenueRes;
+import com.piltover.dto.response.TransportRevenueRes;
+
 
 public interface RevenueService {
-	List<Revenue> getAll(String startDate, String endDate);
+	List<RevenueRes> getAll(String startDate, String endDate);
 	
-	List<MonthRevenue> getMonthRevenue(String startDate, String endDate);
+	List<MonthRevenueRes> getMonthRevenue(String startDate, String endDate);
 
-	List<TourRevenue> getTourRevenue(String startDate, String endDate);
+	List<TourRevenueRes> getTourRevenue(String startDate, String endDate);
 	
-	List<HotelRevenue> getHotelRevenue(String startDate, String endDate);
+	List<HotelRevenueRes> getHotelRevenue(String startDate, String endDate);
 	
-	List<TransportRevenue> getTransportRevenue(String startDate, String endDate);
+	List<TransportRevenueRes> getTransportRevenue(String startDate, String endDate);
 }

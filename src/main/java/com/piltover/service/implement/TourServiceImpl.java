@@ -7,9 +7,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.piltover.dto.response.HomeUserRes;
 import com.piltover.entity.Price;
 import com.piltover.entity.Tour;
-import com.piltover.model.HomeUser;
 import com.piltover.repository.HomeRepository;
 import com.piltover.repository.PriceRepository;
 import com.piltover.repository.TourRepository;
@@ -62,7 +62,7 @@ public class TourServiceImpl implements TourService {
     
     @Transactional
 	@Override
-	public List<HomeUser> getHomeTour() {
+	public List<HomeUserRes> getHomeTour() {
 		// TODO Auto-generated method stub
 		return homeRepository.CallHomeTour();
 	}

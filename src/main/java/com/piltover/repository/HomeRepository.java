@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
-import com.piltover.model.HomeUser;
 
-public interface HomeRepository extends JpaRepository<HomeUser, Long>{
+import com.piltover.dto.response.HomeUserRes;
+
+public interface HomeRepository extends JpaRepository<HomeUserRes, Long>{
 	@Procedure("CallHomeTour")
-	List<HomeUser> CallHomeTour();
+	List<HomeUserRes> CallHomeTour();
 }

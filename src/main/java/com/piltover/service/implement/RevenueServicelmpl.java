@@ -7,11 +7,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.piltover.model.HotelRevenue;
-import com.piltover.model.MonthRevenue;
-import com.piltover.model.Revenue;
-import com.piltover.model.TourRevenue;
-import com.piltover.model.TransportRevenue;
+import com.piltover.dto.response.HotelRevenueRes;
+import com.piltover.dto.response.MonthRevenueRes;
+import com.piltover.dto.response.RevenueRes;
+import com.piltover.dto.response.TourRevenueRes;
+import com.piltover.dto.response.TransportRevenueRes;
 import com.piltover.repository.revenue.HotelRevenueRepository;
 import com.piltover.repository.revenue.MonthRevenueRepository;
 import com.piltover.repository.revenue.RevenueRepository;
@@ -38,35 +38,35 @@ public class RevenueServicelmpl implements RevenueService{
 	
 	@Transactional
 	@Override
-	public List<Revenue> getAll(String startDate, String endDate) {
+	public List<RevenueRes> getAll(String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return RenvenueRep.CallTotalRevenue(startDate, endDate);
 	}
 	
 	@Transactional
 	@Override
-	public List<MonthRevenue> getMonthRevenue(String startDate, String endDate) {
+	public List<MonthRevenueRes> getMonthRevenue(String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return MonthRep.callMonthTotalRevenue(startDate, endDate);
 	}
 	
 	@Transactional
 	@Override
-	public List<TourRevenue> getTourRevenue(String startDate, String endDate) {
+	public List<TourRevenueRes> getTourRevenue(String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return TourRep.CallTourRevenue(startDate, endDate);
 	}
 	
 	@Transactional
 	@Override
-	public List<HotelRevenue> getHotelRevenue(String startDate, String endDate) {
+	public List<HotelRevenueRes> getHotelRevenue(String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return HotelRep.CallHotelRevenue(startDate, endDate);
 	}
 	
 	@Transactional
 	@Override
-	public List<TransportRevenue> getTransportRevenue(String startDate, String endDate) {
+	public List<TransportRevenueRes> getTransportRevenue(String startDate, String endDate) {
 		// TODO Auto-generated method stub
 		return TransportRep.CallTransportRevenue(startDate, endDate);
 	}
