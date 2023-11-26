@@ -8,4 +8,8 @@ public interface HotelService {
     List<Hotel> getAllHotels();
 
     void addHotel(Hotel hotel);
+
+    void putHotel(Hotel hotel);
+
+    void deleteHotel(Long id);
 }

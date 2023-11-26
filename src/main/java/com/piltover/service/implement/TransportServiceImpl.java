@@ -19,4 +19,20 @@ public class TransportServiceImpl implements TransportService {
         return transportRepository.findAll();
     }
 
+    @Override
+    public void postTransport(Transport transport) {
+        transportRepository.save(transport);
+    }
+
+    @Override
+    public void putTransport(Transport transport) {
+        transportRepository.save(transport);
+    }
+
+    @Override
+    public void deleteTransport(Long transportId) {
+        Transport transport = transportRepository.findById(transportId).get();
+        transportRepository.delete(transport);
+    }
+
 }

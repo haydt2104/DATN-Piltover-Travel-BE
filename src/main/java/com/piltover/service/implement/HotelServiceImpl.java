@@ -22,4 +22,15 @@ public class HotelServiceImpl implements HotelService {
     public void addHotel(Hotel hotel) {
         hotelReps.save(hotel);
     }
+
+    @Override
+    public void putHotel(Hotel hotel) {
+        hotelReps.save(hotel);
+    }
+
+    @Override
+    public void deleteHotel(Long id) {
+        Hotel hotel = hotelReps.findById(id).get();
+        hotelReps.delete(hotel);
+    }
 }
