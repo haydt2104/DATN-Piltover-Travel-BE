@@ -44,19 +44,19 @@ public class Comment implements Serializable {
     @JoinColumn(name = "PostID")
     private Post post;
     
-    @DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
-    @Column(name = "Comment_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date commentTime = new Date();
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+//	@Temporal(TemporalType.DATE)
+    @Column(name = "Comment_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date commentTime;
     
-    @DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
-    @Column(name = "Update_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date updateTime = new Date();
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+//	@Temporal(TemporalType.DATE)
+    @Column(name = "Update_at", nullable = true, updatable = true, insertable = true, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date updateTime;
     
     @Column(name = "Content")
     private String content;
     
-    @Column(name = "isDelete")
+    @Column(name = "is_Delete")
     private Boolean isDelete = false;
 }

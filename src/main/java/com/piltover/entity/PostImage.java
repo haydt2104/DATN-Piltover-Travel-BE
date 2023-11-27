@@ -17,7 +17,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "PostImages", uniqueConstraints = {
+@Table(name = "Post_Images", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "PostID" })
 })
 public class PostImage implements Serializable {
