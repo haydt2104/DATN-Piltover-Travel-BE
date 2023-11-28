@@ -17,6 +17,7 @@ public class HomeUserRes {
 	private String Name_Tour;
 	private String Image;
 	private String Hotel_Name;
+	private String Hotel_Star;
 	private String Start_address;
 	private String Start_time;
 	private Double Adult_price;
