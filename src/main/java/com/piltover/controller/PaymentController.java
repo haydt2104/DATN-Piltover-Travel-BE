@@ -156,15 +156,27 @@ public class PaymentController {
                                     .getPrice().getChildrenPrice()
                             + bookingDetail.getSurcharge());
             if (bookingDetail.getBooking().getDiscount() != null) {
-                bookingDetail.getBooking().setTotalPrice(
-                        bookingDetail.getBooking().getTotalPrice() - bookingDetail.getBooking().getTotalPrice()
-                                * bookingDetail.getBooking().getDiscount().getPercentage());
-                ;
+                if (((bookingDetail.getBooking().getTotalPrice() - bookingDetail.getSurcharge())
+                        * (bookingDetail.getBooking().getDiscount().getPercentage() / 100)) <= bookingDetail
+                                .getBooking()
+                                .getDiscount().getMax()) {
+                    bookingDetail.getBooking().setTotalPrice(
+                            bookingDetail.getBooking().getTotalPrice()
+                                    - ((bookingDetail.getBooking().getTotalPrice() - bookingDetail.getSurcharge())
+                                            * bookingDetail.getBooking().getDiscount().getPercentage() / 100));
+                } else {
+                    bookingDetail.getBooking().setTotalPrice(
+                            bookingDetail.getBooking().getTotalPrice()
+                                    - bookingDetail.getBooking().getDiscount().getMax());
+                }
             }
         }
         if (bookingDetail.getBooking().getDiscount() != null) {
             Discount discount = discountRepository.findById(bookingDetail.getBooking().getDiscount().getId()).get();
             discount.setAmount(discount.getAmount() - 1);
+            if (discount.getAmount() == 0) {
+                discount.setIsDelete(true);
+            }
             discountRepository.save(discount);
         }
         bookingRepository.save(bookingDetail.getBooking());

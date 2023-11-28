@@ -27,14 +27,14 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Discounts", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "Create_User","Update_User" })
+        @UniqueConstraint(columnNames = { "Create_User", "Update_User" })
 })
 public class Discount implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -49,28 +49,34 @@ public class Discount implements Serializable {
 
     @Column(name = "Code")
     private String code;
-    
+
     @ManyToOne
     @JoinColumn(name = "Create_User")
     private Account createUser;
-    
+
     @DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     @Column(name = "Create_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createTime = new Date();
-    
+
     @ManyToOne
     @JoinColumn(name = "Update_User")
     private Account updateUser;
-    
+
     @DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     @Column(name = "Update_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date updateTime;
 
     @Column(name = "is_Delete")
     private Boolean isDelete = false;
-    
+
+    @Column(name = "min")
+    private Float min;
+
+    @Column(name = "max")
+    private Float max;
+
     @JsonIgnore
     @OneToMany(mappedBy = "discount")
     List<Booking> bookings;
