@@ -22,7 +22,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Likes", uniqueConstraints = {
+@Table(name = "likes", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "PostID" , "Like_User" })
 })
 public class Like implements Serializable {
