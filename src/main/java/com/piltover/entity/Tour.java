@@ -27,15 +27,15 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Tours", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "PriceID", "CreateID", "HotelID",  "TransportID"})
+        @UniqueConstraint(columnNames = { "PriceID", "CreateID", "HotelID", "TransportID" })
 })
 public class Tour implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -46,7 +46,7 @@ public class Tour implements Serializable {
     @ManyToOne
     @JoinColumn(name = "CreateID")
     private Account creator;
-    
+
     @ManyToOne
     @JoinColumn(name = "TransportID")
     private Transport transport;
@@ -71,19 +71,19 @@ public class Tour implements Serializable {
     private Integer availableSpaces;
 
     @DateTimeFormat(iso = ISO.DATE_TIME)
-	@Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     @Column(name = "Create_at")
     private Date createTime;
 
     @Column(name = "Active")
     private Boolean active;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "tour")
     List<TourDate> tourDates;
-    
+
     @JsonIgnore
     @OneToMany(mappedBy = "tour")
     List<TourImage> tourImages;
-    
+
 }

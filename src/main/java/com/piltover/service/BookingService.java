@@ -6,7 +6,9 @@ import com.piltover.entity.Booking;
 import com.piltover.model.History;
 
 public interface BookingService {
-	List<Booking> getAllBooking();
+    List<Booking> getAllBooking();
+
+    List<Booking> getBookingsByTourDateId(Long tourDateId);
 
 	Booking getOneByID(Long id);
 

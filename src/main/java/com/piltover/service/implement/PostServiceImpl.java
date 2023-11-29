@@ -12,11 +12,11 @@ import com.piltover.repository.PostRepository;
 import com.piltover.service.PostService;
 
 @Service
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
 
 	@Autowired
 	PostRepository pdao;
-	
+
 	@Override
 	public List<Post> getAllPost() {
 		return pdao.getAllsPost();

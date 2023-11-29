@@ -1,5 +1,7 @@
 package com.piltover.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.piltover.entity.Booking;
@@ -48,5 +51,10 @@ public class BookingController {
 	@PutMapping("/edit2")
 	public ResponseEntity<BookingDetail> editBookingdetail(@RequestBody BookingDetail booking) {
 		return ResponseEntity.ok(this.bds.edit2(booking));
+	}
+
+	@GetMapping("")
+	public ResponseEntity<List<Booking>> getBookingsByTourDate(@RequestParam("tourDateId") Long id) {
+		return ResponseEntity.ok(bs.getBookingsByTourDateId(id));
 	}
 }

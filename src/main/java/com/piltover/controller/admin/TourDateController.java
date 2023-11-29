@@ -3,6 +3,7 @@ package com.piltover.controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +26,13 @@ public class TourDateController {
     TourDateService tourDateService;
 
     @GetMapping("")
-    public List<TourDate> getDateByTourId(@RequestParam("tourId") Long tourId) {
-        return tourDateService.getTourDateByTourId(tourId);
+    public ResponseEntity<List<TourDate>> getDateByTourId(@RequestParam("tourId") Long tourId) {
+        return ResponseEntity.ok(tourDateService.getTourDateByTourId(tourId));
     }
 
     @GetMapping("/{tourDateId}")
-    public TourDate getTourDate(@PathVariable("tourDateId") Long tourDateId) {
-        return tourDateService.getTourDate(tourDateId);
+    public ResponseEntity<TourDate> getTourDate(@PathVariable("tourDateId") Long tourDateId) {
+        return ResponseEntity.ok(tourDateService.getTourDate(tourDateId));
     }
 
     @PostMapping("")

@@ -28,10 +28,10 @@ public class Price implements Serializable {
     private Long id;
 
     @Column(name = "Adult_price")
-    private Integer adultPrice;
+    private Double adultPrice;
 
     @Column(name = "Children_price")
-    private Integer childrenPrice;
+    private Double childrenPrice;
     
     @JsonIgnore
     @OneToMany(mappedBy = "price")

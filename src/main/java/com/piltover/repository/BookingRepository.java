@@ -5,12 +5,9 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
-import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.piltover.entity.Booking;
-import com.piltover.model.History;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 	// Get All data of bookings => (lấy tất cả dữ liệu trong Bookings)

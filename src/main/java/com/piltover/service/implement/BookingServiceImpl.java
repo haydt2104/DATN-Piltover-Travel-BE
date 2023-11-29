@@ -21,6 +21,11 @@ public class BookingServiceImpl implements BookingService {
 	BookingDetailRepository bookingDetailRepo;
 
 	@Override
+	public List<Booking> getBookingsByTourDateId(Long tourDateId) {
+		return BookingRepo.getBookingsByTourDateId(tourDateId);
+	}
+
+	@Override
 	public List<Booking> getAllBooking() {
 		return BookingRepo.findAll();
 	}

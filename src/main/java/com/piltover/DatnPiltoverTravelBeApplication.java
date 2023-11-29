@@ -1,7 +1,6 @@
 package com.piltover;
 
 import java.util.Arrays;
-import java.util.TimeZone;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +15,6 @@ import org.springframework.web.filter.CorsFilter;
 public class DatnPiltoverTravelBeApplication {
 
 	public static void main(String[] args) {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		SpringApplication.run(DatnPiltoverTravelBeApplication.class, args);
 	}
 
