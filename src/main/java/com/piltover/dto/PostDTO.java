@@ -25,6 +25,7 @@ public class PostDTO  implements Serializable{
     private Account updateUser;
     private Date updateTime;
     private Boolean isDelete = false;
+    List<String> images;
     List<PostImage> postImages;
     List<Like> likes;
     List<Comment> comments;

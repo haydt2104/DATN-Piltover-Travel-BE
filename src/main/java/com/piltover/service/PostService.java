@@ -17,6 +17,8 @@ public interface PostService {
 	
 	Post createPost(Post entity);
 	
-	Page<Post> getAllPost(Pageable pageable);
+	Post deletePost(Post entity);
+	
+	String idMostNewPost();
 	
 }

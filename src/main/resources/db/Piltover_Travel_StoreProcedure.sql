@@ -77,11 +77,11 @@ END;
 //DELIMITER ;
 -- CALL CallMonthTotalRevenue('2023-01-01', '2023-12-31');
 
-
 --------------------------
 
 -- Lấy tổng tất cả doanh thu 
 DELIMITER //
+
 DROP PROCEDURE IF EXISTS CallTotalRevenue;
 CREATE PROCEDURE CallTotalRevenue(IN startDate DATE, IN endDate DATE)
 BEGIN
@@ -111,12 +111,11 @@ END;
 -- CALL CallTotalRevenue('2023-01-01', '2023-10-30');
 -- CALL CallTotalRevenue('2023-01-01', '2023-12-31');
 
-
-
 ---------------------------------------------
 
 -- ---Lấy dữ liệu doanh thu tour ---
 DELIMITER //
+
 DROP PROCEDURE IF EXISTS CallTourRevenue;
 CREATE PROCEDURE CallTourRevenue(IN startDate DATE, IN endDate DATE)
 BEGIN
@@ -177,7 +176,8 @@ LIMIT 10;
 END;
 //DELIMITER ;
 -- CALL CallHotelRevenue('2023-01-01', '2023-12-31');
- 
+-- CALL CallHotelRevenue('2023-01-01', '2023-12-31');
+
 ------------------------------------------------
 
 -- ---Lấy dữ liệu doanh thu phuong tien ---
@@ -211,7 +211,7 @@ END;
 -- -----------------------------------------------------
 
 
- 
+-- Trọng 
 -- Đếm số lượt Like của bài viết
 DELIMITER //
 DROP PROCEDURE IF EXISTS CountLikePost;
@@ -223,3 +223,15 @@ BEGIN
 END//
 DELIMITER ;
 -- Test CountLikePost: CALL CountLikePost(2);
+
+-- Lấy bái viết có is_delete = false
+DELIMITER //
+DROP PROCEDURE IF EXISTS GetAllPosts;
+CREATE PROCEDURE GetAllPosts()
+BEGIN
+	SELECT *
+	FROM Posts
+	WHERE Is_Delete = 0;
+END//
+DELIMITER ;
+-- Test GetAllPosts: CALL GetAllPosts();

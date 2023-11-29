@@ -32,7 +32,7 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "Posts", uniqueConstraints = {
+@Table(name = "posts", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "Create_User","Update_User" })
 })
 @Getter @Setter
@@ -63,7 +63,6 @@ public class Post implements Serializable{/**
     @Column(name = "Content")
     private String content;
     
-
     @DateTimeFormat(iso = ISO.DATE_TIME)
 //	@Temporal(TemporalType.DATE)
     @Column(name = "Create_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

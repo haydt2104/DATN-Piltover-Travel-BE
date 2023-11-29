@@ -99,7 +99,7 @@ CREATE TABLE Comments(
     Comment_User BIGINT,
 	PostID BIGINT,
     Comment_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Update_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Update_at DATETIME,
     Content VARCHAR(100),
     is_Delete BIT DEFAULT FALSE,
     FOREIGN KEY (Comment_User) REFERENCES Accounts(Id),
@@ -113,7 +113,7 @@ CREATE TABLE Likes(
 	PostID BIGINT,
     Is_Like BOOLEAN,
     Like_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Unlike_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Unlike_at DATETIME,
     FOREIGN KEY (Like_User) REFERENCES Accounts(Id),
     FOREIGN KEY (PostID) REFERENCES Posts(Id)
     
