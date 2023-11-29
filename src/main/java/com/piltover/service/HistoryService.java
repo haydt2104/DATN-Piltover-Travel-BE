@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.piltover.model.History;
+import com.piltover.entity.History;
 
 public interface HistoryService {
 

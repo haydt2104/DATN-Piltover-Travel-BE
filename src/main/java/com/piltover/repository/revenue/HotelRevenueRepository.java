@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.piltover.dto.response.HotelRevenueRes;
 
-public interface HotelRevenueRepository extends JpaRepository<HotelRevenueRes, Long>{
+public interface HotelRevenueRepository extends JpaRepository<HotelRevenueRes, String>{
 	@Procedure("CallHotelRevenue")
 	List<HotelRevenueRes> CallHotelRevenue(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }

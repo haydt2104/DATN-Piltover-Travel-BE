@@ -1,4 +1,4 @@
-package com.piltover.model;
+package com.piltover.entity;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;

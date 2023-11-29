@@ -29,12 +29,15 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	@Query("SELECT b FROM Booking b WHERE b.status = 2")
 	List<Booking> findAllCancel();
 
+	@Query("SELECT b FROM Booking b WHERE b.tourDate.id = ?1")
+	List<Booking> getBookingsByTourDateId(Long tourDateId);
+
 	@Query("SELECT bd FROM Booking bd WHERE bd.id=?1")
 	Booking findByBookingID(Long id);
-	
+
 	@Transactional
 	@Query(value = "CALL FindAllHistory()", nativeQuery = true)
-//    @Procedure(name="FindAllHistory")
+	// @Procedure(name="FindAllHistory")
 	List<Booking> History_ReadAll();
 
 	@Modifying
@@ -42,8 +45,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	@Query(value = "CALL ReadAllHistoryByAcc(:id)", nativeQuery = true)
 	List<Booking> ReadAllHistoryByAcc(Long id);
 
-//    @Transactional
-//    @Query(value = "CALL ReadOneHistoryByAcc`(:uid,:bid);",nativeQuery = true)
-//    Booking ReadoneHistoryByAcc(@Param("uid") Long uid,@Param("bid") Long bid);
+	// @Transactional
+	// @Query(value = "CALL ReadOneHistoryByAcc`(:uid,:bid);",nativeQuery = true)
+	// Booking ReadoneHistoryByAcc(@Param("uid") Long uid,@Param("bid") Long bid);
 
 }

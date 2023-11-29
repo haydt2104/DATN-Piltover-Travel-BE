@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.piltover.entity.Booking;
-import com.piltover.model.History;
+import com.piltover.entity.History;
 import com.piltover.service.BookingService;
 import com.piltover.service.HistoryService;
 

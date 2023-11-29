@@ -1,13 +1,11 @@
 package com.piltover.service.implement;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.piltover.model.History;
+import com.piltover.entity.History;
 import com.piltover.repository.revenue.HistoryRepository;
 import com.piltover.service.HistoryService;
 

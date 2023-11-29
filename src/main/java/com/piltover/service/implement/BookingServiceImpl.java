@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.piltover.entity.Booking;
-import com.piltover.model.History;
 import com.piltover.repository.BookingDetailRepository;
 import com.piltover.repository.BookingRepository;
 import com.piltover.service.BookingService;
