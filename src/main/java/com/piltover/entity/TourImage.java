@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Tour_Images", uniqueConstraints = {
+@Table(name = "tour_images", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "TourID" })
 })
 public class TourImage implements Serializable {

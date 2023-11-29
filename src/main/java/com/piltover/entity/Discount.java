@@ -26,7 +26,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Discounts", uniqueConstraints = {
+@Table(name = "discounts", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "Create_User", "Update_User" })
 })
 public class Discount implements Serializable {

@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Roles")
+@Table(name = "roles")
 public class Role implements Serializable {
     /**
 	 * 
