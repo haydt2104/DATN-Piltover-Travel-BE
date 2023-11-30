@@ -1,6 +1,7 @@
 package com.piltover.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,10 +25,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
-@Data
+@Data 
 @Entity
 @Table(name = "discounts", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "Create_User", "Update_User" })
+        @UniqueConstraint(columnNames = { "Create_User","Update_User" })
 })
 public class Discount implements Serializable {
     /**
@@ -49,7 +50,13 @@ public class Discount implements Serializable {
 
     @Column(name = "Code")
     private String code;
-
+    
+    @Column(name="min")
+    private Float min;
+    
+    @Column(name="max")
+    private Float max;
+    
     @ManyToOne
     @JoinColumn(name = "Create_User")
     private Account createUser;
@@ -57,8 +64,8 @@ public class Discount implements Serializable {
     @DateTimeFormat(iso = ISO.DATE)
     @Temporal(TemporalType.DATE)
     @Column(name = "Create_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createTime = new Date();
-
+    private Date createTime;
+    
     @ManyToOne
     @JoinColumn(name = "Update_User")
     private Account updateUser;
