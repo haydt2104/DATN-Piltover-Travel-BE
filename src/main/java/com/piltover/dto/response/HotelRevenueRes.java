@@ -3,18 +3,10 @@ package com.piltover.dto.response;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Entity
-@Getter
-@Setter
 public class HotelRevenueRes {
 	@Id
 	private String hotel_name;

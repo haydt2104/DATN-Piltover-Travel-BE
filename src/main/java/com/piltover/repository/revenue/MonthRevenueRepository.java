@@ -1,5 +1,6 @@
 package com.piltover.repository.revenue;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,5 +11,8 @@ import com.piltover.dto.response.MonthRevenueRes;
 
 public interface MonthRevenueRepository extends JpaRepository<MonthRevenueRes, Long> {
 	@Procedure("CallMonthTotalRevenue")
-	  List<MonthRevenueRes> callMonthTotalRevenue(@Param("startDate") String startDate, @Param("endDate") String endDate);
+	List<MonthRevenueRes> callMonthTotalRevenue(@Param("startDate") String startDate, @Param("endDate") String endDate);
+
+	@Procedure("CallMonthTotalRevenue")
+	List<MonthRevenueRes> callMonthTotalRevenueAll(Date startDate, Date endStart);
 }

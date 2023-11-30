@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piltover.dto.request.DateRevenue;
 import com.piltover.service.RevenueService;
 
 @RestController
@@ -22,23 +25,26 @@ public class RevenueController {
 		return ResponseEntity.ok(service.getAll(startDate, endDate));		
 	}
 	
-	@GetMapping("/getMonthRevenue")
-	  public ResponseEntity<?> getMonthRevenue(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
-	    return ResponseEntity.ok(service.getMonthRevenue(startDate, endDate));
+	@PostMapping("/getAllRevenue")
+	public ResponseEntity<?> getAllRevenue(@RequestBody DateRevenue DateRevenue) {
+	    return ResponseEntity.ok(service.getAllRevenue(DateRevenue));
 	}
 	
-	@GetMapping("/getTourRevenue")	
-	public ResponseEntity<?> getTourRevenue(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){	
-		return ResponseEntity.ok(service.getTourRevenue(startDate, endDate));
+	@PostMapping("/getAllMonthRevenue")
+	public ResponseEntity<?> getAllMonthRevenue(@RequestBody DateRevenue DateRevenue) {
+	    return ResponseEntity.ok(service.getAllMonthRevenue(DateRevenue));
 	}
 	
-	@GetMapping("/getHotelRevenue")	
-	public ResponseEntity<?> getHotelRevenue(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){	
-		return ResponseEntity.ok(service.getHotelRevenue(startDate, endDate));
+	@PostMapping("/getTourRevenue")
+	public ResponseEntity<?> getTourRevenue(@RequestBody DateRevenue DateRevenue) {
+	    return ResponseEntity.ok(service.getTourRevenue(DateRevenue));
 	}
-	
-	@GetMapping("/getTransportRevenue")	
-	public ResponseEntity<?> getTransportRevenue(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){	
-		return ResponseEntity.ok(service.getTransportRevenue(startDate, endDate));
+	@PostMapping("/getHotelRevenue")
+	public ResponseEntity<?> getHotelRevenue(@RequestBody DateRevenue DateRevenue) {
+	    return ResponseEntity.ok(service.getHotelRevenue(DateRevenue));
+	}
+	@PostMapping("/getTransportRevenue")
+	public ResponseEntity<?> getTransportRevenue(@RequestBody DateRevenue DateRevenue) {
+	    return ResponseEntity.ok(service.getTransportRevenue(DateRevenue));
 	}
 }

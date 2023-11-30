@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.piltover.dto.request.SearchTour;
-import com.piltover.dto.response.HomeUserRes;
 import com.piltover.service.LoadTourServicec;
 
 @CrossOrigin("*")
