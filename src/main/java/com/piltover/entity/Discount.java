@@ -1,7 +1,6 @@
 package com.piltover.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -78,11 +77,6 @@ public class Discount implements Serializable {
     @Column(name = "is_Delete")
     private Boolean isDelete = false;
 
-    @Column(name = "min")
-    private Float min;
-
-    @Column(name = "max")
-    private Float max;
 
     @JsonIgnore
     @OneToMany(mappedBy = "discount")
