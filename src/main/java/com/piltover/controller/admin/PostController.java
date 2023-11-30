@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.piltover.dto.CommentDTO;
+import com.piltover.dto.LikeDTO;
 import com.piltover.dto.PostDTO;
 import com.piltover.entity.Account;
 import com.piltover.entity.Comment;
+import com.piltover.entity.Like;
 import com.piltover.entity.Post;
 import com.piltover.entity.PostImage;
 import com.piltover.service.AccountService;
@@ -72,6 +75,29 @@ public class PostController {
 	public ResponseEntity<Integer> getLikePosts(@PathVariable Long id) {
         return ResponseEntity.ok(ls.getCountLikePostId(id));
     }
+	
+	@GetMapping("/checkUserLike")
+	public ResponseEntity<Boolean> checkUserLike(@RequestParam Long userId, @RequestParam Long postId){
+		
+		return ResponseEntity.ok(ls.checkUserLike(userId, postId));
+	}
+	
+	@PutMapping("/doLike")
+	public ResponseEntity<?> doLike(@RequestParam Long userId, @RequestParam Long postId, @RequestBody Boolean isLike){
+		Like entity = ls.getLike(userId, postId);
+		if (entity == null) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}else {
+			if(isLike == true) {
+				entity.setLikeTime(new Date());
+			}else {
+				entity.setUnlikeTime(new Date());
+			}
+			entity.setIsLike(isLike);
+			ls.doLike(entity);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+	}
 	
 	@GetMapping("/getPostImgById/{id}")
 	public ResponseEntity<?> getPostImageById(@PathVariable Long id){

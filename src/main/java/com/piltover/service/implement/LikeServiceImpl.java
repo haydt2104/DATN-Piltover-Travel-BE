@@ -3,6 +3,7 @@ package com.piltover.service.implement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.piltover.entity.Like;
 import com.piltover.repository.LikeRepository;
 import com.piltover.service.LikeService;
 
@@ -14,8 +15,22 @@ public class LikeServiceImpl implements LikeService{
 
 	@Override
 	public int getCountLikePostId(Long id) {
-		// TODO Auto-generated method stub
 		return ldao.getCountLikePostId(id);
+	}
+
+	@Override
+	public Boolean checkUserLike(long userId, long postId) {
+		return ldao.checkLikeUser(userId, postId);
+	}
+
+	@Override
+	public Like doLike(Like entity) {
+		return ldao.saveAndFlush(entity);
+	}
+
+	@Override
+	public Like getLike(long userId, long postId) {
+		return ldao.getLike(userId, postId);
 	}
 
 }
