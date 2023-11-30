@@ -23,7 +23,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Comments", uniqueConstraints = {
+@Table(name = "comments", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "PostID" , "Comment_User" })
 })
 public class Comment implements Serializable {

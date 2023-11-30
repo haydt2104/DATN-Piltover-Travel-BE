@@ -32,7 +32,7 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "Posts", uniqueConstraints = {
+@Table(name = "posts", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "Create_User","Update_User" })
 })
 @Getter @Setter

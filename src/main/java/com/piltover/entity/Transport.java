@@ -26,7 +26,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Transports", uniqueConstraints = {
+@Table(name = "transports", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "Create_User","Update_User" })
 })
 public class Transport implements Serializable {

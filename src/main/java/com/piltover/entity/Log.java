@@ -22,7 +22,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Logs", uniqueConstraints = {
+@Table(name = "logs", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "AccountId" })
 })
 public class Log implements Serializable{/**
