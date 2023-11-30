@@ -15,6 +15,4 @@ public interface TourService {
     void putTour(Tour tour);
 
     void deleteTour(Long id);
-    
-	List<HomeUserRes> getHomeTour();
 }
