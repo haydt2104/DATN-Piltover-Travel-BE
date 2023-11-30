@@ -47,4 +47,9 @@ public class PostServiceImpl implements PostService {
 		return pdao.idMostNewPost();
 	}
 
+	@Override
+	public List<Post> getRandomPost() {
+		return pdao.getRandomPost();
+	}
+
 }

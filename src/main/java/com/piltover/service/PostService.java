@@ -11,6 +11,8 @@ public interface PostService {
 
 	List<Post> getAllPost();
 	
+	List<Post> getRandomPost();
+	
 	Post getPost(Long id);
 	
 	Post updatePost(Post entity);

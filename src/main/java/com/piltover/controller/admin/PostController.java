@@ -53,11 +53,13 @@ public class PostController {
 	
 	@GetMapping("/getAllPosts")
     public ResponseEntity<?> getAllPosts( ) {
-		List<Post> list = ps.getAllPost();
-//		list.get(0).getLikes().
         return ResponseEntity.ok(ps.getAllPost());
     }
 	
+	@GetMapping("/getRandomPosts")
+	public ResponseEntity<?> getRandomPosts(){
+		return ResponseEntity.ok(ps.getRandomPost());
+	}
 	@GetMapping("/getPostById/{id}")
 	public ResponseEntity<Post> getPost(@PathVariable Long id){
 		Post post = ps.getPost(id);
