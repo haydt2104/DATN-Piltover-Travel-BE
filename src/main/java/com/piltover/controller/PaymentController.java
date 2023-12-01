@@ -143,10 +143,10 @@ public class PaymentController {
     /* VNPay */
 
     public void successPurchase(Integer num, HttpServletResponse response) throws IOException {
-        if (num == 1) {
-            bookingDetail.getBooking().setStatus(1);
+        if (num == 0) {
+            bookingDetail.getBooking().setStatus(0);
         } else {
-            bookingDetail.getBooking().setStatus(2);
+            bookingDetail.getBooking().setStatus(1);
         }
         if (num == 2) {
             bookingDetail.getBooking().setTotalPrice(
