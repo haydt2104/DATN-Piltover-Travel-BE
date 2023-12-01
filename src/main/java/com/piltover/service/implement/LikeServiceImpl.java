@@ -33,4 +33,9 @@ public class LikeServiceImpl implements LikeService{
 		return ldao.getLike(userId, postId);
 	}
 
+	@Override
+	public Like newLike(Like entity) {
+		return ldao.saveAndFlush(entity);
+	}
+
 }

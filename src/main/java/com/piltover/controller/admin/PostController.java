@@ -78,14 +78,33 @@ public class PostController {
 	
 	@GetMapping("/checkUserLike")
 	public ResponseEntity<Boolean> checkUserLike(@RequestParam Long userId, @RequestParam Long postId){
+		boolean check = ls.checkUserLike(userId, postId);
 		
-		return ResponseEntity.ok(ls.checkUserLike(userId, postId));
+		if(check == true) {
+			return ResponseEntity.ok(true);
+		}else {
+			return ResponseEntity.ok(false);
+		}
+	}
+	
+	@PostMapping("/likePost")
+	public ResponseEntity<?> likePost(@RequestParam Long userId, @RequestParam Long postId, @RequestBody Boolean isLike){
+		Like newLike = new Like();
+		Account acc = as.findUserByID(userId);
+		Post post = ps.getPost(postId);
+		newLike.setIsLike(true);
+		newLike.setLikeUser(acc);
+		newLike.setPost(post);
+		
+		ls.newLike(newLike);
+		return ResponseEntity.ok(newLike);
 	}
 	
 	@PutMapping("/doLike")
 	public ResponseEntity<?> doLike(@RequestParam Long userId, @RequestParam Long postId, @RequestBody Boolean isLike){
 		Like entity = ls.getLike(userId, postId);
 		if (entity == null) {
+			
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}else {
 			if(isLike == true) {
@@ -117,7 +136,7 @@ public class PostController {
 	@PostMapping("/addComment")
 	public ResponseEntity<?> addComment(@RequestBody CommentDTO cmtDTO){
 		Comment cmt = new Comment();
-		Account user = as.findUserByID((long) 1234567890);
+		Account user = as.findUserByID((long) 2345673452l);
 		Post post = ps.getPost(cmtDTO.getPostId());
 		cmtDTO.setCreateAt(new Date());
 		

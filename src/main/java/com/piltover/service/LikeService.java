@@ -11,4 +11,6 @@ public interface LikeService {
 	Like doLike(Like entity);
 	
 	Like getLike(long userId, long postId);
+	
+	Like newLike(Like entity);
 ;}
