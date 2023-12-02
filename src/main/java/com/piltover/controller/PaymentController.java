@@ -59,9 +59,9 @@ public class PaymentController {
         bookingDetail = data;
         try {
             successPurchase(1, response);
-            return "http://localhost:4200/checkout/success";
+            return "http://localhost:4200/history";
         } catch (Exception e) {
-            return "http://localhost:4200/checkout/failed";
+            return "http://localhost:4200/";
         }
     }
 
@@ -103,7 +103,7 @@ public class PaymentController {
 
     @GetMapping(URL_PAYPAL_CANCEL)
     public void cancelPay(HttpServletResponse response) throws IOException {
-        response.sendRedirect("http://localhost:4200/checkout/failed");
+        response.sendRedirect("http://localhost:4200/");
     }
 
     /* Paypal */
@@ -136,17 +136,17 @@ public class PaymentController {
         if (paymentStatus == 1) {
             successPurchase(3, response);
         } else {
-            response.sendRedirect("http://localhost:4200/checkout/failed");
+            response.sendRedirect("http://localhost:4200/");
         }
     }
 
     /* VNPay */
 
     public void successPurchase(Integer num, HttpServletResponse response) throws IOException {
-        if (num == 1) {
-            bookingDetail.getBooking().setStatus(1);
+        if (num == 0) {
+            bookingDetail.getBooking().setStatus(0);
         } else {
-            bookingDetail.getBooking().setStatus(2);
+            bookingDetail.getBooking().setStatus(1);
         }
         if (num == 2) {
             bookingDetail.getBooking().setTotalPrice(
@@ -182,7 +182,7 @@ public class PaymentController {
         bookingRepository.save(bookingDetail.getBooking());
         bookingDetailRepository.save(bookingDetail);
         if (num != 1) {
-            response.sendRedirect("http://localhost:4200/checkout/success");
+            response.sendRedirect("http://localhost:4200/history");
         }
     }
 }

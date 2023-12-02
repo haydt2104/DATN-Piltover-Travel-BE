@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -35,11 +36,14 @@ public class TourPlanDetail implements Serializable {
     private TourPlan tourPlan;
 
     @Column(name = "Start_time")
+    @NotNull
     private LocalTime startTime;
 
     @Column(name = "End_time")
+    @NotNull
     private LocalTime endTime;
 
     @Column(name = "Description")
+    @NotNull
     private String description;
 }
