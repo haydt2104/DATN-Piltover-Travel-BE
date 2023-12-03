@@ -58,7 +58,7 @@ public class PaymentController {
             throws IOException {
         bookingDetail = data;
         try {
-            successPurchase(1, response);
+            successPurchase(0, response);
             return "http://localhost:4200/history";
         } catch (Exception e) {
             return "http://localhost:4200/";
