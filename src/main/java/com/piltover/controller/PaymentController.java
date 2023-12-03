@@ -171,7 +171,7 @@ public class PaymentController {
                 }
             }
         }
-        if (bookingDetail.getBooking().getDiscount() != null) {
+        if (bookingDetail.getBooking().getDiscount() != null && num != 0) {
             Discount discount = discountRepository.findById(bookingDetail.getBooking().getDiscount().getId()).get();
             discount.setAmount(discount.getAmount() - 1);
             if (discount.getAmount() == 0) {
@@ -181,7 +181,7 @@ public class PaymentController {
         }
         bookingRepository.save(bookingDetail.getBooking());
         bookingDetailRepository.save(bookingDetail);
-        if (num != 0) {
+        if (num == 0) {
             response.sendRedirect("http://localhost:4200/history");
         }
     }

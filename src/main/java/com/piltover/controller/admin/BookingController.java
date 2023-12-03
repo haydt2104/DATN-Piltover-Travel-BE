@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +29,7 @@ public class BookingController {
 
 	@Autowired
 	private BookingDetailService bds;
-	
+
 	@Autowired
 	ResponeUtil respUtill;
 
@@ -46,12 +48,17 @@ public class BookingController {
 		return bs.getOneByID(id);
 	}
 
+	@PutMapping("/edit")
+	public ResponseEntity<Booking> editBooking(@RequestBody Booking booking) {
+		return ResponseEntity.ok(this.bs.edit(booking));
+	}
+
 	@DeleteMapping("/cancel/{bid}")
 	public ResponseEntity<?> editBookingdetail(@PathVariable Long bid) {
-		System.out.println("Id of discountDelete: "+bid);
-		int newStatus=2;
-		Long upUser=(long) 1234567890;
-		bs.cancelBooking(bid,upUser,newStatus);
+		System.out.println("Id of discountDelete: " + bid);
+		int newStatus = 2;
+		Long upUser = (long) 1234567890;
+		bs.cancelBooking(bid, upUser, newStatus);
 		respUtill.putRespone("message", "Cancel booking susscess");
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
