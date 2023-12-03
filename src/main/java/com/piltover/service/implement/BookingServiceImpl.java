@@ -29,23 +29,10 @@ public class BookingServiceImpl implements BookingService {
 		return BookingRepo.findAll();
 	}
 
-	public List<Booking> getAllBookingComfirmed() {
-		return BookingRepo.findAllConfirmed();
-	}
-
-	public List<Booking> getAllBookingUnComfirm() {
-		return BookingRepo.findAllUnConfirm();
-	}
-
-	public List<Booking> getAllBookingCancel() {
-		return BookingRepo.findAllCancel();
-	}
-
 	public Booking getOneByIDQuery(Long Id) {
 		return BookingRepo.findByBookingID((Long) Id);
 	}
 	
-
 	@Override
 	public Booking getOneByID(Long id) {
 		// TODO Auto-generated method stub
@@ -74,6 +61,12 @@ public class BookingServiceImpl implements BookingService {
 	public Booking ReadHistoryByAccAndBid(String uid, Long bid) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Transactional
+	@Override
+	public void cancelBooking(Long bid, Long upUser, int newStatus) {
+		BookingRepo.cancelBooking(bid, upUser, newStatus);
 	}
 
 	

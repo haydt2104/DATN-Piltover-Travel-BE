@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.piltover.dto.request.DiscountReq;
-import com.piltover.entity.Account;
 import com.piltover.entity.Discount;
 import com.piltover.service.AccountService;
 import com.piltover.service.DiscountService;
@@ -55,20 +54,6 @@ public class DiscountController {
 		respUtill.putRespone("message", "Create discount susscess");
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
-	
-//	@PostMapping("/create")
-//	public ResponseEntity<?> createDiscount(@RequestBody Discount disc) {
-//		
-//		Account acc=as.findUserByID(Long.valueOf(2345673452l));
-//		
-//		disc.setCreateUser(acc);
-//		disc.setUpdateUser(acc);
-//		discountService.createDiscount(disc);
-//		
-//	
-//		return ResponseEntity.ok(respUtill.getRespone());
-//		
-//	}
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> Delete(@PathVariable("id") Long id){

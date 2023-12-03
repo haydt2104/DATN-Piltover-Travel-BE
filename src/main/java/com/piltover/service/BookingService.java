@@ -18,4 +18,6 @@ public interface BookingService {
 	List<Booking> ReadHistoryByAcc(Long id);
 
 	Booking ReadHistoryByAccAndBid(String uid, Long bid);
+	
+	void cancelBooking(Long bid, Long upUser,int newStatus); 
 }

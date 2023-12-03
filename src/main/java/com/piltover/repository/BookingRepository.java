@@ -5,30 +5,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.piltover.entity.Booking;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-	// Get All data of bookings => (lấy tất cả dữ liệu trong Bookings)
-	@Query("SELECT b FROM Booking b")
-	List<Booking> findAll();
-
-	// Get All data of bookings with status = 1(confirmed) => (Lấy tất danh sách
-	// khách đã liên hệ)
-	@Query("SELECT b FROM Booking b WHERE b.status = 1")
-	List<Booking> findAllConfirmed();
-
-	// Get All data of bookings with status = 0(unconfirm) => (Lấy tất danh sách
-	// khách chưa liên hệ)
-	@Query("SELECT b FROM Booking b WHERE b.status = 0")
-	List<Booking> findAllUnConfirm();
-
-	// Get All data of bookings with status = 1(confirmed) => (Lấy tất danh sách
-	// khách đã hủy)
-	@Query("SELECT b FROM Booking b WHERE b.status = 2")
-	List<Booking> findAllCancel();
-
 	@Query("SELECT b FROM Booking b WHERE b.tourDate.id = ?1")
 	List<Booking> getBookingsByTourDateId(Long tourDateId);
 
@@ -45,8 +27,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	@Query(value = "CALL ReadAllHistoryByAcc(:id)", nativeQuery = true)
 	List<Booking> ReadAllHistoryByAcc(Long id);
 
-	// @Transactional
-	// @Query(value = "CALL ReadOneHistoryByAcc`(:uid,:bid);",nativeQuery = true)
-	// Booking ReadoneHistoryByAcc(@Param("uid") Long uid,@Param("bid") Long bid);
+	@Modifying
+	@Query(value = "CALL CancelBooking(:bid,:upUser,:newStatus)", nativeQuery = true)
+	void cancelBooking(@Param("bid") Long bid, @Param("upUser") Long upUser,@Param("newStatus") int newStatus);
 
 }
