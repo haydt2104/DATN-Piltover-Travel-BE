@@ -94,7 +94,7 @@ public class PaymentController {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if (payment.getState().equals("approved")) {
-                successPurchase(2, response);
+                successPurchase(1, response);
             }
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
@@ -134,7 +134,7 @@ public class PaymentController {
         model.addAttribute("paymentTime", paymentTime);
         model.addAttribute("transactionId", transactionId);
         if (paymentStatus == 1) {
-            successPurchase(3, response);
+            successPurchase(2, response);
         } else {
             response.sendRedirect("http://localhost:4200/");
         }
@@ -148,7 +148,7 @@ public class PaymentController {
         } else {
             bookingDetail.getBooking().setStatus(1);
         }
-        if (num == 2) {
+        if (num == 1) {
             bookingDetail.getBooking().setTotalPrice(
                     bookingDetail.getAdult()
                             * bookingDetail.getBooking().getTourDate().getTour().getPrice().getAdultPrice()
@@ -181,7 +181,7 @@ public class PaymentController {
         }
         bookingRepository.save(bookingDetail.getBooking());
         bookingDetailRepository.save(bookingDetail);
-        if (num != 1) {
+        if (num != 0) {
             response.sendRedirect("http://localhost:4200/history");
         }
     }
