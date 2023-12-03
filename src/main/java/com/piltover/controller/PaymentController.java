@@ -80,8 +80,9 @@ public class PaymentController {
                     PaypalPaymentMethod.paypal,
                     PaypalPaymentIntent.sale, "payment description", cancelUrl, successUrl);
             for (Links links : payment.getLinks())
-                if (links.getRel().equals("approval_url"))
+                if (links.getRel().equals("approval_url")) {
                     return links.getHref();
+                }
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
         }
