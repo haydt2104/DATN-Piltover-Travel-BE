@@ -16,9 +16,9 @@ public class BookingDetailServiceImpl implements BookingDetailService {
 	BookingRepository bookingRepository;
 
 	@Override
-	public BookingDetail getAll(Long id) {
+	public BookingDetail getDetail(Long bid) {
 		// TODO Auto-generated method stub
-		return BookingDetailRepo.findByBookingID(id);
+		return BookingDetailRepo.findByBookingID(bid);
 	}
 
 	@Override

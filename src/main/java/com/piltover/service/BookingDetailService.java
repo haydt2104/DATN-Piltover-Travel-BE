@@ -4,7 +4,7 @@ package com.piltover.service;
 import com.piltover.entity.BookingDetail;
 
 public interface BookingDetailService {
-	BookingDetail getAll(Long id);
+	BookingDetail getDetail(Long bid);
 
 	BookingDetail editDetailOfBooking(BookingDetail bookingDetail);
 
