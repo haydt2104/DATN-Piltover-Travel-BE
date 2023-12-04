@@ -21,7 +21,7 @@ public class Role implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-    private Long id;
+    private String id;
     private String name;
     @JsonIgnore
     @OneToMany(mappedBy = "role")
