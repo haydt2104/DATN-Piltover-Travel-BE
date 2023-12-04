@@ -70,4 +70,9 @@ public class AccountServiceImpl implements AccountService {
 		return accountRepository.findById(id).get();
 	}
 
+	@Override
+	public long getId(String email) {
+		return accountRepository.findIdByEmail(email);
+	}
+
 }
