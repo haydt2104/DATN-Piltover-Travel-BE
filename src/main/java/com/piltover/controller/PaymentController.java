@@ -182,7 +182,7 @@ public class PaymentController {
         }
         bookingRepository.save(bookingDetail.getBooking());
         bookingDetailRepository.save(bookingDetail);
-        if (num == 0) {
+        if (num != 0) {
             response.sendRedirect("http://localhost:4200/history");
         }
     }
