@@ -15,7 +15,7 @@ public interface BookingService {
 
 	List<Booking> ReadAllHistoryBooking();
 
-	List<Booking> ReadHistoryByAcc(Long id);
+	List<Booking> ReadAllHistoryByAcc(String p_uname);
 
 	Booking ReadHistoryByAccAndBid(String uid, Long bid);
 	

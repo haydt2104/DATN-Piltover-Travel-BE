@@ -1,5 +1,7 @@
 package com.piltover.service.implement;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,5 @@ public class HistoryImpl implements HistoryService {
 	public History getHistoryBookingAcc(String p_uname, Long p_bookingid) {
 		return historyRepository.History_OfAccount(p_uname, p_bookingid);
 	}
-
 	
 }

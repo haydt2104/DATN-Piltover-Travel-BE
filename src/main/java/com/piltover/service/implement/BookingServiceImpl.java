@@ -52,9 +52,9 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public List<Booking> ReadHistoryByAcc(Long id) {
+	public List<Booking> ReadAllHistoryByAcc(String p_uname) {
 		// TODO Auto-generated method stub
-		return BookingRepo.ReadAllHistoryByAcc(id);
+		return BookingRepo.ReadAllHistoryByAcc(p_uname);
 	}
 
 	@Override

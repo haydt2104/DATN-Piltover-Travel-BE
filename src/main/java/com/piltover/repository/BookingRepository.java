@@ -22,10 +22,13 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	// @Procedure(name="FindAllHistory")
 	List<Booking> History_ReadAll();
 
-	@Modifying
-	@Transactional
-	@Query(value = "CALL ReadAllHistoryByAcc(:id)", nativeQuery = true)
-	List<Booking> ReadAllHistoryByAcc(Long id);
+//	@Modifying
+//	@Transactional
+//	@Query(value = "CALL ReadAllHistoryByAcc(:id)", nativeQuery = true)
+//	List<Booking> ReadAllHistoryByAcc(Long id);
+	
+	@Query(value = "CALL ReadAllHistoryByAcc(:p_uname)", nativeQuery = true)
+	List<Booking> ReadAllHistoryByAcc(@Param("p_uname") String p_uname);
 
 	@Modifying
 	@Query(value = "CALL CancelBooking(:bid,:upUser,:newStatus)", nativeQuery = true)
