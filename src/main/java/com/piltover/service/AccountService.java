@@ -26,4 +26,7 @@ public interface AccountService {
 	
 	// Lấy account vs id
 	Account findUserByID(Long id);
+	
+	//Lấy id từ email
+	long getId(String email);
 }

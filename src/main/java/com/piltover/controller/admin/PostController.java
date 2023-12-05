@@ -4,9 +4,12 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -53,6 +56,17 @@ public class PostController {
 	
 	@Autowired
 	CommentService cs;
+	
+	private String getEmail() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = auth.getName();
+		return username;
+	}
+	
+	private long getIdUser() {
+		long id = as.getId(getEmail());
+		return id;
+	}
 	
 	@GetMapping("/getAllPosts")
     public ResponseEntity<?> getAllPosts( ) {
@@ -136,7 +150,7 @@ public class PostController {
 	@PostMapping("/addComment")
 	public ResponseEntity<?> addComment(@RequestBody CommentDTO cmtDTO){
 		Comment cmt = new Comment();
-		Account user = as.findUserByID((long) 2345673452l);
+		Account user = as.findUserByID(getIdUser());
 		Post post = ps.getPost(cmtDTO.getPostId());
 		cmtDTO.setCreateAt(new Date());
 		
@@ -144,7 +158,6 @@ public class PostController {
 		cmt.setCommentUser(user);
 		cmt.setContent(cmtDTO.getContent());
 		cmt.setPost(post);
-//		System.out.println("Data: " + cmt.getPost().getId());
 		cs.addComment(cmt);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
@@ -172,7 +185,7 @@ public class PostController {
 		}
 	}
 	
-	@PutMapping("/updatePost/{id}")
+	@PutMapping("admin/updatePost/{id}")
 	public ResponseEntity<?> updatePost(@Validated @RequestBody PostDTO post, @PathVariable Long id){
 		Post entity = ps.getPost(id);
 		if(entity == null) {
@@ -181,7 +194,7 @@ public class PostController {
 			String title = post.getTitle().replaceAll("<p>", "");
 			String description = post.getDescription().replaceAll("<p>", "");
 			String content = post.getContent().replaceAll("<p>", "");
-			Account user = as.findUserByID((long) 1234567890);
+			Account user = as.findUserByID(getIdUser());
 			
 			entity.setId(id);
 			entity.setTitle(title.replaceAll("</p>", ""));
@@ -194,12 +207,12 @@ public class PostController {
 		}
 	}
 	
-	@PostMapping("/create")
+	@PostMapping("admin/create")
 	public ResponseEntity<?> createPost(@RequestBody PostDTO post){
 		String title = post.getTitle().replaceAll("<p>", "");
 		String description = post.getDescription().replaceAll("<p>", "");
 		String content = post.getContent().replaceAll("<p>", "");
-		Account user = as.findUserByID((long) 1234567890);
+		Account user = as.findUserByID(getIdUser());
 		Post entity = new Post();
 		entity.setTitle(title.replaceAll("</p>", ""));
 		entity.setDescription(description.replaceAll("</p>", ""));
@@ -207,8 +220,6 @@ public class PostController {
 		entity.setCreateTime(LocalDateTime.now());
 		entity.setCreateUser(user);
 		ps.createPost(entity);
-//		String newPostId = ps.idMostNewPost();
-		System.out.println(post.getImages());
 		for(int i = 0; i < post.getImages().size(); i++) {
 			String path = post.getImages().get(i);
 			PostImage postImg = new PostImage();
@@ -219,7 +230,7 @@ public class PostController {
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/removePost/{id}")
+	@GetMapping("admin/removePost/{id}")
 	public ResponseEntity<?> removePost(@PathVariable Long id){
 		Post entity = ps.getPost(id);
 		if(entity == null) {
