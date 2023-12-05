@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 
 import com.piltover.entity.Account;
 import com.piltover.repository.AccountRepository;
+import com.piltover.repository.AuthorityRepository;
 import com.piltover.service.AccountService;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 	@Autowired
 	AccountRepository accountRepository;
+	
+	@Autowired 
+	AuthorityRepository authorityRepository;
 
 	@Override
 	public List<Account> getAllAccountActive() {
@@ -65,5 +69,10 @@ public class AccountServiceImpl implements AccountService {
 	public Account findUserByID(Long id) {
 		return accountRepository.findById(id).get();
 	}
-	
+
+	@Override
+	public long getId(String email) {
+		return accountRepository.findIdByEmail(email);
+	}
+
 }

@@ -26,7 +26,7 @@ public class PaypalService {
 			String description, String cancelUrl, String successUrl) throws PayPalRESTException {
 		Amount amount = new Amount();
 		amount.setCurrency(currency);
-		amount.setTotal(String.format("%.2f", total));
+		amount.setTotal(String.format("%.3f", total));
 
 		Transaction transaction = new Transaction();
 		transaction.setDescription(description);
