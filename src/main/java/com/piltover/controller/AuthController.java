@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -41,28 +41,23 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody JwtRequestModel user) throws Exception {
 		
-		try {
-			System.out.println("User: " + user.getUsername() +" - "+user.getPassword());
-			List<String> roleNames = authService.getRolesByUsername(user.getUsername());
-			System.out.println("Role names:" +roleNames);
-			System.out.println("Try run...");
-			
+		try {		
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(user.getUsername() , user.getPassword()));
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			List<GrantedAuthority> authList = new ArrayList<>();
 			// Check if the user is authenticated
 			if (authentication != null && authentication.isAuthenticated()) {
-				List<String> roleNames2 = authService.getRolesByUsername(user.getUsername());
-				System.out.println("Role names:" +roleNames2);
+				List<String> roleNames = authService.getRolesByUsername(user.getUsername());
+				System.out.println("Role names:" +roleNames);
 
 				for (String roleName : roleNames) {
 					authList.add(new SimpleGrantedAuthority("ROLE_" + roleName));
 				}
 
-//				if (!roleNames.contains("USER")) {
-//					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-//				}
+				if (!roleNames.contains("USER")) {
+					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+				}
 			}
 		} catch (DisabledException e) {
 			throw new Exception("USER_DISABLED", e);

@@ -1,12 +1,17 @@
 package com.piltover.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,10 +35,19 @@ public class TestController {
 		
 	}
 	
-	@GetMapping("/encode")
-	public ResponseEntity<?> encode(@RequestBody String password) {
-		String encode = pe.encode(password);
-		return ResponseEntity.ok(encode);
+	@PostMapping("/encode")
+	public ResponseEntity<List<String>> encode(@RequestBody List<String> passwordList) {
+		List<String> passwordEncode = new ArrayList<>();
+		for (String pass : passwordList) {
+			System.out.println(pass);
+			for (String password : passwordList) {
+				String passe = pe.encode(password);
+				passwordEncode.add(passe);
+				System.out.println(passe);
+			}
+		}
+		
+		return ResponseEntity.ok(passwordEncode);
 		
 	}
 	
