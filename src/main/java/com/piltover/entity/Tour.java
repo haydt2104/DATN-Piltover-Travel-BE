@@ -27,7 +27,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "tours", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "PriceID", "CreateID", "HotelID",  "TransportID"})
+        @UniqueConstraint(columnNames = { "PriceID", "CreateID", "HotelID", "TransportID" })
 })
 public class Tour implements Serializable {
     /**
@@ -50,7 +50,7 @@ public class Tour implements Serializable {
     @ManyToOne
     @JoinColumn(name = "TransportID")
     private Transport transport;
-    
+
     @ManyToOne
     @JoinColumn(name = "HotelID")
     private Hotel hotel;
@@ -71,9 +71,9 @@ public class Tour implements Serializable {
     private Integer availableSpaces;
 
     @DateTimeFormat(iso = ISO.DATE_TIME)
-    @Temporal(TemporalType.DATE)
-    @Column(name = "Create_at")
-    private Date createTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "Create_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createTime = new Date();
 
     @Column(name = "Active")
     private Boolean active;
