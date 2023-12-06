@@ -38,7 +38,7 @@ import com.piltover.service.PostService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/post")
+@RequestMapping("/api")
 @Transactional
 public class PostController {
 
@@ -68,16 +68,16 @@ public class PostController {
 		return id;
 	}
 	
-	@GetMapping("/getAllPosts")
+	@GetMapping("/post/getAllPosts")
     public ResponseEntity<?> getAllPosts( ) {
         return ResponseEntity.ok(ps.getAllPost());
     }
 	
-	@GetMapping("/getRandomPosts")
+	@GetMapping("/post/getRandomPosts")
 	public ResponseEntity<?> getRandomPosts(){
 		return ResponseEntity.ok(ps.getRandomPost());
 	}
-	@GetMapping("/getPostById/{id}")
+	@GetMapping("/post/getPostById/{id}")
 	public ResponseEntity<Post> getPost(@PathVariable Long id){
 		Post post = ps.getPost(id);
 		List<PostImage> img = is.postImg(id);
@@ -85,14 +85,14 @@ public class PostController {
 		return ResponseEntity.ok(post);
 	}
 	
-	@GetMapping("/getLikePosts/{id}")
+	@GetMapping("/post/getLikePosts/{id}")
 	public ResponseEntity<Integer> getLikePosts(@PathVariable Long id) {
         return ResponseEntity.ok(ls.getCountLikePostId(id));
     }
 	
-	@GetMapping("/checkUserLike")
-	public ResponseEntity<Boolean> checkUserLike(@RequestParam Long userId, @RequestParam Long postId){
-		boolean check = ls.checkUserLike(userId, postId);
+	@GetMapping("/post/checkUserLike")
+	public ResponseEntity<Boolean> checkUserLike(@RequestParam Long postId){
+		boolean check = ls.checkUserLike(getIdUser(), postId);
 		
 		if(check == true) {
 			return ResponseEntity.ok(true);
@@ -101,10 +101,10 @@ public class PostController {
 		}
 	}
 	
-	@PostMapping("/likePost")
-	public ResponseEntity<?> likePost(@RequestParam Long userId, @RequestParam Long postId, @RequestBody Boolean isLike){
+	@PostMapping("/post/likePost")
+	public ResponseEntity<?> likePost(@RequestParam Long postId, @RequestBody Boolean isLike){
 		Like newLike = new Like();
-		Account acc = as.findUserByID(userId);
+		Account acc = as.findUserByID(getIdUser());
 		Post post = ps.getPost(postId);
 		newLike.setIsLike(true);
 		newLike.setLikeUser(acc);
@@ -114,9 +114,9 @@ public class PostController {
 		return ResponseEntity.ok(newLike);
 	}
 	
-	@PutMapping("/doLike")
-	public ResponseEntity<?> doLike(@RequestParam Long userId, @RequestParam Long postId, @RequestBody Boolean isLike){
-		Like entity = ls.getLike(userId, postId);
+	@PutMapping("/post/doLike")
+	public ResponseEntity<?> doLike(@RequestParam Long postId, @RequestBody Boolean isLike){
+		Like entity = ls.getLike(getIdUser(), postId);
 		if (entity == null) {
 			
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -132,22 +132,22 @@ public class PostController {
 		}
 	}
 	
-	@GetMapping("/getPostImgById/{id}")
+	@GetMapping("/post/getPostImgById/{id}")
 	public ResponseEntity<?> getPostImageById(@PathVariable Long id){
 		return ResponseEntity.ok(is.postImg(id));
 	}
 	
-	@GetMapping("/setThumbnailPost/{id}")
+	@GetMapping("/post/setThumbnailPost/{id}")
 	public ResponseEntity<?> setThumbnailPost(@PathVariable Long id){
 		return ResponseEntity.ok(is.postImg(id).get(0));
 	}
 	
-	@GetMapping("/getCommentPost/{id}")
+	@GetMapping("/post/getCommentPost/{id}")
 	public ResponseEntity<?> getCommentPost(@PathVariable Long id){
 		return ResponseEntity.ok(cs.getCommentPost(id));
 	}
 	
-	@PostMapping("/addComment")
+	@PostMapping("/post/addComment")
 	public ResponseEntity<?> addComment(@RequestBody CommentDTO cmtDTO){
 		Comment cmt = new Comment();
 		Account user = as.findUserByID(getIdUser());
@@ -162,7 +162,7 @@ public class PostController {
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/removeComment/{id}")
+	@GetMapping("/post/removeComment/{id}")
 	public ResponseEntity<?> removeComment(@PathVariable Long id){
 		Comment cmt = cs.fimdCommentById(id);
 		if(cmt == null) {
@@ -173,7 +173,7 @@ public class PostController {
 		}
 	}
 
-	@PutMapping("/updateComment/{id}")
+	@PutMapping("/post/updateComment/{id}")
 	public ResponseEntity<?> updateComment(@PathVariable Long id, @RequestBody CommentDTO cmtDTO){
 		Comment entity = cs.fimdCommentById(id);
 		if (entity == null) {
@@ -185,7 +185,7 @@ public class PostController {
 		}
 	}
 	
-	@PutMapping("admin/updatePost/{id}")
+	@PutMapping("/admin/post/updatePost/{id}")
 	public ResponseEntity<?> updatePost(@Validated @RequestBody PostDTO post, @PathVariable Long id){
 		Post entity = ps.getPost(id);
 		if(entity == null) {
@@ -207,7 +207,7 @@ public class PostController {
 		}
 	}
 	
-	@PostMapping("admin/create")
+	@PostMapping("/admin/post/create")
 	public ResponseEntity<?> createPost(@RequestBody PostDTO post){
 		String title = post.getTitle().replaceAll("<p>", "");
 		String description = post.getDescription().replaceAll("<p>", "");
@@ -230,7 +230,7 @@ public class PostController {
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
-	@GetMapping("admin/removePost/{id}")
+	@GetMapping("/admin/post/removePost/{id}")
 	public ResponseEntity<?> removePost(@PathVariable Long id){
 		Post entity = ps.getPost(id);
 		if(entity == null) {
