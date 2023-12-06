@@ -17,18 +17,12 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	@Query("SELECT bd FROM Booking bd WHERE bd.id=?1")
 	Booking findByBookingID(Long id);
 
-	@Transactional
-	@Query(value = "CALL FindAllHistory()", nativeQuery = true)
-	// @Procedure(name="FindAllHistory")
-	List<Booking> History_ReadAll();
-
 	@Modifying
-	@Transactional
-	@Query(value = "CALL ReadAllHistoryByAcc(:id)", nativeQuery = true)
-	List<Booking> ReadAllHistoryByAcc(Long id);
-
-	@Modifying
-	@Query(value = "CALL CancelBooking(:bid,:upUser,:newStatus)", nativeQuery = true)
+	@Query(value = "CALL Booking_Cancel(:bid,:upUser,:newStatus)", nativeQuery = true)
 	void cancelBooking(@Param("bid") Long bid, @Param("upUser") Long upUser,@Param("newStatus") int newStatus);
 
+//	History
+	@Transactional
+	@Query(value = "CALL History_ReadAll(:p_uname)", nativeQuery = true)
+	List<Booking> History_ReadAll(@Param("p_uname") Long p_uname);
 }
