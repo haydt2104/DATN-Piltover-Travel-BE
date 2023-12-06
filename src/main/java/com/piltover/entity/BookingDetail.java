@@ -50,6 +50,6 @@ public class BookingDetail implements Serializable {
 
     @Column(name = "Booking_time")
     @DateTimeFormat(iso = ISO.DATE_TIME)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date bookingTime = new Date();
 }

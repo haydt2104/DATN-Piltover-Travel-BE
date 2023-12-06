@@ -1,6 +1,7 @@
 package com.piltover.controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,6 +58,8 @@ public class PaymentController {
     public String nopay(HttpServletRequest request, HttpServletResponse response, @RequestBody BookingDetail data)
             throws IOException {
         bookingDetail = data;
+        bookingDetail.getBooking().setCreateTime(new Date());
+        bookingDetail.getBooking().setUpdateTime(new Date());
         try {
             successPurchase(0, response);
             return "http://localhost:4200/history";
@@ -73,6 +76,8 @@ public class PaymentController {
     @PostMapping("/paypal")
     public String pay(HttpServletRequest request, @RequestBody BookingDetail data) {
         bookingDetail = data;
+        bookingDetail.getBooking().setCreateTime(new Date());
+        bookingDetail.getBooking().setUpdateTime(new Date());
         String cancelUrl = PaypalUtils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
         String successUrl = PaypalUtils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;
         try {
@@ -114,6 +119,8 @@ public class PaymentController {
     @PostMapping("/vnpay")
     public String submidOrder(HttpServletRequest request, @RequestBody BookingDetail data) {
         bookingDetail = data;
+        bookingDetail.getBooking().setCreateTime(new Date());
+        bookingDetail.getBooking().setUpdateTime(new Date());
         String orderInfo = "Giao dịch Piltover";
         String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         String vnpayUrl = vnPayService.createOrder(data.getBooking().getTotalPrice().intValue(), orderInfo,

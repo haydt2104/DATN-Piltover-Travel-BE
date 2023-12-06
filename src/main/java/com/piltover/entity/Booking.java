@@ -57,7 +57,7 @@ public class Booking implements Serializable {
     private Integer totalPassengers;
 
     @DateTimeFormat(iso = ISO.DATE)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Create_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createTime = new Date();
 
@@ -66,7 +66,7 @@ public class Booking implements Serializable {
     private Account updateUser;
 
     @DateTimeFormat(iso = ISO.DATE)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Update_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date updateTime = new Date();
 
