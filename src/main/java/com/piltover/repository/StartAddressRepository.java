@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.query.Procedure;
 
 import com.piltover.dto.response.LoadStartAddress;
 
-public interface StartAddressRepository extends JpaRepository<LoadStartAddress, Long>{
+public interface StartAddressRepository extends JpaRepository<LoadStartAddress, String>{
 	@Procedure("CallStartAddress")
 	List<LoadStartAddress> CallStartAddress();
 }

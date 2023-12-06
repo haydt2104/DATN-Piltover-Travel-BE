@@ -25,7 +25,7 @@ import com.piltover.util.ResponeUtil;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/discount")
+@RequestMapping("/api")
 public class DiscountController {
 	
 
@@ -38,17 +38,17 @@ public class DiscountController {
 	@Autowired
 	ResponeUtil respUtill;
 
-	@GetMapping("/getAll")
+	@GetMapping("/discount/getAll")
 	public List<Discount> ReadAllDiscount() {
 		return discountService.ReadAllDiscounts();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/discount/{id}")
 	public Discount readOneByDiscountID(@PathVariable Long id) {
 		return discountService.ReadOneByDiscountID(id);
 	}
 
-	@PutMapping("/update/{did}")
+	@PutMapping("/admin/discount/update/{did}")
 	public ResponseEntity<?> Update(@PathVariable("did") Long id, @RequestBody Discount_UpdateReq request) {
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,7 +64,7 @@ public class DiscountController {
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
 	
-	@PostMapping("/insert")
+	@PostMapping("/admin/discount/insert")
 	public ResponseEntity<?> insertDiscount(@RequestBody DiscountReq dto) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
@@ -77,7 +77,7 @@ public class DiscountController {
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/admin/discount/delete/{id}")
 	public ResponseEntity<?> Delete(@PathVariable("id") Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
@@ -90,13 +90,13 @@ public class DiscountController {
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
 	
-	@GetMapping("/check/{id}")
+	@GetMapping("/admin/discount/check/{id}")
 	public ResponseEntity<?> check(@PathVariable("id") Long id) {
 //		respUtill.putRespone("message", "Delete discount susscess");
 		return ResponseEntity.ok(discountService.checkAmountById(id));
 	}
 	
-	@DeleteMapping("/active/{id}")
+	@DeleteMapping("/admin/discount/active/{id}")
 	public ResponseEntity<?> Active(@PathVariable("id") Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
@@ -109,7 +109,7 @@ public class DiscountController {
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
 	
-	@PutMapping("/addAmount/{did}")
+	@PutMapping("/admin/discount/addAmount/{did}")
 	public ResponseEntity<?> Active(@PathVariable("did") Long id,@RequestBody int Amount) {
 		
 		discountService.addAmount(id, Amount);
@@ -118,7 +118,7 @@ public class DiscountController {
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
 	
-	@GetMapping("/checkd/{id}")
+	@GetMapping("/admin/discount/checkd/{id}")
 	public ResponseEntity<?> check_Delete(@PathVariable("id")Long id) {
 		return ResponseEntity.ok(discountService.checkDelete(id));
 				
