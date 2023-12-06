@@ -1,5 +1,6 @@
 package com.piltover.service.implement;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class TransportServiceImpl implements TransportService {
 
     @Override
     public void putTransport(Transport transport) {
+        transport.setUpdateTime(new Date());
         transportRepository.save(transport);
     }
 

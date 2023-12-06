@@ -25,7 +25,7 @@ import com.piltover.util.ResponeUtil;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/admin/booking")
+@RequestMapping("/api")
 public class BookingController {
 	@Autowired
 	private BookingService bs;
@@ -39,7 +39,7 @@ public class BookingController {
 	@Autowired
 	ResponeUtil respUtill;
 
-	@GetMapping("/all")
+	@GetMapping("/booking/all")
 	public ResponseEntity<?> ReadAll() {
 		return ResponseEntity.ok(bs.Booking_ReadAll());
 	}
@@ -49,7 +49,7 @@ public class BookingController {
 		return bds.getDetail(id);
 	}
 
-	@DeleteMapping("/cancel/{bid}")
+	@DeleteMapping("/admin/booking/cancel/{bid}")
 	public ResponseEntity<?> editBookingdetail(@PathVariable Long bid) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
@@ -64,13 +64,13 @@ public class BookingController {
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
 
-	@GetMapping("")
+	@GetMapping("/admin/booking")
 	public ResponseEntity<List<Booking>> getBookingsByTourDate(@RequestParam("tourDateId") Long id) {
 		return ResponseEntity.ok(bs.getBookingsByTourDateId(id));
 	}
 	
 
-	@PutMapping("/edit")
+	@PutMapping("/admin/booking/edit")
 	public ResponseEntity<Booking> editBooking(@RequestBody Booking booking) {
 		return ResponseEntity.ok(this.bs.edit(booking));
 	}

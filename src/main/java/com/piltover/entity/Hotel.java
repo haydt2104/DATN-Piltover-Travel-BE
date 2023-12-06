@@ -27,7 +27,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "hotels", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "Create_User","Update_User" })
+        @UniqueConstraint(columnNames = { "Create_User", "Update_User" })
 })
 public class Hotel implements Serializable {
     /**
@@ -54,19 +54,19 @@ public class Hotel implements Serializable {
     @JoinColumn(name = "Create_User")
     private Account createUser;
 
-    @DateTimeFormat(iso = ISO.DATE)
-    @Temporal(TemporalType.DATE)
-    @Column(name = "Create_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "Create_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createTime = new Date();
 
     @ManyToOne
     @JoinColumn(name = "Update_User")
     private Account updateUser;
 
-    @DateTimeFormat(iso = ISO.DATE)
-    @Temporal(TemporalType.DATE)
-    @Column(name = "Update_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date updateTime;
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "Update_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date updateTime = new Date();
 
     @Column(name = "is_Delete")
     private Boolean isDelete = false;

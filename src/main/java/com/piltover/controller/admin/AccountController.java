@@ -3,6 +3,8 @@ package com.piltover.controller.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import com.piltover.entity.Account;
 import com.piltover.service.AccountService;
 import com.piltover.util.IDGenerator;
 import com.piltover.util.ResponeUtil;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin("*")
@@ -68,4 +71,13 @@ public class AccountController {
 	public ResponseEntity<?> testRespone() {
 		return ResponseEntity.ok(responeUtil.getRespone());
 	}
+
+	@GetMapping("/currentAccount")
+	public ResponseEntity<Account> getCurrentAccount() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Long upUser = accountService.getId(username);
+		return ResponseEntity.ok(accountService.findUserByID(upUser));
+	}
+
 }
