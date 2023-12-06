@@ -5,19 +5,15 @@ import java.util.List;
 import com.piltover.entity.Booking;
 
 public interface BookingService {
-	List<Booking> getAllBooking();
+	
+	List<Booking> Booking_ReadAll();
 
 	List<Booking> getBookingsByTourDateId(Long tourDateId);
-
-	Booking getOneByID(Long id);
-
-	Booking edit(Booking booking);
-
-	List<Booking> ReadAllHistoryBooking();
-
-	List<Booking> ReadAllHistoryByAcc(String p_uname);
-
-	Booking ReadHistoryByAccAndBid(String uid, Long bid);
 	
 	void cancelBooking(Long bid, Long upUser,int newStatus); 
+	
+//	History 
+	public List<Booking> ReadAll(Long p_uname);
+	
+	Booking edit(Booking booking);
 }

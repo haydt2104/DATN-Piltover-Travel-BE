@@ -24,50 +24,33 @@ public class BookingServiceImpl implements BookingService {
 		return BookingRepo.getBookingsByTourDateId(tourDateId);
 	}
 
-	@Override
-	public List<Booking> getAllBooking() {
-		return BookingRepo.findAll();
-	}
-
 	public Booking getOneByIDQuery(Long Id) {
 		return BookingRepo.findByBookingID((Long) Id);
 	}
-	
-	@Override
-	public Booking getOneByID(Long id) {
-		// TODO Auto-generated method stub
-		return BookingRepo.findById(id).get();
-	}
 
-	@Override
-	public Booking edit(Booking booking) {
-		// TODO Auto-generated method stub
-		return BookingRepo.save(booking);
-	}
-	
-	@Override
-	@Transactional
-	public List<Booking> ReadAllHistoryBooking() {
-		return BookingRepo.History_ReadAll();
-	}
-
-	@Override
-	public List<Booking> ReadAllHistoryByAcc(String p_uname) {
-		// TODO Auto-generated method stub
-		return BookingRepo.ReadAllHistoryByAcc(p_uname);
-	}
-
-	@Override
-	public Booking ReadHistoryByAccAndBid(String uid, Long bid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	// dont touch
 	@Transactional
 	@Override
 	public void cancelBooking(Long bid, Long upUser, int newStatus) {
 		BookingRepo.cancelBooking(bid, upUser, newStatus);
 	}
 
-	
+	// History
+	@Override
+	public List<Booking> ReadAll(Long p_uname) {
+		// TODO Auto-generated method stub
+		return BookingRepo.History_ReadAll(p_uname);
+	}
+
+	@Override
+	public Booking edit(Booking booking) {
+		return BookingRepo.save(booking);
+	}
+
+	@Override
+	public List<Booking> Booking_ReadAll() {
+		// TODO Auto-generated method stub
+		return BookingRepo.findAll();
+	}
+
 }

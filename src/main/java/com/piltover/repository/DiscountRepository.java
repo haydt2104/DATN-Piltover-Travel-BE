@@ -10,36 +10,47 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.piltover.dto.request.DiscountReq;
+import com.piltover.dto.request.Discount_UpdateReq;
 import com.piltover.entity.Discount;
 
 public interface DiscountRepository extends JpaRepository<Discount, Long> {
 	@Transactional
-	@Query(value = "SELECT * FROM discounts", nativeQuery = true)
-	List<Discount> ReadAllDiscountNoDelete();
+	@Query(value = "CALL Discount_ReadAll()", nativeQuery = true)
+	List<Discount> ReadAllDiscount();
 
-	@Query(value = "CALL Discount_ReadOneByID(:id)", nativeQuery = true)
-	Discount readOneByDiscountNoDelete(@Param("id") Long id);
+	@Query(value = "CALL Discount_ReadOneByID(:id_in)", nativeQuery = true)
+	Discount readOneByDiscountNoDelete(@Param("id_in") Long id);
 
-//	@Modifying
-//	@Query(value = " INSERT INTO discounts "
-//			+ " (`Name`, `Percentage`, `Amount`, `Code`, `Create_User`, `Create_at`, `Update_at`, `Update_User`, `is_Delete`, `min`, `max`)"
-//			+ "   VALUES(?1,?2,?3,?4,?5,?6,?7,0,?9,?10,?11)",nativeQuery = true)
-//	void insertDiscount(String Name, float Percentage, int Amount, String Code,int Create_User, Date Create_at, Date Update_at, float min,float max);
+	@Modifying
+	@Transactional
+	@Query(value = "CALL Discount_Insert(:#{#discountDTO.name}, :#{#discountDTO.percentage},:#{#discountDTO.amount}, :#{#discountDTO.create_User}, :#{#discountDTO.min}, :#{#discountDTO.max})", nativeQuery = true)
+	void insertDiscount(DiscountReq discountDTO);
 
-//	@Modifying
-//	@Transactional
-////	@Procedure("InsertDiscount")
-//	@Query(value = "CALL InsertDiscount(:Name,:Percentage,:Amount,:Create_User,:min,:max)", nativeQuery = true)
-//	void insertDiscount(@Param("Name") String Name, @Param("Percentage") float Percentage, @Param("Amount") int Amount,
-//			@Param("Create_User") Long Create_User, @Param("min") float min, @Param("max") float max);
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE discounts d SET d.is_Delete=1,d.Update_User=:Update_User WHERE d.id =:discountId", nativeQuery = true)
+	void deleteDiscount(@Param("discountId") Long id,@Param("Update_User") Long updateUser);
 	
 	@Modifying
 	@Transactional
-	@Query(value = "CALL InsertDiscount(:#{#discountDTO.name}, :#{#discountDTO.percentage},:#{#discountDTO.amount}, :#{#discountDTO.create_User}, :#{#discountDTO.min}, :#{#discountDTO.max})",nativeQuery = true)
-	void insertDiscount(DiscountReq discountDTO);	
+	@Query(value = "UPDATE discounts d SET d.is_Delete=0,d.Update_User=:Update_User WHERE d.id =:discountId", nativeQuery = true)
+	void activeDiscount(@Param("discountId") Long id,@Param("Update_User") Long updateUser);
 
-	@Modifying
 	@Transactional
-	@Query(value = "UPDATE discounts d SET d.is_Delete=1 WHERE d.id =:discountId", nativeQuery = true)
-	void deleteDiscount(@Param("discountId") Long id);
+	@Modifying
+	@Query(value="CALL Discount_Update(:did, :#{#discountDTO.name}, :#{#discountDTO.percentage},:#{#discountDTO.amount}, :#{#discountDTO.Update_User}, :#{#discountDTO.min}, :#{#discountDTO.max})",nativeQuery = true)
+	void updateDiscount1(@Param("did") Long id,Discount_UpdateReq discountDTO);
+	
+	@Transactional
+	@Query(value = "SELECT Amount FROM discounts where discounts.id=:id",nativeQuery = true)
+	Integer checkAmount(@Param("id") Long id);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE discounts SET Amount=:num WHERE Id =:id;",nativeQuery = true)
+	Discount addAmount(@Param("id") Long id,@Param("num") int num);
+	
+	@Transactional
+	@Query(value = "select is_delete from discounts where discounts.id=:id",nativeQuery = true)
+	Boolean check_delete(@Param("id") Long id);
 }
