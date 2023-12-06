@@ -3,7 +3,9 @@ package com.piltover.service.implement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.piltover.entity.BookingDetail;
 import com.piltover.entity.History;
+import com.piltover.repository.BookingDetailRepository;
 import com.piltover.repository.revenue.HistoryRepository;
 import com.piltover.service.HistoryService;
 
@@ -12,10 +14,10 @@ import com.piltover.service.HistoryService;
 public class HistoryImpl implements HistoryService {
 
 	@Autowired
-	private HistoryRepository historyRepository;	
+	private BookingDetailRepository historyRepository;	
 
 	@Override
-	public History ReadOne(String p_uname, Long p_bookingid) {
+	public BookingDetail ReadOne(Long p_uname, Long p_bookingid) {
 		// TODO Auto-generated method stub
 		return historyRepository.History_ReadOne(p_uname, p_bookingid);
 	}
