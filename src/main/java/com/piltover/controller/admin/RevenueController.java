@@ -15,7 +15,7 @@ import com.piltover.service.RevenueService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/revenue")
+@RequestMapping("/api/admin/revenue")
 public class RevenueController {
 	@Autowired
 	RevenueService service;
