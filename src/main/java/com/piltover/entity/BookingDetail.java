@@ -27,11 +27,11 @@ import lombok.Data;
 })
 public class BookingDetail implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -50,6 +50,6 @@ public class BookingDetail implements Serializable {
 
     @Column(name = "Booking_time")
     @DateTimeFormat(iso = ISO.DATE_TIME)
-	@Temporal(TemporalType.DATE)
-    private Date bookingTime;
+    @Temporal(TemporalType.DATE)
+    private Date bookingTime = new Date();
 }

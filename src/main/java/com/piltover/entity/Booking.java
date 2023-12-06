@@ -55,21 +55,21 @@ public class Booking implements Serializable {
 
     @Column(name = "Total_passengers")
     private Integer totalPassengers;
-    
+
     @DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
-    @Column(name = "Create_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "Create_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createTime = new Date();
-    
+
     @ManyToOne
     @JoinColumn(name = "Update_User")
     private Account updateUser;
-    
+
     @DateTimeFormat(iso = ISO.DATE)
-	@Temporal(TemporalType.DATE)
-    @Column(name = "Update_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date updateTime;
-    
+    @Temporal(TemporalType.DATE)
+    @Column(name = "Update_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date updateTime = new Date();
+
     @Column(name = "Status")
     private Integer status;
 
