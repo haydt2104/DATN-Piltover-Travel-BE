@@ -20,32 +20,32 @@ import com.piltover.service.TourDateService;
 
 @CrossOrigin("*")
 @RestController()
-@RequestMapping("/api/tour_date")
+@RequestMapping("/api")
 public class TourDateController {
     @Autowired
     TourDateService tourDateService;
 
-    @GetMapping("")
+    @GetMapping("/tour_date")
     public ResponseEntity<List<TourDate>> getDateByTourId(@RequestParam("tourId") Long tourId) {
         return ResponseEntity.ok(tourDateService.getTourDateByTourId(tourId));
     }
 
-    @GetMapping("/{tourDateId}")
+    @GetMapping("/tour_date/{tourDateId}")
     public ResponseEntity<TourDate> getTourDate(@PathVariable("tourDateId") Long tourDateId) {
         return ResponseEntity.ok(tourDateService.getTourDate(tourDateId));
     }
 
-    @PostMapping("")
+    @PostMapping("/admin/tour_date")
     public void postTourDate(@RequestBody TourDate tourDate) {
         tourDateService.postTourDate(tourDate);
     }
 
-    @PutMapping("")
+    @PutMapping("/admin/tour_date")
     public void putTourDate(@RequestBody TourDate tourDate) {
         tourDateService.putTourDate(tourDate);
     }
 
-    @DeleteMapping("/{tourDateId}")
+    @DeleteMapping("/admin/tour_date/{tourDateId}")
     public void deleteTourDate(@PathVariable("tourDateId") Long tourDateId) {
         tourDateService.deleteTourDate(tourDateId);
     }

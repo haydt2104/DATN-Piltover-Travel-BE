@@ -20,37 +20,37 @@ import com.piltover.service.TourPlanDetailService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/tour_plan_detail")
+@RequestMapping("/api")
 public class TourPlanDetailController {
     @Autowired
     TourPlanDetailService tourPlanDetailService;
 
-    @GetMapping("/all")
+    @GetMapping("/tour_plan_detail/all")
     public ResponseEntity<List<TourPlanDetail>> getAllTourPlans() {
         return ResponseEntity.ok(tourPlanDetailService.getAll());
     }
 
-    @GetMapping("/{tourDetailId}")
+    @GetMapping("/tour_plan_detail/{tourDetailId}")
     public ResponseEntity<TourPlanDetail> getTourPlanDetail(@PathVariable("tourDetailId") Long tourDetailId) {
         return ResponseEntity.ok(tourPlanDetailService.getById(tourDetailId));
     }
 
-    @GetMapping("")
+    @GetMapping("/tour_plan_detail")
     public ResponseEntity<List<TourPlanDetail>> getAllTourPlans(@RequestParam("tourPlanId") Long id) {
         return ResponseEntity.ok(tourPlanDetailService.getTourPlanDetailListByTourPlanId(id));
     }
 
-    @PostMapping("")
+    @PostMapping("/admin/tour_plan_detail")
     public void postPlanDetail(@RequestBody TourPlanDetail tourPlanDetail) {
         tourPlanDetailService.postPlanDetail(tourPlanDetail);
     }
 
-    @PutMapping("")
+    @PutMapping("/admin/tour_plan_detail")
     public void putPlanDetail(@RequestBody TourPlanDetail tourPlanDetail) {
         tourPlanDetailService.putPlanDetail(tourPlanDetail);
     }
 
-    @DeleteMapping("/{tourDetailId}")
+    @DeleteMapping("/admin/tour_plan_detail/{tourDetailId}")
     public void deletePlanDetail(@PathVariable("tourDetailId") Long tourPlanDetailId) {
         tourPlanDetailService.deleteTourPlan(tourPlanDetailId);
     }

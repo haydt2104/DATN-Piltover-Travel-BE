@@ -20,27 +20,27 @@ import com.piltover.service.TourImageService;
 
 @CrossOrigin("*")
 @RestController()
-@RequestMapping("/api/tour_image")
+@RequestMapping("/api")
 public class TourImageController {
     @Autowired
     TourImageService tourImageService;
 
-    @GetMapping("")
+    @GetMapping("/tour_image")
     public ResponseEntity<List<TourImage>> getImageByTourId(@RequestParam("tourId") Long tourId) {
         return ResponseEntity.ok(tourImageService.getTourImagesByTourId(tourId));
     }
 
-    @PostMapping("")
+    @PostMapping("/admin/tour_image")
     public void postTourImage(@RequestBody TourImage tourImage) {
         tourImageService.postTourImage(tourImage);
     }
 
-    @PutMapping("")
+    @PutMapping("/admin/tour_image")
     public void putTourImage(@RequestBody TourImage tourImage) {
         tourImageService.putTourImage(tourImage);
     }
 
-    @DeleteMapping("/{tourId}")
+    @DeleteMapping("/admin/tour_image/{tourId}")
     public void deleteTour(@PathVariable("tourId") Long tourId) {
         tourImageService.deleteTourImage(tourId);
     }
