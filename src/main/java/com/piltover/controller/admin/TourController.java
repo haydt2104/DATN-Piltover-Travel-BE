@@ -19,32 +19,32 @@ import com.piltover.service.TourService;
 
 @CrossOrigin("*")
 @RestController()
-@RequestMapping("/api/tour")
+@RequestMapping("/api")
 public class TourController {
     @Autowired
     TourService tourService;
 
-    @GetMapping("/all")
+    @GetMapping("/tour/all")
     public ResponseEntity<List<Tour>> getAllTour() {
         return ResponseEntity.ok(tourService.getTourList());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/tour/{id}")
     public ResponseEntity<Tour> getTourById(@PathVariable("id") Long tourId) {
         return ResponseEntity.ok(tourService.getTourById(tourId));
     }
 
-    @PostMapping("")
+    @PostMapping("/admin/tour")
     public void postTour(@RequestBody Tour tour) {
         tourService.postTour(tour);
     }
 
-    @PutMapping("")
+    @PutMapping("/admin/tour")
     public void putTour(@RequestBody Tour tour) {
         tourService.putTour(tour);
     }
 
-    @DeleteMapping("/{tourId}")
+    @DeleteMapping("/admin/tour/{tourId}")
     public void deleteTour(@PathVariable("tourId") Long tourId) {
         tourService.deleteTour(tourId);
     }

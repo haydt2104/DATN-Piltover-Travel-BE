@@ -20,27 +20,27 @@ import com.piltover.service.TourPlanService;
 
 @CrossOrigin("*")
 @RestController()
-@RequestMapping("/api/tour_plan")
+@RequestMapping("/api")
 public class TourPlanController {
     @Autowired
     TourPlanService tourPlanService;
 
-    @GetMapping("/all")
+    @GetMapping("/tour_plan/all")
     public ResponseEntity<List<TourPlan>> getAll() {
         return ResponseEntity.ok(tourPlanService.getAll());
     }
 
-    @GetMapping("/{tourPlanId}")
+    @GetMapping("/tour_plan/{tourPlanId}")
     public ResponseEntity<TourPlan> getTourPlan(@PathVariable("tourPlanId") Long tourPlanId) {
         return ResponseEntity.ok(tourPlanService.getById(tourPlanId));
     }
 
-    @GetMapping("")
+    @GetMapping("/admin/tour_plan")
     public ResponseEntity<List<TourPlan>> getTourPlansByTourId(@RequestParam("tourDateId") Long id) {
         return ResponseEntity.ok(tourPlanService.getTourPlansByDateId(id));
     }
 
-    @PostMapping("")
+    @PostMapping("/admin/tour_plan")
     public void postTourPlan(@RequestBody TourPlan tourPlan) {
         tourPlanService.postTourPlan(tourPlan);
     }
