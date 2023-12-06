@@ -40,8 +40,10 @@ public class HistoryBookingController {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
+		
+		Long uid=accService.getId(username);
 
-		return ResponseEntity.ok(historyService.ReadOne(username, bid));
+		return ResponseEntity.ok(historyService.ReadOne(uid, bid));
 	}
 
 	// get by @pathVarable
@@ -50,8 +52,10 @@ public class HistoryBookingController {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String mail = auth.getName();
-
-		return ResponseEntity.ok(historyService.ReadOne(mail, p_bookingid));
+		
+		Long uid=accService.getId(mail);
+		
+		return ResponseEntity.ok(historyService.ReadOne(uid, p_bookingid));
 	}
 
 }

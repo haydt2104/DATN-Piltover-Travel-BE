@@ -1,10 +1,11 @@
 package com.piltover.service;
 
+import com.piltover.entity.BookingDetail;
 import com.piltover.entity.History;
 
 public interface HistoryService {
 
-	public History ReadOne(String p_uname, Long p_bookingid);
+	public BookingDetail ReadOne(Long p_uname, Long p_bookingid);
 
 	
 }
