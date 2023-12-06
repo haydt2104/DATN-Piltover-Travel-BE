@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class HomeUserRes {
+public class LoadTourHomeRes {
 	@Id
 	private Long tourID;
 	private String name_tour;

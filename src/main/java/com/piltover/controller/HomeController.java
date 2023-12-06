@@ -33,4 +33,9 @@ public class HomeController {
 	public ResponseEntity<?> createTour(@RequestBody SearchTour tourSearchParams) {
 	    return ResponseEntity.ok(TourService.getHomeTourSearch(tourSearchParams));
 	}
+	
+	@GetMapping("/startAddress")
+	public ResponseEntity<?> getstartAddress() {
+		return ResponseEntity.ok(TourService.getStartAddress());
+	}
 }

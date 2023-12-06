@@ -8,25 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.piltover.dto.request.SearchTour;
-import com.piltover.dto.response.HomeUserRes;
+import com.piltover.dto.response.LoadStartAddress;
+import com.piltover.dto.response.LoadTourHomeRes;
 import com.piltover.repository.HomeRepository;
+import com.piltover.repository.StartAddressRepository;
 import com.piltover.service.LoadTourServicec;
 
 @Service
 public class LoadTourServicelmpl implements LoadTourServicec {
 	@Autowired
 	HomeRepository homeRepository;
+	
+	@Autowired
+	StartAddressRepository startAddressRepository;
 
 	@Transactional
 	@Override
-	public List<HomeUserRes> getHomeTour() {
+	public List<LoadTourHomeRes> getHomeTour() {
 		// TODO Auto-generated method stub
 		return homeRepository.CallHomeTour();
 	}
 	
 	@Transactional
 	@Override
-	public List<HomeUserRes> getHomeTourSearch(SearchTour tourSearchParams) {
+	public List<LoadTourHomeRes> getHomeTourSearch(SearchTour tourSearchParams) {
 		// TODO Auto-generated method stub
 
 		return homeRepository.CallHomeTourSearch(		
@@ -36,5 +41,12 @@ public class LoadTourServicelmpl implements LoadTourServicec {
 	            tourSearchParams.getMinPrice(),
 	            tourSearchParams.getMaxPrice()
 	        );
+	}
+	
+	@Transactional
+	@Override
+	public List<LoadStartAddress> getStartAddress() {
+		// TODO Auto-generated method stub
+		return startAddressRepository.CallStartAddress();
 	}
 }
