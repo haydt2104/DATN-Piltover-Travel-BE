@@ -40,7 +40,7 @@ public class BookingController {
 	@Autowired
 	ResponeUtil respUtill;
 
-	@GetMapping("/booking/all")
+	@GetMapping("/admin/booking/all")
 	public ResponseEntity<?> ReadAll() {
 		return ResponseEntity.ok(bs.Booking_ReadAll());
 	}
@@ -88,10 +88,9 @@ public class BookingController {
 	
 	@RequestMapping("/user/booking/countbytourdate/{Tour_DateID}")
 	public ResponseEntity<?> Booking_CountByTourDateId(@PathVariable("Tour_DateID") Long Tour_DateID) {
-		Integer status = 1;
-		BookingCountResp result = new BookingCountResp();
-		result.setCount(bs.Booking_CountByTourDateId(status, Tour_DateID));
-		return ResponseEntity.ok(result);
+		// BookingCountResp result = new BookingCountResp();
+		// result.setCount(bs.Booking_CountByTourDateId(Tour_DateID));
+		return ResponseEntity.ok(bs.Booking_CountByTourDateId(Tour_DateID));
 	}
 	
 	//Đếm hết theo status 0-1

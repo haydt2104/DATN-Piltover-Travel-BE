@@ -19,7 +19,7 @@ public interface BookingService {
 	
 	Integer Booking_count(Integer status);
 	
-	Integer Booking_CountByTourDateId(Integer status,Long Tour_DateID);
+	Integer Booking_CountByTourDateId(Long Tour_DateID);
 	
 	Integer Booking_count0_1();
 }

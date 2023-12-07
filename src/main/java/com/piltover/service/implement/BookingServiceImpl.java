@@ -66,8 +66,8 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public Integer Booking_CountByTourDateId(Integer status, Long Tour_DateID) {
-		return BookingRepo.Booking_CountByTourDateId(status, Tour_DateID);
+	public Integer Booking_CountByTourDateId(Long Tour_DateID) {
+		return BookingRepo.Booking_CountByTourDateId(Tour_DateID);
 	}
 
 }
