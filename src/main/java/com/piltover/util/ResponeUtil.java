@@ -21,4 +21,8 @@ public class ResponeUtil {
 	public Map<String, Object> getRespone() {
 		return responeMap;
 	}
+	
+	public void clearRespone() {
+        responeMap.clear();
+    }
 }

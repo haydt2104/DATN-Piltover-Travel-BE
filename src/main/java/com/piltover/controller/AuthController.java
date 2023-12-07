@@ -91,15 +91,18 @@ public class AuthController {
 	public ResponseEntity<?> signUp(@RequestBody Account account) {
 		
 		if (accountService.isEmailExists(account.getEmail())) {
+			
 			// Trả về lỗi 400 - BadRequest
+			responeUtil.putRespone("message", "Địa chỉ email đã tồn tại trong hệ thống");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body("Địa chỉ email đã tồn tại trong hệ thống");
+					.body(responeUtil.getRespone());
 		}
 
 		if (accountService.isPhoneExists(account.getPhone())) {
 			// Trả về lỗi 400 - BadRequest
+			responeUtil.putRespone("message", "Số điện thoại đã tồn tại trong hệ thống");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body("Số điện thoại đã tồn tại trong hệ thống");
+					.body(responeUtil.getRespone());
 		}
 		account.setId(idGenerator.generateRandomNumbers());
 		Account newAccount = accountService.createAccount(account);

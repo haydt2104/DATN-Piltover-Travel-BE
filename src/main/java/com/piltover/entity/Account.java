@@ -62,7 +62,7 @@ public class Account implements Serializable{/**
     @DateTimeFormat(iso = ISO.DATE)
 	@Temporal(TemporalType.DATE)
     @Column(name = "Update_at")
-    private Date updateAt;
+    private Date updateAt = new Date();
     
     @Column(name = "Error_count")
     private Integer errorCount = 0;
