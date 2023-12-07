@@ -16,4 +16,6 @@ public interface BookingService {
 	public List<Booking> ReadAll(Long p_uname);
 	
 	Booking edit(Booking booking);
+	
+	Integer Booking_count(Integer status);
 }

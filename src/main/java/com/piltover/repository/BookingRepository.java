@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,4 +26,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	@Transactional
 	@Query(value = "CALL History_ReadAll(:p_uname)", nativeQuery = true)
 	List<Booking> History_ReadAll(@Param("p_uname") Long p_uname);
+	
+	//Dem so Booking theo trang thai
+	@Procedure(name="Booking_Count")
+	Integer Booking_count(Integer status);
 }
