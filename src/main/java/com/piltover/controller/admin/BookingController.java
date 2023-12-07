@@ -39,15 +39,12 @@ public class BookingController {
 
 	@Autowired
 	ResponeUtil respUtill;
-
-	@GetMapping("/user/booking/all")
-	public ResponseEntity<?> ReadAll() {
-		return ResponseEntity.ok(bs.Booking_ReadAll());
-	}
+	
 	@GetMapping("/admin/booking/all")
 	public ResponseEntity<?> ReadAll2() {
 		return ResponseEntity.ok(bs.Booking_ReadAll());
 	}
+	
 	@GetMapping("/admin/booking/detail/{bid}")
 	public BookingDetail getById(@PathVariable("bid") Long id) {
 		return bds.getDetail(id);
