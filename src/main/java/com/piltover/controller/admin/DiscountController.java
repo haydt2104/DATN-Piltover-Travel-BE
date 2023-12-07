@@ -42,12 +42,22 @@ public class DiscountController {
 	public List<Discount> ReadAllDiscount() {
 		return discountService.ReadAllDiscounts();
 	}
-
+	
 	@GetMapping("/discount/{id}")
 	public Discount readOneByDiscountID(@PathVariable Long id) {
 		return discountService.ReadOneByDiscountID(id);
 	}
-
+	
+	@GetMapping("/admin/discount/{id}")
+	public Discount readOneByDiscountID1(@PathVariable Long id) {
+		return discountService.ReadOneByDiscountID(id);
+	}
+//
+	@GetMapping("/admin/discount/getAll")
+	public List<Discount> ReadAllDiscount1() {
+		return discountService.ReadAllDiscounts1();
+	}
+//	
 	@PutMapping("/admin/discount/update/{did}")
 	public ResponseEntity<?> Update(@PathVariable("did") Long id, @RequestBody Discount_UpdateReq request) {
 		

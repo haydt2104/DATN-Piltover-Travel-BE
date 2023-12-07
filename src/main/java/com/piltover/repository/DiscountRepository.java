@@ -17,6 +17,10 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
 	@Transactional
 	@Query(value = "CALL Discount_ReadAll()", nativeQuery = true)
 	List<Discount> ReadAllDiscount();
+	
+	@Transactional
+	@Query(value = "select d.* from discounts d ORDER BY d.Create_at  DESC", nativeQuery = true)
+	List<Discount> ReadAllDiscount1();
 
 	@Query(value = "CALL Discount_ReadOneByID(:id_in)", nativeQuery = true)
 	Discount readOneByDiscountNoDelete(@Param("id_in") Long id);

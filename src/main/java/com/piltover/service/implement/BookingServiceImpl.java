@@ -50,7 +50,7 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public List<Booking> Booking_ReadAll() {
 		// TODO Auto-generated method stub
-		return BookingRepo.findAll();
+		return BookingRepo.Booking_ReadAll();
 	}
 
 	@Override

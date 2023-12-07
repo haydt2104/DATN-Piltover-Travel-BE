@@ -38,4 +38,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	// Dem so Booking theo trang thai 0-1
 	@Procedure(name = "Booking_Count0_1")
 	Integer Booking_count0_1();
+	
+	@Transactional
+	@Query(value="select b.* from bookings b ORDER BY b.Create_at  DESC;",nativeQuery =true )
+	List<Booking> Booking_ReadAll();
 }

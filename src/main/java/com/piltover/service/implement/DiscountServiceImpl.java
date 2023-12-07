@@ -21,7 +21,8 @@ public class DiscountServiceImpl implements DiscountService {
 	public List<Discount> getAllDiscount() {
 		return disReps.findAll();
 	}
-
+	
+	
 	@Transactional
 	@Override
 	public List<Discount> ReadAllDiscounts() {
@@ -29,6 +30,12 @@ public class DiscountServiceImpl implements DiscountService {
 		return disReps.ReadAllDiscount();
 	}
 
+	@Override
+	public List<Discount> ReadAllDiscounts1() {
+		// TODO Auto-generated method stub
+		return disReps.ReadAllDiscount1();
+	}
+	
 	@Override
 	public Discount ReadOneByDiscountID(Long id) {
 		// TODO Auto-generated method stub
@@ -87,5 +94,7 @@ public class DiscountServiceImpl implements DiscountService {
 		// TODO Auto-generated method stub
 		return disReps.check_delete(id);
 	}
+
+	
 
 }

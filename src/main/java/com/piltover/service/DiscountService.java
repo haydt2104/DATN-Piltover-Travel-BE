@@ -9,6 +9,7 @@ import com.piltover.entity.Discount;
 public interface DiscountService {
 	
 	List<Discount> ReadAllDiscounts();
+	List<Discount> ReadAllDiscounts1();
 	
 	Discount ReadOneByDiscountID(Long id);
 	
