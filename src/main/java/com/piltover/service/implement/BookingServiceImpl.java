@@ -59,4 +59,10 @@ public class BookingServiceImpl implements BookingService {
 		return BookingRepo.Booking_count(status);
 	}
 
+	@Override
+	public Integer Booking_count0_1() {
+		// TODO Auto-generated method stub
+		return BookingRepo.Booking_count0_1();
+	}
+
 }

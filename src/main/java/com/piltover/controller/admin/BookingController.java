@@ -75,8 +75,12 @@ public class BookingController {
 		return ResponseEntity.ok(this.bs.edit(booking));
 	}
 	
-	@RequestMapping("/booking/count/{status}")
+	@RequestMapping("/user/booking/count/{status}")
 	public Integer BookingCount(@PathVariable("status")Integer Status) {
 		return bs.Booking_count(Status);
+	}
+	@RequestMapping("/user/booking/count")
+	public Integer BookingCount0_1() {
+		return bs.Booking_count0_1();
 	}
 }
