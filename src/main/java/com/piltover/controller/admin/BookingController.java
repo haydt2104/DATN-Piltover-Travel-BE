@@ -44,7 +44,7 @@ public class BookingController {
 		return ResponseEntity.ok(bs.Booking_ReadAll());
 	}
 
-	@GetMapping("/detail/{bid}")
+	@GetMapping("/admin/booking/detail/{bid}")
 	public BookingDetail getById(@PathVariable("bid") Long id) {
 		return bds.getDetail(id);
 	}

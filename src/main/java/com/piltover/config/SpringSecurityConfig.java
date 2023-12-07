@@ -75,6 +75,7 @@ public class SpringSecurityConfig {
 			http.cors();
 			http.csrf().disable().antMatcher("/api/**").authorizeRequests()
 			.antMatchers("/api/auth/**", "/api/home/**", "/api/post/**").permitAll()
+			.antMatchers("/api/admin/**").hasAnyRole("ADMIN")
 					.antMatchers("/api/**").hasAnyRole("USER")
 					
 					.anyRequest().permitAll().and()

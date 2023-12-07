@@ -3,6 +3,7 @@ package com.piltover.service.implement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.piltover.entity.Account;
@@ -17,6 +18,9 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Autowired 
 	AuthorityRepository authorityRepository;
+	
+	@Autowired
+	BCryptPasswordEncoder pe;
 
 	@Override
 	public List<Account> getAllAccountActive() {
@@ -30,6 +34,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account createAccount(Account account) {	
+		account.setPassword(pe.encode(account.getPassword()));
 		accountRepository.saveAndFlush(account);
 		return account;
 		

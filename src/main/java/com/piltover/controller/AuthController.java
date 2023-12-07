@@ -20,10 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piltover.dto.request.SignUpReq;
+import com.piltover.entity.Account;
 import com.piltover.model.JwtRequestModel;
 import com.piltover.model.JwtResponseModel;
+import com.piltover.service.AccountService;
 import com.piltover.service.AuthService;
+import com.piltover.util.IDGenerator;
 import com.piltover.util.JwtTokenUtil;
+import com.piltover.util.ResponeUtil;
 
 @CrossOrigin("*")
 @RestController
@@ -37,23 +42,35 @@ public class AuthController {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	AccountService accountService;
+	
+	@Autowired
+	IDGenerator idGenerator;
+	
+	@Autowired
+	ResponeUtil responeUtil;
 
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody JwtRequestModel user) throws Exception {
-		
+		List<String> roleResps = new ArrayList<>();
 		try {		
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(user.getUsername() , user.getPassword()));
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			List<GrantedAuthority> authList = new ArrayList<>();
+			
 			// Check if the user is authenticated
 			if (authentication != null && authentication.isAuthenticated()) {
 				List<String> roleNames = authService.getRolesByUsername(user.getUsername());
 				System.out.println("Role names:" +roleNames);
-
+				List<GrantedAuthority> authList = new ArrayList<>();
 				for (String roleName : roleNames) {
 					authList.add(new SimpleGrantedAuthority("ROLE_" + roleName));
+					roleResps.add("ROLE_" + roleName);
 				}
+				
+				System.out.println("Auth list: "+authList);
 
 				if (!roleNames.contains("USER")) {
 					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -63,9 +80,35 @@ public class AuthController {
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
 			System.out.println("Invalid credentials: " + user.getUsername() + " - " + user.getPassword());
-			throw new Exception("INVALID_CREDENTIALS", e);
+			responeUtil.putRespone("message", "Username or password is incorrect");
+			return ResponseEntity.badRequest().body(responeUtil.getRespone());
 		}
 		final String jwtToken = jwtTokenUtil.generateToken(user.getUsername());
-		return ResponseEntity.ok(new JwtResponseModel(jwtToken));
+		return ResponseEntity.ok(new JwtResponseModel(jwtToken, user.getUsername(), roleResps));
 	}
+	
+	@PostMapping("/sign-up")
+	public ResponseEntity<?> signUp(@RequestBody Account account) {
+		
+		if (accountService.isEmailExists(account.getEmail())) {
+			// Trả về lỗi 400 - BadRequest
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body("Địa chỉ email đã tồn tại trong hệ thống");
+		}
+
+		if (accountService.isPhoneExists(account.getPhone())) {
+			// Trả về lỗi 400 - BadRequest
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body("Số điện thoại đã tồn tại trong hệ thống");
+		}
+		account.setId(idGenerator.generateRandomNumbers());
+		Account newAccount = accountService.createAccount(account);
+
+		responeUtil.putRespone("message", "Tạo tài khoản thành công");
+		responeUtil.putRespone("newAccount", newAccount);
+
+		System.out.println(responeUtil.getRespone());
+		return ResponseEntity.ok(responeUtil.getRespone());
+	}
+	
 }
