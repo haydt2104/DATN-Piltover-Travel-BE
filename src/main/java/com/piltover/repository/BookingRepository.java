@@ -30,6 +30,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	// Dem so Booking theo trang thai
 	@Procedure(name = "Booking_Count")
 	Integer Booking_count(Integer status);
+	
+	// Dem so Booking theo trang thai và tourdate_id
+	@Procedure(name = "Booking_CountByTourDateId")
+	Integer Booking_CountByTourDateId(@Param("status_in") Integer status,@Param("Tour_DateID") Long Tour_DateID);
 
 	// Dem so Booking theo trang thai 0-1
 	@Procedure(name = "Booking_Count0_1")

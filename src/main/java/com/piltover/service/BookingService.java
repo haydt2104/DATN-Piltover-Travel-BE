@@ -18,5 +18,8 @@ public interface BookingService {
 	Booking edit(Booking booking);
 	
 	Integer Booking_count(Integer status);
+	
+	Integer Booking_CountByTourDateId(Integer status,Long Tour_DateID);
+	
 	Integer Booking_count0_1();
 }

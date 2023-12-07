@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piltover.dto.response.BookingCountResp;
 import com.piltover.entity.Booking;
 import com.piltover.entity.BookingDetail;
 import com.piltover.service.AccountService;
@@ -32,7 +33,7 @@ public class BookingController {
 
 	@Autowired
 	private BookingDetailService bds;
-	
+
 	@Autowired
 	private AccountService accService;
 
@@ -53,14 +54,14 @@ public class BookingController {
 	public ResponseEntity<?> editBookingdetail(@PathVariable Long bid) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
-		
+
 		int newStatus = 2;
 		Long upUser = accService.getId(username);
-		
+
 		bs.cancelBooking(bid, upUser, newStatus);
-		
+
 		respUtill.putRespone("message", "Cancel booking susscess");
-		
+
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
 
@@ -68,19 +69,36 @@ public class BookingController {
 	public ResponseEntity<List<Booking>> getBookingsByTourDate(@RequestParam("tourDateId") Long id) {
 		return ResponseEntity.ok(bs.getBookingsByTourDateId(id));
 	}
-	
 
 	@PutMapping("/admin/booking/edit")
 	public ResponseEntity<Booking> editBooking(@RequestBody Booking booking) {
 		return ResponseEntity.ok(this.bs.edit(booking));
 	}
+
 	
+	//Đếm hết theo status truyền vào
 	@RequestMapping("/user/booking/count/{status}")
-	public Integer BookingCount(@PathVariable("status")Integer Status) {
-		return bs.Booking_count(Status);
+	public ResponseEntity<?> BookingCount(@PathVariable("status") Integer Status) {
+		BookingCountResp result = new BookingCountResp();
+		result.setCount(bs.Booking_count(Status));
+		return ResponseEntity.ok(result);
 	}
+	
+	//Đếm theo tour_date
+	
+	@RequestMapping("/user/booking/countbytourdate/{Tour_DateID}")
+	public ResponseEntity<?> Booking_CountByTourDateId(@PathVariable("Tour_DateID") Long Tour_DateID) {
+		Integer status = 1;
+		BookingCountResp result = new BookingCountResp();
+		result.setCount(bs.Booking_CountByTourDateId(status, Tour_DateID));
+		return ResponseEntity.ok(result);
+	}
+	
+	//Đếm hết theo status 0-1
 	@RequestMapping("/user/booking/count")
-	public Integer BookingCount0_1() {
-		return bs.Booking_count0_1();
+	public ResponseEntity<?> BookingCount0_1() {
+		BookingCountResp result = new BookingCountResp();
+		result.setCount(bs.Booking_count0_1());
+		return ResponseEntity.ok(result);
 	}
 }
