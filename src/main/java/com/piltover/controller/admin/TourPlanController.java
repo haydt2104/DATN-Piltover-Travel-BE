@@ -45,12 +45,12 @@ public class TourPlanController {
         tourPlanService.postTourPlan(tourPlan);
     }
 
-    @PutMapping("")
+    @PutMapping("/admin/tour_plan")
     public void putTourPlan(@RequestBody TourPlan tourPlan) {
         tourPlanService.postTourPlan(tourPlan);
     }
 
-    @DeleteMapping("/{tourPlanId}")
+    @DeleteMapping("/admin/tour_plan/{tourPlanId}")
     public void deleteTourPlan(@PathVariable("tourPlanId") Long tourPlanId) {
         tourPlanService.deleteTourPlan(tourPlanId);
     }
