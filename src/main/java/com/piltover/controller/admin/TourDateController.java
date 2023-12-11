@@ -25,6 +25,11 @@ public class TourDateController {
     @Autowired
     TourDateService tourDateService;
 
+    @GetMapping("/tour_date/all")
+    public ResponseEntity<List<TourDate>> getAll() {
+        return ResponseEntity.ok(tourDateService.getAllDates());
+    }
+
     @GetMapping("/tour_date")
     public ResponseEntity<List<TourDate>> getDateByTourId(@RequestParam("tourId") Long tourId) {
         return ResponseEntity.ok(tourDateService.getTourDateByTourId(tourId));
@@ -40,7 +45,7 @@ public class TourDateController {
         tourDateService.postTourDate(tourDate);
     }
 
-    @PutMapping("/admin/tour_date")
+    @PutMapping("/tour_date")
     public void putTourDate(@RequestBody TourDate tourDate) {
         tourDateService.putTourDate(tourDate);
     }

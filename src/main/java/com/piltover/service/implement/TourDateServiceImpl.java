@@ -47,4 +47,9 @@ public class TourDateServiceImpl implements TourDateService {
         tourDateRepository.delete(tourDate);
     }
 
+    @Override
+    public List<TourDate> getAllDates() {
+        return tourDateRepository.findAll();
+    }
+
 }

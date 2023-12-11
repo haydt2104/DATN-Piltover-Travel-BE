@@ -70,4 +70,10 @@ public class BookingServiceImpl implements BookingService {
 		return BookingRepo.Booking_CountByTourDateId(Tour_DateID);
 	}
 
+	@Transactional
+	@Override
+	public List<Long> getOutDatedBooking() {
+		return BookingRepo.Booking_Outdated();
+	}
+
 }

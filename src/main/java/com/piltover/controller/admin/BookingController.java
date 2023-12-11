@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.piltover.dto.response.BookingCountResp;
 import com.piltover.entity.Booking;
 import com.piltover.entity.BookingDetail;
+import com.piltover.repository.BookingRepository;
 import com.piltover.service.AccountService;
 import com.piltover.service.BookingDetailService;
 import com.piltover.service.BookingService;
@@ -32,6 +33,9 @@ public class BookingController {
 	private BookingService bs;
 
 	@Autowired
+	private BookingRepository bookingRepository;
+
+	@Autowired
 	private BookingDetailService bds;
 
 	@Autowired
@@ -39,12 +43,12 @@ public class BookingController {
 
 	@Autowired
 	ResponeUtil respUtill;
-	
+
 	@GetMapping("/admin/booking/all")
 	public ResponseEntity<?> ReadAll2() {
 		return ResponseEntity.ok(bs.Booking_ReadAll());
 	}
-	
+
 	@GetMapping("/admin/booking/detail/{bid}")
 	public BookingDetail getById(@PathVariable("bid") Long id) {
 		return bds.getDetail(id);
@@ -75,29 +79,44 @@ public class BookingController {
 		return ResponseEntity.ok(this.bs.edit(booking));
 	}
 
-	
-	//Đếm hết theo status truyền vào
+	// Đếm hết theo status truyền vào
 	@RequestMapping("/user/booking/count/{status}")
 	public ResponseEntity<?> BookingCount(@PathVariable("status") Integer Status) {
 		BookingCountResp result = new BookingCountResp();
 		result.setCount(bs.Booking_count(Status));
 		return ResponseEntity.ok(result);
 	}
-	
-	//Đếm theo tour_date
-	
+
+	// Đếm theo tour_date
+
 	@RequestMapping("/user/booking/countbytourdate/{Tour_DateID}")
 	public ResponseEntity<?> Booking_CountByTourDateId(@PathVariable("Tour_DateID") Long Tour_DateID) {
 		// BookingCountResp result = new BookingCountResp();
 		// result.setCount(bs.Booking_CountByTourDateId(Tour_DateID));
 		return ResponseEntity.ok(bs.Booking_CountByTourDateId(Tour_DateID));
 	}
-	
-	//Đếm hết theo status 0-1
+
+	// Đếm hết theo status 0-1
 	@RequestMapping("/user/booking/count")
 	public ResponseEntity<?> BookingCount0_1() {
 		BookingCountResp result = new BookingCountResp();
 		result.setCount(bs.Booking_count0_1());
 		return ResponseEntity.ok(result);
+	}
+
+	@GetMapping("/booking/outdated")
+	public ResponseEntity<?> getOutDated() {
+		return ResponseEntity.ok(bs.getOutDatedBooking());
+	}
+
+	@PutMapping("/booking/outdated")
+	public void updateOutdated(@RequestBody List<Long> list) {
+		if (list.size() != 0) {
+			for (Long id : list) {
+				Booking bk = bookingRepository.findByBookingID(id);
+				bk.setStatus(2);
+				bs.edit(bk);
+			}
+		}
 	}
 }

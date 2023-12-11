@@ -22,7 +22,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	@Query(value = "CALL Booking_Cancel(:bid,:upUser,:newStatus)", nativeQuery = true)
 	void cancelBooking(@Param("bid") Long bid, @Param("upUser") Long upUser, @Param("newStatus") int newStatus);
 
-//	History
+	// History
 	@Transactional
 	@Query(value = "CALL History_ReadAll(:p_uname)", nativeQuery = true)
 	List<Booking> History_ReadAll(@Param("p_uname") Long p_uname);
@@ -30,7 +30,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	// Dem so Booking theo trang thai
 	@Procedure(name = "Booking_Count")
 	Integer Booking_count(Integer status);
-	
+
 	// Dem so Booking theo trang thai và tourdate_id
 	@Procedure(name = "Booking_CountByTourDateId")
 	Integer Booking_CountByTourDateId(@Param("Tour_DateID") Long Tour_DateID);
@@ -38,8 +38,11 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 	// Dem so Booking theo trang thai 0-1
 	@Procedure(name = "Booking_Count0_1")
 	Integer Booking_count0_1();
-	
+
 	@Transactional
-	@Query(value="select b.* from bookings b ORDER BY b.Create_at  DESC;",nativeQuery =true )
+	@Query(value = "select b.* from bookings b ORDER BY b.Create_at  DESC;", nativeQuery = true)
 	List<Booking> Booking_ReadAll();
+
+	@Procedure(name = "Booking_Outdated")
+	List<Long> Booking_Outdated();
 }

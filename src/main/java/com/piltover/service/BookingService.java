@@ -22,4 +22,6 @@ public interface BookingService {
 	Integer Booking_CountByTourDateId(Long Tour_DateID);
 	
 	Integer Booking_count0_1();
+
+	List<Long> getOutDatedBooking();
 }
