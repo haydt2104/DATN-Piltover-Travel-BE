@@ -21,8 +21,7 @@ public class DiscountServiceImpl implements DiscountService {
 	public List<Discount> getAllDiscount() {
 		return disReps.findAll();
 	}
-	
-	
+
 	@Transactional
 	@Override
 	public List<Discount> ReadAllDiscounts() {
@@ -35,7 +34,7 @@ public class DiscountServiceImpl implements DiscountService {
 		// TODO Auto-generated method stub
 		return disReps.ReadAllDiscount1();
 	}
-	
+
 	@Override
 	public Discount ReadOneByDiscountID(Long id) {
 		// TODO Auto-generated method stub
@@ -48,11 +47,11 @@ public class DiscountServiceImpl implements DiscountService {
 		disReps.save(discount);
 	}
 
-//	@Override
-//	public Discount updateDiscount(Discount bean) {
-//		// TODO Auto-generated method stub
-//		return disReps.saveAndFlush(bean);
-//	}
+	// @Override
+	// public Discount updateDiscount(Discount bean) {
+	// // TODO Auto-generated method stub
+	// return disReps.saveAndFlush(bean);
+	// }
 
 	@Override
 	public void deleteDiscount(Long id, Long upUser) {
@@ -95,6 +94,9 @@ public class DiscountServiceImpl implements DiscountService {
 		return disReps.check_delete(id);
 	}
 
-	
+	@Override
+	public Discount getDiscountByCode(String code) {
+		return disReps.getDiscountByCode(code);
+	}
 
 }

@@ -48,7 +48,7 @@ public class BookingDetail implements Serializable {
     @Column(name = "Surcharge")
     private Integer surcharge;
 
-    @Column(name = "Booking_time")
+    @Column(name = "Booking_time", updatable = false)
     @DateTimeFormat(iso = ISO.DATE_TIME)
     @Temporal(TemporalType.TIMESTAMP)
     private Date bookingTime = new Date();

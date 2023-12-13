@@ -12,6 +12,8 @@ public interface DiscountService {
 	List<Discount> ReadAllDiscounts1();
 	
 	Discount ReadOneByDiscountID(Long id);
+
+	Discount getDiscountByCode(String code);
 	
 	void insertDiscount(DiscountReq bean);
 	

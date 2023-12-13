@@ -182,11 +182,12 @@ public class PaymentController {
         if (bookingDetail.getBooking().getDiscount() != null && num != 0) {
             Discount discount = discountRepository.findById(bookingDetail.getBooking().getDiscount().getId()).get();
             discount.setAmount(discount.getAmount() - 1);
-            if (discount.getAmount() == 0) {
+            if (discount.getAmount() <= 0) {
                 discount.setIsDelete(true);
             }
             discountRepository.save(discount);
         }
+        bookingDetail.setBookingTime(new Date());
         bookingRepository.save(bookingDetail.getBooking());
         bookingDetailRepository.save(bookingDetail);
         if (num != 0) {
