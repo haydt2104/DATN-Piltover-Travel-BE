@@ -81,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public long getId(String email) {
+	public Long getId(String email) {
 		return accountRepository.findIdByEmail(email);
 	}
 

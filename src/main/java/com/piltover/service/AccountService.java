@@ -28,7 +28,7 @@ public interface AccountService {
 	Account findUserByID(Long id);
 	
 	//Lấy id từ email
-	long getId(String email);
+	Long getId(String email);
 	
 	// Thêm role
 	void addRole(String email, String role);
