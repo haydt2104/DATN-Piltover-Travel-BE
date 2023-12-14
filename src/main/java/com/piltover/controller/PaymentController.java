@@ -54,17 +54,21 @@ public class PaymentController {
 
     private BookingDetail bookingDetail;
 
+    private String feUrl;
+
     @PostMapping("/nopay")
-    public String nopay(HttpServletRequest request, HttpServletResponse response, @RequestBody BookingDetail data)
+    public String nopay(HttpServletRequest request, HttpServletResponse response, @RequestBody BookingDetail data,
+            @RequestParam("fe") String fe)
             throws IOException {
+        feUrl = fe;
         bookingDetail = data;
         bookingDetail.getBooking().setCreateTime(new Date());
         bookingDetail.getBooking().setUpdateTime(new Date());
         try {
             successPurchase(0, response);
-            return "http://localhost:4200/history";
+            return feUrl + "history";
         } catch (Exception e) {
-            return "http://localhost:4200/";
+            return feUrl;
         }
     }
 
@@ -74,7 +78,8 @@ public class PaymentController {
     public static final String URL_PAYPAL_CANCEL = "pay/cancel";
 
     @PostMapping("/paypal")
-    public String pay(HttpServletRequest request, @RequestBody BookingDetail data) {
+    public String pay(HttpServletRequest request, @RequestBody BookingDetail data, @RequestParam("fe") String fe) {
+        feUrl = fe;
         bookingDetail = data;
         bookingDetail.getBooking().setCreateTime(new Date());
         bookingDetail.getBooking().setUpdateTime(new Date());
@@ -91,7 +96,7 @@ public class PaymentController {
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
         }
-        return "http://localhost:4200/";
+        return feUrl;
     }
 
     @GetMapping(URL_PAYPAL_SUCCESS)
@@ -109,7 +114,7 @@ public class PaymentController {
 
     @GetMapping(URL_PAYPAL_CANCEL)
     public void cancelPay(HttpServletResponse response) throws IOException {
-        response.sendRedirect("http://localhost:4200/");
+        response.sendRedirect(feUrl);
     }
 
     /* Paypal */
@@ -117,7 +122,9 @@ public class PaymentController {
     /* VNPay */
 
     @PostMapping("/vnpay")
-    public String submidOrder(HttpServletRequest request, @RequestBody BookingDetail data) {
+    public String submidOrder(HttpServletRequest request, @RequestBody BookingDetail data,
+            @RequestParam("fe") String fe) {
+        feUrl = fe;
         bookingDetail = data;
         bookingDetail.getBooking().setCreateTime(new Date());
         bookingDetail.getBooking().setUpdateTime(new Date());
@@ -144,7 +151,7 @@ public class PaymentController {
         if (paymentStatus == 1) {
             successPurchase(2, response);
         } else {
-            response.sendRedirect("http://localhost:4200/");
+            response.sendRedirect(feUrl);
         }
     }
 
@@ -191,7 +198,7 @@ public class PaymentController {
         bookingRepository.save(bookingDetail.getBooking());
         bookingDetailRepository.save(bookingDetail);
         if (num != 0) {
-            response.sendRedirect("http://localhost:4200/history");
+            response.sendRedirect(feUrl + "history");
         }
     }
 }
