@@ -31,7 +31,7 @@ public class TourPlanController {
     }
 
     @GetMapping("/tour_plan/{tourPlanId}")
-    public ResponseEntity<TourPlan> getTourPlan(@PathVariable("tourPlanId") Long tourPlanId) {
+    public ResponseEntity<TourPlan> getTourPlan(@PathVariable Long tourPlanId) {
         return ResponseEntity.ok(tourPlanService.getById(tourPlanId));
     }
 
@@ -51,7 +51,7 @@ public class TourPlanController {
     }
 
     @DeleteMapping("/admin/tour_plan/{tourPlanId}")
-    public void deleteTourPlan(@PathVariable("tourPlanId") Long tourPlanId) {
+    public void deleteTourPlan(@PathVariable Long tourPlanId) {
         tourPlanService.deleteTourPlan(tourPlanId);
     }
 }

@@ -51,7 +51,7 @@ public class TransportController {
     }
 
     @DeleteMapping("/admin/transport/{id}")
-    public void deleteTransport(@PathVariable("id") Long id) {
+    public void deleteTransport(@PathVariable Long id) {
         transportService.deleteTransport(id);
     }
 

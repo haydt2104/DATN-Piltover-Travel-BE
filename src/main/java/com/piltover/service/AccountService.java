@@ -29,4 +29,7 @@ public interface AccountService {
 	
 	//Lấy id từ email
 	long getId(String email);
+	
+	// Thêm role
+	void addRole(String email, String role);
 }

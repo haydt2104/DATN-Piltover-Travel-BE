@@ -26,6 +26,7 @@ import com.piltover.model.JwtRequestModel;
 import com.piltover.model.JwtResponseModel;
 import com.piltover.service.AccountService;
 import com.piltover.service.AuthService;
+import com.piltover.service.MailService;
 import com.piltover.util.IDGenerator;
 import com.piltover.util.JwtTokenUtil;
 import com.piltover.util.ResponeUtil;
@@ -45,6 +46,9 @@ public class AuthController {
 	
 	@Autowired
 	AccountService accountService;
+	
+	@Autowired
+	MailService mailService;
 	
 	@Autowired
 	IDGenerator idGenerator;
@@ -97,7 +101,7 @@ public class AuthController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(responeUtil.getRespone());
 		}
-
+		System.out.println("Tồn tại số điện thoại: " +accountService.isPhoneExists(account.getPhone()) +" - "+ account.getPhone());
 		if (accountService.isPhoneExists(account.getPhone())) {
 			// Trả về lỗi 400 - BadRequest
 			responeUtil.putRespone("message", "Số điện thoại đã tồn tại trong hệ thống");
@@ -106,9 +110,14 @@ public class AuthController {
 		}
 		account.setId(idGenerator.generateRandomNumbers());
 		Account newAccount = accountService.createAccount(account);
-
+		
+		// Thêm role sau đăng ký
+		accountService.addRole(account.getEmail(), "USER");
 		responeUtil.putRespone("message", "Tạo tài khoản thành công");
 		responeUtil.putRespone("newAccount", newAccount);
+		
+		mailService.sendMailWelcome(account.getEmail(), account.getFullname());
+		System.out.println(account.getEmail()+" - "+ account.getFullname()+  " - send mail success");
 
 		System.out.println(responeUtil.getRespone());
 		return ResponseEntity.ok(responeUtil.getRespone());

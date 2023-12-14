@@ -50,7 +50,7 @@ public class HotelController {
     }
 
     @DeleteMapping("/admin/hotel/{hotelId}")
-    public void deleteHotel(@PathVariable("hotelId") Long hotelId) {
+    public void deleteHotel(@PathVariable Long hotelId) {
         hotelService.deleteHotel(hotelId);
     }
 

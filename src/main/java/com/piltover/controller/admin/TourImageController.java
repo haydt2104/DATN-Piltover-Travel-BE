@@ -26,7 +26,7 @@ public class TourImageController {
     TourImageService tourImageService;
 
     @GetMapping("/tour_image")
-    public ResponseEntity<List<TourImage>> getImageByTourId(@RequestParam("tourId") Long tourId) {
+    public ResponseEntity<List<TourImage>> getImageByTourId(@RequestParam Long tourId) {
         return ResponseEntity.ok(tourImageService.getTourImagesByTourId(tourId));
     }
 
@@ -41,7 +41,7 @@ public class TourImageController {
     }
 
     @DeleteMapping("/admin/tour_image/{tourId}")
-    public void deleteTour(@PathVariable("tourId") Long tourId) {
+    public void deleteTour(@PathVariable Long tourId) {
         tourImageService.deleteTourImage(tourId);
     }
 }

@@ -95,7 +95,7 @@ public class PaymentController {
     }
 
     @GetMapping(URL_PAYPAL_SUCCESS)
-    public void successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId,
+    public void successPay(@RequestParam String paymentId, @RequestParam("PayerID") String payerId,
             HttpServletResponse response) throws IOException {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);

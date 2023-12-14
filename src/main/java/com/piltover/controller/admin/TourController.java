@@ -45,7 +45,7 @@ public class TourController {
     }
 
     @DeleteMapping("/admin/tour/{tourId}")
-    public void deleteTour(@PathVariable("tourId") Long tourId) {
+    public void deleteTour(@PathVariable Long tourId) {
         tourService.deleteTour(tourId);
     }
 }

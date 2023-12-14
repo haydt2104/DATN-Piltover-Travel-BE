@@ -90,7 +90,7 @@ public class DiscountController {
 	}
 
 	@DeleteMapping("/admin/discount/delete/{id}")
-	public ResponseEntity<?> Delete(@PathVariable("id") Long id) {
+	public ResponseEntity<?> Delete(@PathVariable Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 
@@ -103,13 +103,13 @@ public class DiscountController {
 	}
 
 	@GetMapping("/admin/discount/check/{id}")
-	public ResponseEntity<?> check(@PathVariable("id") Long id) {
+	public ResponseEntity<?> check(@PathVariable Long id) {
 		// respUtill.putRespone("message", "Delete discount susscess");
 		return ResponseEntity.ok(discountService.checkAmountById(id));
 	}
 
 	@DeleteMapping("/admin/discount/active/{id}")
-	public ResponseEntity<?> Active(@PathVariable("id") Long id) {
+	public ResponseEntity<?> Active(@PathVariable Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 
@@ -131,12 +131,12 @@ public class DiscountController {
 	}
 
 	@GetMapping("/admin/discount/checkd/{id}")
-	public ResponseEntity<?> check_Delete(@PathVariable("id") Long id) {
+	public ResponseEntity<?> check_Delete(@PathVariable Long id) {
 		return ResponseEntity.ok(discountService.checkDelete(id));
 	}
 
 	@GetMapping("/discountCode/{code}")
-	public ResponseEntity<?> getDiscountByCode(@PathVariable("code") String code) {
+	public ResponseEntity<?> getDiscountByCode(@PathVariable String code) {
 		return ResponseEntity.ok(discountService.getDiscountByCode(code));
 	}
 }

@@ -31,7 +31,7 @@ public class TourPlanDetailController {
     }
 
     @GetMapping("/tour_plan_detail/{tourDetailId}")
-    public ResponseEntity<TourPlanDetail> getTourPlanDetail(@PathVariable("tourDetailId") Long tourDetailId) {
+    public ResponseEntity<TourPlanDetail> getTourPlanDetail(@PathVariable Long tourDetailId) {
         return ResponseEntity.ok(tourPlanDetailService.getById(tourDetailId));
     }
 

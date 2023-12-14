@@ -53,8 +53,8 @@ public class HistoryBookingController {
 	}
 
 	// get by @pathVarable
-	@RequestMapping(value = "/detail/{p_bookingid}")
-	public ResponseEntity<?> ReadDetailPathVarable(@PathVariable(name = "p_bookingid") Long p_bookingid) {
+	@GetMapping("/detail/{p_bookingid}")
+	public ResponseEntity<?> ReadDetailPathVarable(@PathVariable Long p_bookingid) {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String mail = auth.getName();

@@ -80,7 +80,7 @@ public class BookingController {
 	}
 
 	// Đếm hết theo status truyền vào
-	@RequestMapping("/user/booking/count/{status}")
+	@GetMapping("/user/booking/count/{status}")
 	public ResponseEntity<?> BookingCount(@PathVariable("status") Integer Status) {
 		BookingCountResp result = new BookingCountResp();
 		result.setCount(bs.Booking_count(Status));
@@ -89,15 +89,15 @@ public class BookingController {
 
 	// Đếm theo tour_date
 
-	@RequestMapping("/user/booking/countbytourdate/{Tour_DateID}")
-	public ResponseEntity<?> Booking_CountByTourDateId(@PathVariable("Tour_DateID") Long Tour_DateID) {
+	@GetMapping("/user/booking/countbytourdate/{Tour_DateID}")
+	public ResponseEntity<?> Booking_CountByTourDateId(@PathVariable Long Tour_DateID) {
 		// BookingCountResp result = new BookingCountResp();
 		// result.setCount(bs.Booking_CountByTourDateId(Tour_DateID));
 		return ResponseEntity.ok(bs.Booking_CountByTourDateId(Tour_DateID));
 	}
 
 	// Đếm hết theo status 0-1
-	@RequestMapping("/user/booking/count")
+	@GetMapping("/user/booking/count")
 	public ResponseEntity<?> BookingCount0_1() {
 		BookingCountResp result = new BookingCountResp();
 		result.setCount(bs.Booking_count0_1());

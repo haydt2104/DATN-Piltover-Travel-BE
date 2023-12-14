@@ -31,12 +31,12 @@ public class TourDateController {
     }
 
     @GetMapping("/tour_date")
-    public ResponseEntity<List<TourDate>> getDateByTourId(@RequestParam("tourId") Long tourId) {
+    public ResponseEntity<List<TourDate>> getDateByTourId(@RequestParam Long tourId) {
         return ResponseEntity.ok(tourDateService.getTourDateByTourId(tourId));
     }
 
     @GetMapping("/tour_date/{tourDateId}")
-    public ResponseEntity<TourDate> getTourDate(@PathVariable("tourDateId") Long tourDateId) {
+    public ResponseEntity<TourDate> getTourDate(@PathVariable Long tourDateId) {
         return ResponseEntity.ok(tourDateService.getTourDate(tourDateId));
     }
 
@@ -51,7 +51,7 @@ public class TourDateController {
     }
 
     @DeleteMapping("/admin/tour_date/{tourDateId}")
-    public void deleteTourDate(@PathVariable("tourDateId") Long tourDateId) {
+    public void deleteTourDate(@PathVariable Long tourDateId) {
         tourDateService.deleteTourDate(tourDateId);
     }
 }

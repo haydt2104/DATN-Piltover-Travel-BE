@@ -21,7 +21,7 @@ public class RevenueController {
 	RevenueService service;
 	
 	@GetMapping("/getAll")
-	public ResponseEntity<?> getAll(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
+	public ResponseEntity<?> getAll(@RequestParam String startDate, @RequestParam String endDate){
 		return ResponseEntity.ok(service.getAll(startDate, endDate));		
 	}
 	

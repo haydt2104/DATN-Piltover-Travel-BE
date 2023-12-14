@@ -7,8 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.piltover.entity.Account;
+import com.piltover.entity.Authority;
 import com.piltover.repository.AccountRepository;
 import com.piltover.repository.AuthorityRepository;
+import com.piltover.repository.RoleRepository;
 import com.piltover.service.AccountService;
 
 @Service
@@ -18,6 +20,9 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Autowired 
 	AuthorityRepository authorityRepository;
+	
+	@Autowired 
+	RoleRepository roleRepository;
 	
 	@Autowired
 	BCryptPasswordEncoder pe;
@@ -53,7 +58,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public boolean isPhoneExists(String phone) {
-		List<String> listP = accountRepository.getAllEmails();
+		List<String> listP = accountRepository.getAllPhones();
 		for (String phoneC : listP) {
 			if(phoneC.equalsIgnoreCase(phone)) {
 				return true;
@@ -78,6 +83,14 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public long getId(String email) {
 		return accountRepository.findIdByEmail(email);
+	}
+
+	@Override
+	public void addRole(String email, String role) {
+		Authority auth =  new Authority();
+		auth.setAccount(accountRepository.findByEmail(email).get());
+		auth.setRole(roleRepository.findById(role).get());
+		authorityRepository.saveAndFlush(auth);
 	}
 
 }
