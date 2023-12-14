@@ -45,10 +45,12 @@ public class MailService {
 		MailModel mail = new MailModel();
 		mail.setTo(emailUser);
 		mail.setSubject("Thư chào mừng");
-		mail.setBody("<h1>Chúc mừng!</h1>\r\n" + "    <p>Xin chào, " + nameUser + "</p>\r\n"
+		mail.setBody("<h1>Chào mừng!</h1>\r\n"
+				+ "    <p>Xin chào, " + nameUser + "</p>\r\n"
 				+ "    <p>Cảm ơn bạn đã đăng ký thành công tài khoản trên website của chúng tôi. Bây giờ bạn có thể truy cập và sử dụng các tính năng của chúng tôi.</p>\r\n"
 				+ "    <p>Hãy khám phá và tận hưởng trải nghiệm tuyệt vời trên website của chúng tôi!</p>\r\n"
-				+ "    <p>Trân trọng,</p>\r\n" + "    <p>Đội ngũ quản trị website</p>");
+				+ "    <p>Trân trọng,</p>\r\n"
+				+ "    <p>Đội ngũ quản trị website</p>");
 		MimeMessage message = sender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
@@ -237,7 +239,8 @@ public class MailService {
 		MailModel mail = new MailModel();
 		mail.setTo(emailUser);
 		mail.setSubject("Thông báo: Hủy tour do vấn đề phát sinh");
-		mail.setBody(" <p>Xin chào, khách hàng " + nameUser + "</p>\r\n" + "<p>Chúng tôi rất tiếc phải thông báo rằng " + tourName
+		mail.setBody(" <p>Xin chào, khách hàng " + nameUser + "</p>\r\n" + "<p>Chúng tôi rất tiếc phải thông báo rằng "
+				+ tourName
 				+ " của bạn đã bị hủy do một số vấn đề phát sinh không thể kiểm soát được. Điều này có thể liên quan đến điều kiện thời tiết, vấn đề kỹ thuật hoặc các yếu tố khác ảnh hưởng đến sự an toàn và trải nghiệm của bạn.</p>\r\n"
 				+ "<p>Chúng tôi đang nỗ lực để giải quyết tình hình và cung cấp giải pháp thay thế. Xin lỗi vì bất kỳ sự bất tiện nào mà điều này gây ra và chúng tôi sẽ hoàn trả chi phí đăng ký cho bạn trong thời gian sớm nhất.</p>\r\n"
 				+ "<p>Nếu có bất kỳ câu hỏi hoặc cần hỗ trợ, vui lòng liên hệ với chúng tôi qua địa chỉ email piltovertravel@gmail.com hoặc số điện thoại 0948342123.</p>\r\n"
