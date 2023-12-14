@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.piltover.dto.response.BookingCountResp;
+import com.piltover.entity.Account;
 import com.piltover.entity.Booking;
 import com.piltover.entity.BookingDetail;
+import com.piltover.entity.Tour;
 import com.piltover.repository.BookingRepository;
 import com.piltover.service.AccountService;
 import com.piltover.service.BookingDetailService;
 import com.piltover.service.BookingService;
+import com.piltover.service.MailService;
 import com.piltover.util.ResponeUtil;
 
 @RestController
@@ -44,6 +47,9 @@ public class BookingController {
 	@Autowired
 	ResponeUtil respUtill;
 
+	@Autowired
+	MailService mailService;
+
 	@GetMapping("/admin/booking/all")
 	public ResponseEntity<?> ReadAll2() {
 		return ResponseEntity.ok(bs.Booking_ReadAll());
@@ -57,15 +63,31 @@ public class BookingController {
 	@DeleteMapping("/admin/booking/cancel/{bid}")
 	public ResponseEntity<?> editBookingdetail(@PathVariable Long bid) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		// send mail when admin cancel(begin)
+		String mail = bs.FindEmailByBookingID(bid);
+		String name = bs.FindUserNameByBookingID(bid);
+		String tourName = bs.FindTourNameByBookingID(bid);
+		// send mail when admin cancel(end)
+
 		String username = authentication.getName();
 
 		int newStatus = 2;
+		//get id uer by email get from token
 		Long upUser = accService.getId(username);
 
+		//call service cancel
 		bs.cancelBooking(bid, upUser, newStatus);
 
+		//mail Service(begin)
+		mailService.sendMailCancel(mail, name, tourName);
+		System.out.println(mail + " - " + name + " - " + tourName + " - send mail success");
+		//mail Service(begin)
+		
+		//message when cancel admin call api cancel susscess(begin)
 		respUtill.putRespone("message", "Cancel booking susscess");
-
+		//message when cancel admin call api cancel susscess(end)
+		
 		return ResponseEntity.ok(respUtill.getRespone());
 	}
 
@@ -119,4 +141,5 @@ public class BookingController {
 			}
 		}
 	}
+
 }

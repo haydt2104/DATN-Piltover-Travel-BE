@@ -76,4 +76,23 @@ public class BookingServiceImpl implements BookingService {
 		return BookingRepo.Booking_Outdated();
 	}
 
+	// ============for send mail(Begin)============
+	@Override
+	public String FindEmailByBookingID(Long bid) {
+		// TODO Auto-generated method stub
+		return BookingRepo.FindEmailByBookingID(bid);
+	}
+
+	@Override
+	public String FindUserNameByBookingID(Long bid) {
+		// TODO Auto-generated method stub
+		return BookingRepo.FindUserNameByBookingID(bid);
+	}
+
+	@Override
+	public String FindTourNameByBookingID(Long bid) {
+		// TODO Auto-generated method stub
+		return BookingRepo.FindTourNameByBookingID(bid);
+	}
+	// ============for send mail(End)============
 }

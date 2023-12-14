@@ -45,4 +45,25 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
 	@Procedure(name = "Booking_Outdated")
 	List<Long> Booking_Outdated();
+
+	//===================================================for send mail(Begin)===================================================
+	
+	@Transactional
+	@Query(value = "SELECT accounts.Email\r\n" + "FROM bookings\r\n"
+			+ "JOIN accounts ON accounts.ID = bookings.Create_User\r\n" + "WHERE bookings.Id =:bid", nativeQuery = true)
+	String FindEmailByBookingID(@Param("bid") Long bid);
+
+	@Transactional
+	@Query(value = "SELECT accounts.fullname\r\n" + "	FROM bookings\r\n"
+			+ "	JOIN accounts ON accounts.ID = bookings.Create_User\r\n"
+			+ "	WHERE bookings.Id =:bid", nativeQuery = true)
+	String FindUserNameByBookingID(@Param("bid") Long bid);
+
+	@Transactional
+	@Query(value = "SELECT tours.Name\r\n" + "	FROM bookings\r\n"
+			+ "	JOIN tour_dates ON tour_dates.ID = bookings.Tour_DateID\r\n"
+			+ "	JOIN tours ON tour_dates.TourID = tours.ID\r\n" + "	WHERE bookings.Id =:bid", nativeQuery = true)
+	String FindTourNameByBookingID(@Param("bid") Long bid);
+	
+	//===================================================for send mail(End)===================================================
 }
