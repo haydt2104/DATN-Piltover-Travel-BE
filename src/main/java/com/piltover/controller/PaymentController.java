@@ -66,7 +66,7 @@ public class PaymentController {
         bookingDetail.getBooking().setUpdateTime(new Date());
         try {
             successPurchase(0, response);
-            return feUrl + "history";
+            return "history";
         } catch (Exception e) {
             return feUrl;
         }
@@ -198,7 +198,7 @@ public class PaymentController {
         bookingRepository.save(bookingDetail.getBooking());
         bookingDetailRepository.save(bookingDetail);
         if (num != 0) {
-            response.sendRedirect(feUrl + "history");
+            response.sendRedirect(feUrl + "#/history");
         }
     }
 }
