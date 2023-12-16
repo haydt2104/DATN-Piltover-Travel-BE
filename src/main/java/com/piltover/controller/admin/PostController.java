@@ -95,7 +95,7 @@ public class PostController {
 	@GetMapping("/post/checkUserLike")
 	public ResponseEntity<Boolean> checkUserLike(@RequestParam Long postId) {
 		boolean check = ls.checkUserLike(getIdUser(), postId);
-
+		System.out.println("Check User Like: " + check);
 		if (check == true) {
 			return ResponseEntity.ok(true);
 		} else {
@@ -106,7 +106,6 @@ public class PostController {
 	@GetMapping("/post/getIdUserCmt")
 	public ResponseEntity<?> getId() {
 		Long id = getIdUser();
-		System.out.println("Id: " + id);
 		return ResponseEntity.ok(id);
 	}
 
@@ -200,15 +199,15 @@ public class PostController {
 		if (entity == null) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} else {
-			String title = post.getTitle().replaceAll("<p>", "");
-			String description = post.getDescription().replaceAll("<p>", "");
-			String content = post.getContent().replaceAll("<p>", "");
+//			String title = post.getTitle().replaceAll("<p>", "");
+//			String description = post.getDescription().replaceAll("<p>", "");
+//			String content = post.getContent().replaceAll("<p>", "");
 			Account user = as.findUserByID(getIdUser());
 
 			entity.setId(id);
-			entity.setTitle(title.replaceAll("</p>", ""));
-			entity.setDescription(description.replaceAll("</p>", ""));
-			entity.setContent(content.replaceAll("</p>", ""));
+//			entity.setTitle(title.replaceAll("</p>", ""));
+//			entity.setDescription(description.replaceAll("</p>", ""));
+//			entity.setContent(content.replaceAll("</p>", ""));
 			entity.setUpdateTime(LocalDateTime.now());
 			entity.setUpdateUser(user);
 			ps.updatePost(entity);
@@ -218,14 +217,14 @@ public class PostController {
 
 	@PostMapping("/admin/post/create")
 	public ResponseEntity<?> createPost(@RequestBody PostDTO post) {
-		String title = post.getTitle().replaceAll("<p>", "");
-		String description = post.getDescription().replaceAll("<p>", "");
-		String content = post.getContent().replaceAll("<p>", "");
+//		String title = post.getTitle().replaceAll("<p>", "");
+//		String description = post.getDescription().replaceAll("<p>", "");
+//		String content = post.getContent().replaceAll("<p>", "");
 		Account user = as.findUserByID(getIdUser());
 		Post entity = new Post();
-		entity.setTitle(title.replaceAll("</p>", ""));
-		entity.setDescription(description.replaceAll("</p>", ""));
-		entity.setContent(content.replaceAll("</p>", ""));
+//		entity.setTitle(title.replaceAll("</p>", ""));
+//		entity.setDescription(description.replaceAll("</p>", ""));
+//		entity.setContent(content.replaceAll("</p>", ""));
 		entity.setCreateTime(LocalDateTime.now());
 		entity.setCreateUser(user);
 		ps.createPost(entity);

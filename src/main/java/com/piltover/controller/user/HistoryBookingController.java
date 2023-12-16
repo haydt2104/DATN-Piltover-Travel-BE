@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.piltover.service.AccountService;
 import com.piltover.service.BookingService;
 import com.piltover.service.HistoryService;
+import com.piltover.service.TourPlanDetailService;
 import com.piltover.util.ResponeUtil;
 
 @RestController
@@ -28,6 +29,8 @@ public class HistoryBookingController {
 	HistoryService historyService;
 	@Autowired
 	BookingService bookingService;
+	@Autowired
+	TourPlanDetailService TourPlanDetailService;
 	
 	@Autowired
 	ResponeUtil respUtill;
@@ -77,6 +80,11 @@ public class HistoryBookingController {
 		respUtill.putRespone("message", "Cancel booking susscess");
 
 		return ResponseEntity.ok(respUtill.getRespone());
+	}
+	
+	@GetMapping("/tourplan")
+	public ResponseEntity<?> getListTourPlan(@RequestParam(name = "detail") Long bid){
+		return ResponseEntity.ok(TourPlanDetailService.getTourPlanDetailListByTourPlanId(bid));
 	}
 
 }

@@ -44,4 +44,9 @@ public class TourPlanDetailServiceImpl implements TourPlanDetailService {
         TourPlanDetail tourPlanDetail = tourPlanDetailRepository.findById(planDetailId).get();
         tourPlanDetailRepository.delete(tourPlanDetail);
     }
+
+	@Override
+	public List<TourPlanDetail> getListById(Long bid) {
+			return tourPlanDetailRepository.getListTourPlanDetailByBookingId(bid);
+	}
 }
