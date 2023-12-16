@@ -15,6 +15,6 @@ public interface TourPlanDetailRepository extends JpaRepository<TourPlanDetail, 
 
 	// for history
 	@Transactional
-	@Query(value = "CALL GetListTourPlan(:bid)", nativeQuery = true)
+	@Query(value = "CALL GetListTourPlanDetail(:bid)", nativeQuery = true)
 	List<TourPlanDetail> getListTourPlanDetailByBookingId(@Param("bid") Long bid);
 }

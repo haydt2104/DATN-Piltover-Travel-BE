@@ -16,6 +16,7 @@ import com.piltover.service.AccountService;
 import com.piltover.service.BookingService;
 import com.piltover.service.HistoryService;
 import com.piltover.service.TourPlanDetailService;
+import com.piltover.service.TourPlanService;
 import com.piltover.util.ResponeUtil;
 
 @RestController
@@ -31,6 +32,8 @@ public class HistoryBookingController {
 	BookingService bookingService;
 	@Autowired
 	TourPlanDetailService TourPlanDetailService;
+	@Autowired
+	TourPlanService tourPlanService;
 	
 	@Autowired
 	ResponeUtil respUtill;
@@ -84,7 +87,11 @@ public class HistoryBookingController {
 	
 	@GetMapping("/tourplan")
 	public ResponseEntity<?> getListTourPlan(@RequestParam(name = "detail") Long bid){
-		return ResponseEntity.ok(TourPlanDetailService.getTourPlanDetailListByTourPlanId(bid));
+		return ResponseEntity.ok(tourPlanService.getTourPlanByBookingID(bid));
 	}
 
+	@GetMapping("/tourplanDetail")
+	public ResponseEntity<?> getListTourPlanDetail(@RequestParam(name = "detail") Long bid){
+		return ResponseEntity.ok(TourPlanDetailService.GetTourPlanDetailByBookingID(bid));
+	}
 }
