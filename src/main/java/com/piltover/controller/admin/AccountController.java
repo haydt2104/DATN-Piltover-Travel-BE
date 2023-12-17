@@ -59,6 +59,8 @@ public class AccountController {
 
 		account.setId(idGenerator.generateRandomNumbers());
 		Account newAccount = accountService.createAccount(account);
+		// Thêm role sau đăng ký
+		accountService.addRole(account.getEmail(), "ADMIN");
 
 		responeUtil.putRespone("message", "Tạo tài khoản thành công");
 		responeUtil.putRespone("newAccount", newAccount);
