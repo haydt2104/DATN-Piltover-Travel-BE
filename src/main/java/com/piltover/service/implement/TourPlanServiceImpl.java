@@ -48,4 +48,10 @@ public class TourPlanServiceImpl implements TourPlanService {
         TourPlan plan = tourPlanRepository.findById(planId).get();
         tourPlanRepository.delete(plan);
     }
+
+	@Override
+	public List<TourPlan> getTourPlanByBookingID(Long bid) {
+		// TODO Auto-generated method stub
+		return tourPlanRepository.getListTourPlanByBookingId(bid);
+	}
 }

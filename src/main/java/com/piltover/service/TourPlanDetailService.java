@@ -17,5 +17,5 @@ public interface TourPlanDetailService {
 
     void deleteTourPlan(Long planDetailId);
     
-    List<TourPlanDetail> getListById(Long bid);
+    List<TourPlanDetail> GetTourPlanDetailByBookingID(Long bid);
 }

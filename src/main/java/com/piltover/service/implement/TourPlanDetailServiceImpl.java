@@ -46,7 +46,8 @@ public class TourPlanDetailServiceImpl implements TourPlanDetailService {
     }
 
 	@Override
-	public List<TourPlanDetail> getListById(Long bid) {
-			return tourPlanDetailRepository.getListTourPlanDetailByBookingId(bid);
+	public List<TourPlanDetail> GetTourPlanDetailByBookingID(Long bid) {
+		// TODO Auto-generated method stub
+		return tourPlanDetailRepository.getListTourPlanDetailByBookingId(bid);
 	}
 }

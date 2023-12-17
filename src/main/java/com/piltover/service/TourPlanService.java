@@ -16,4 +16,6 @@ public interface TourPlanService {
         void putTourPlan(TourPlan plan);
 
         void deleteTourPlan(Long planId);
+        
+        List<TourPlan> getTourPlanByBookingID(Long bid);
 }
