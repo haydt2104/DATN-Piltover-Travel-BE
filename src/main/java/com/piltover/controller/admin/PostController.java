@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
-import org.apache.tomcat.util.json.JSONFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.piltover.dto.CommentDTO;
-import com.piltover.dto.LikeDTO;
 import com.piltover.dto.PostDTO;
 import com.piltover.entity.Account;
 import com.piltover.entity.Comment;
@@ -199,15 +196,15 @@ public class PostController {
 		if (entity == null) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} else {
-//			String title = post.getTitle().replaceAll("<p>", "");
-//			String description = post.getDescription().replaceAll("<p>", "");
-//			String content = post.getContent().replaceAll("<p>", "");
+			String title = post.getTitle();
+			String description = post.getDescription();
+			String content = post.getContent();
 			Account user = as.findUserByID(getIdUser());
 
 			entity.setId(id);
-//			entity.setTitle(title.replaceAll("</p>", ""));
-//			entity.setDescription(description.replaceAll("</p>", ""));
-//			entity.setContent(content.replaceAll("</p>", ""));
+			entity.setTitle(title);
+			entity.setDescription(description);
+			entity.setContent(content);
 			entity.setUpdateTime(LocalDateTime.now());
 			entity.setUpdateUser(user);
 			ps.updatePost(entity);
@@ -217,14 +214,14 @@ public class PostController {
 
 	@PostMapping("/admin/post/create")
 	public ResponseEntity<?> createPost(@RequestBody PostDTO post) {
-//		String title = post.getTitle().replaceAll("<p>", "");
-//		String description = post.getDescription().replaceAll("<p>", "");
-//		String content = post.getContent().replaceAll("<p>", "");
+		String title = post.getTitle();
+		String description = post.getDescription();
+		String content = post.getContent();
 		Account user = as.findUserByID(getIdUser());
 		Post entity = new Post();
-//		entity.setTitle(title.replaceAll("</p>", ""));
-//		entity.setDescription(description.replaceAll("</p>", ""));
-//		entity.setContent(content.replaceAll("</p>", ""));
+		entity.setTitle(title);
+		entity.setDescription(description);
+		entity.setContent(content);
 		entity.setCreateTime(LocalDateTime.now());
 		entity.setCreateUser(user);
 		ps.createPost(entity);
