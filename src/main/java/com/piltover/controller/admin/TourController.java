@@ -1,5 +1,6 @@
 package com.piltover.controller.admin;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class TourController {
     @PostMapping("/admin/tour")
     public void postTour(@RequestBody Tour tour) {
         tour.setCreator(getUser());
+        tour.setCreateTime(new Date());
         tourService.postTour(tour);
     }
 
