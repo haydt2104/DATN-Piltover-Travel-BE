@@ -74,7 +74,7 @@ public class SpringSecurityConfig {
 		protected void configure(HttpSecurity http) throws Exception {
 			http.cors();
 			http.csrf().disable().antMatcher("/api/**").authorizeRequests()
-			.antMatchers("/api/auth/**", "/api/home/**", "/api/post/**", "/api/tour_plan/**", "/api/tour_image/**", "/api/booking/**", "/api/tour_date/**", "/api/tour/**", "/api/status/all", "/api/discountCode/**", "/api/admin/account/currentAccount").permitAll()
+			.antMatchers("/api/auth/login", "/api/auth/sign-up", "/api/home/**", "/api/post/**", "/api/tour_plan/**", "/api/tour_image/**", "/api/booking/**", "/api/tour_date/**", "/api/tour/**", "/api/status/all", "/api/discountCode/**", "/api/admin/account/currentAccount").permitAll()
 			.antMatchers("/api/admin/**").hasAnyRole("ADMIN")
 					.antMatchers("/api/**").hasAnyRole("USER")
 					

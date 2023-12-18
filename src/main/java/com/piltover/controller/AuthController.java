@@ -21,11 +21,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.piltover.dto.request.ChangeInfoReq;
 import com.piltover.entity.Account;
 import com.piltover.entity.Log;
 import com.piltover.model.JwtRequestModel;
@@ -146,7 +149,7 @@ public class AuthController {
 	@GetMapping("/logout")
 	public ResponseEntity<?> logout() throws Exception {
 		ResponeUtil resp = new ResponeUtil();
-		resp.putRespone("message", "Đăng xuất thành công");
+		
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
@@ -165,9 +168,74 @@ public class AuthController {
         log.setIpAddress(ipAddress);
         log.setAccount(accountService.findUserByID(userID));
         logService.addLog(log);
-
+        
+        resp.putRespone("message", "Đăng xuất thành công");
         return ResponseEntity.ok().body(resp.getRespone());
 		
+	}
+	
+	@PutMapping("/changeInfo")
+	public ResponseEntity<?> changeInfo(@RequestBody ChangeInfoReq changeAcc){
+		
+		if(changeAcc.getId() == null) {
+			responeUtil.putRespone("message", "Không tìm thấy user");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(responeUtil.getRespone());
+		}
+		
+		ResponeUtil respu = new ResponeUtil();
+		
+		if (!accountService.isIDExists(changeAcc.getId())){
+			respu.putRespone("message", "Người dùng không hợp lệ");
+			return ResponseEntity.badRequest().body(respu.getRespone());
+		}
+		
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Long currentUser = accountService.getId(username);
+		
+		if(!changeAcc.getId().equals(currentUser)) {
+			respu.putRespone("message", "Người dùng không hợp lệ");
+			return ResponseEntity.badRequest().body(respu.getRespone());
+		}
+		
+		accountService.changeInfo(changeAcc);
+		respu.putRespone("message", "Thay đổi thông tin thành công");
+		
+		return ResponseEntity.ok().body(respu.getRespone());
+	}
+	
+	@GetMapping("/getEmail/{email}")
+	public ResponseEntity<?> getEmail(@PathVariable("email") String email){
+		
+		if(email == null) {
+			responeUtil.putRespone("message", "Email không hợp lệ");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(responeUtil.getRespone());
+		}
+		
+		ResponeUtil respu = new ResponeUtil();
+		
+		if (!accountService.isEmailExists(email)){
+			respu.putRespone("message", "Không tồn tại email");
+			return ResponseEntity.badRequest().body(respu.getRespone());
+		}
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Long currentUser = accountService.getId(username);
+		
+		if(!accountService.getId(email).equals(currentUser)) {
+			respu.putRespone("message", "Người dùng không hợp lệ");
+			return ResponseEntity.badRequest().body(respu.getRespone());
+		}
+		
+		
+		respu.putRespone("message", "Lấy thông tin thành công");
+		respu.putRespone("account", accountService.findUserByID(accountService.getId(email)));
+		
+		return ResponseEntity.ok().body(respu.getRespone());
 	}
 	
 	private String getClientIpAddress(HttpServletRequest request) {

@@ -1,11 +1,13 @@
 package com.piltover.service.implement;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.piltover.dto.request.ChangeInfoReq;
 import com.piltover.entity.Account;
 import com.piltover.entity.Authority;
 import com.piltover.repository.AccountRepository;
@@ -100,6 +102,19 @@ public class AccountServiceImpl implements AccountService {
 		accountRepository.saveAndFlush(deleteAcc);
 		
 		
+	}
+
+	@Override
+	public void changeInfo(ChangeInfoReq changeAcc) {
+		Account updateUser = accountRepository.findById(changeAcc.getId()).get();
+		updateUser.setFullname(changeAcc.getFullname());
+		updateUser.setPhone(changeAcc.getPhone());
+		updateUser.setBirthday(changeAcc.getBirthday());
+		updateUser.setGender(changeAcc.getGender());
+		updateUser.setAddress(changeAcc.getAddress());
+		updateUser.setUpdateAt(new Date());
+		
+		accountRepository.saveAndFlush(updateUser);
 	}
 
 }

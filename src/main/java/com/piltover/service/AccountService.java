@@ -2,6 +2,7 @@ package com.piltover.service;
 
 import java.util.List;
 
+import com.piltover.dto.request.ChangeInfoReq;
 import com.piltover.entity.Account;
 
 public interface AccountService {
@@ -35,4 +36,7 @@ public interface AccountService {
 	
 	// Khóa user
 	void deleteAccount(Long id);
+	
+	// thay đổi thông tin
+	void changeInfo(ChangeInfoReq changeAcc);
 }

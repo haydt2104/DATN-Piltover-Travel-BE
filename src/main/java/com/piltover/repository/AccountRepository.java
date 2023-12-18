@@ -19,7 +19,7 @@ public interface AccountRepository extends JpaRepository<Account, Long>{
 	@Query("SELECT a.phone FROM Account a")
 	List<String> getAllPhones();
 	
-	@Query("SELECT a FROM Account a WHERE a.email = :email")
+	@Query("SELECT a FROM Account a WHERE a.email = :email AND a.isDelete = false")
     Optional<Account> findByEmail(@Param("email") String email);
 	
 	@Query("SELECT a.id FROM Account a WHERE a.email = ?1")
