@@ -1,7 +1,12 @@
 package com.piltover.controller;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +20,19 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.piltover.dto.request.SignUpReq;
 import com.piltover.entity.Account;
+import com.piltover.entity.Log;
 import com.piltover.model.JwtRequestModel;
 import com.piltover.model.JwtResponseModel;
 import com.piltover.service.AccountService;
 import com.piltover.service.AuthService;
+import com.piltover.service.LogService;
 import com.piltover.service.MailService;
 import com.piltover.util.IDGenerator;
 import com.piltover.util.JwtTokenUtil;
@@ -45,7 +52,13 @@ public class AuthController {
 	private AuthenticationManager authenticationManager;
 	
 	@Autowired
+	private HttpServletRequest request;
+	
+	@Autowired
 	AccountService accountService;
+	
+	@Autowired
+	LogService logService;
 	
 	@Autowired
 	MailService mailService;
@@ -79,7 +92,7 @@ public class AuthController {
 				if (!roleNames.contains("USER")) {
 					return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 				}
-			}
+					}
 		} catch (DisabledException e) {
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
@@ -87,6 +100,13 @@ public class AuthController {
 			responeUtil.putRespone("message", "Username or password is incorrect");
 			return ResponseEntity.badRequest().body(responeUtil.getRespone());
 		}
+		String ipAddress = getClientIpAddress(request);
+		Log log = new Log();
+		log.setLoginTime(new Date());
+		log.setIpAddress(ipAddress);
+		log.setAccount(accountService.findUserByID(accountService.getId(user.getUsername())));
+		logService.addLog(log);
+		
 		final String jwtToken = jwtTokenUtil.generateToken(user.getUsername());
 		return ResponseEntity.ok(new JwtResponseModel(jwtToken, user.getUsername(), roleResps));
 	}
@@ -122,5 +142,65 @@ public class AuthController {
 		System.out.println(responeUtil.getRespone());
 		return ResponseEntity.ok(responeUtil.getRespone());
 	}
+	
+	@GetMapping("/logout")
+	public ResponseEntity<?> logout() throws Exception {
+		ResponeUtil resp = new ResponeUtil();
+		resp.putRespone("message", "Đăng xuất thành công");
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Long userID = accountService.getId(username);
+		
+		
+		String ipAddress = getClientIpAddress(request);
+		System.out.println(request.getRemoteAddr() +" - "+ ipAddress);
+        if (ipAddress == null || ipAddress.isEmpty()) {
+            ipAddress = request.getRemoteAddr();
+        }
+        System.out.println(request.getRemoteAddr() +" - "+ ipAddress);
+
+        Log log = new Log();
+        log.setLogoutTime(new Date());
+        log.setIpAddress(ipAddress);
+        log.setAccount(accountService.findUserByID(userID));
+        logService.addLog(log);
+
+        return ResponseEntity.ok().body(resp.getRespone());
+		
+	}
+	
+	private String getClientIpAddress(HttpServletRequest request) {
+        String[] headerNames = {
+                "X-Forwarded-For",
+                "Proxy-Client-IP",
+                "WL-Proxy-Client-IP",
+                "HTTP_X_FORWARDED_FOR",
+                "HTTP_X_FORWARDED",
+                "HTTP_X_CLUSTER_CLIENT_IP",
+                "HTTP_CLIENT_IP",
+                "HTTP_FORWARDED_FOR",
+                "HTTP_FORWARDED"
+        };
+
+        for (String header : headerNames) {
+            String ipAddress = request.getHeader(header);
+            if (isValidIpv4Address(ipAddress)) {
+                return ipAddress;
+            }
+        }
+
+        String remoteAddr = request.getRemoteAddr();
+        return isValidIpv4Address(remoteAddr) ? remoteAddr : "Unknown";
+    }
+
+    private boolean isValidIpv4Address(String ipAddress) {
+        try {
+            InetAddress inetAddress = InetAddress.getByName(ipAddress);
+            return inetAddress instanceof Inet4Address;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 	
 }

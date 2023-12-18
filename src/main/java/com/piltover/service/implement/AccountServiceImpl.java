@@ -93,4 +93,13 @@ public class AccountServiceImpl implements AccountService {
 		authorityRepository.saveAndFlush(auth);
 	}
 
+	@Override
+	public void deleteAccount(Long id) {
+		Account deleteAcc = accountRepository.findById(id).get();
+		deleteAcc.setIsDelete(true);
+		accountRepository.saveAndFlush(deleteAcc);
+		
+		
+	}
+
 }

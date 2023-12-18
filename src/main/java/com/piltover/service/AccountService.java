@@ -32,4 +32,7 @@ public interface AccountService {
 	
 	// Thêm role
 	void addRole(String email, String role);
+	
+	// Khóa user
+	void deleteAccount(Long id);
 }

@@ -1,7 +1,6 @@
 package com.piltover.service;
 
 import com.piltover.entity.BookingDetail;
-import com.piltover.entity.History;
 
 public interface HistoryService {
 

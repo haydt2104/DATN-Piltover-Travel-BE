@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.piltover.entity.Account;
 import com.piltover.service.AccountService;
+import com.piltover.service.LogService;
 import com.piltover.util.IDGenerator;
 import com.piltover.util.ResponeUtil;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin("*")
@@ -25,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AccountController {
 	@Autowired
 	AccountService accountService;
+	
+	@Autowired
+	LogService logService;
 
 	@Autowired
 	ResponeUtil responeUtil;
@@ -47,14 +51,16 @@ public class AccountController {
 
 		if (accountService.isEmailExists(account.getEmail())) {
 			// Trả về lỗi 400 - BadRequest
+			responeUtil.putRespone("message", "Địa chỉ email đã tồn tại trong hệ thống");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body("Địa chỉ email đã tồn tại trong hệ thống");
+					.body(responeUtil.getRespone());
 		}
 
 		if (accountService.isPhoneExists(account.getPhone())) {
 			// Trả về lỗi 400 - BadRequest
+			responeUtil.putRespone("message", "Số điện thoại đã tồn tại trong hệ thống");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body("Số điện thoại đã tồn tại trong hệ thống");
+					.body(responeUtil.getRespone());
 		}
 
 		account.setId(idGenerator.generateRandomNumbers());
@@ -78,6 +84,41 @@ public class AccountController {
 		String username = authentication.getName();
 		Long upUser = accountService.getId(username);
 		return ResponseEntity.ok(accountService.findUserByID(upUser));
+	}
+	
+	@GetMapping("/findAllLog")
+	public ResponseEntity<?> findAllLog() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Long upUser = accountService.getId(username);
+		return ResponseEntity.ok(logService.getAllLogByID(upUser));
+	}
+	
+	@DeleteMapping("/block/{id}")
+	public ResponseEntity<?> block(@PathVariable("id") Long id) {
+		ResponeUtil respu = new ResponeUtil();
+		
+		if(id == null) {
+			respu.putRespone("message", "Không tìm thấy user hợp lệ");
+			return ResponseEntity.badRequest().body(respu.getRespone());
+		}
+		if (!accountService.isIDExists(Long.valueOf(id))){
+			respu.putRespone("message", "ID user không hợp lệ");
+			return ResponseEntity.badRequest().body(respu.getRespone());
+		}
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Long currentUser = accountService.getId(username);
+		
+		if (currentUser.equals(id)){
+			respu.putRespone("message", "Bạn không thể xóa chính mình");
+			return ResponseEntity.badRequest().body(respu.getRespone());
+		}
+		
+		accountService.deleteAccount(id);
+		respu.putRespone("message", "Xóa thành công");
+		
+		return ResponseEntity.ok().body(respu.getRespone());
 	}
 
 }
